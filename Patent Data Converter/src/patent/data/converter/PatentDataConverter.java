@@ -16,6 +16,8 @@ import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import patent.data.converter.utilities.Tools;
 
+import org.xml.sax.*;
+
 /**
  *
  * @author Nano
