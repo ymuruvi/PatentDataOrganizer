@@ -17,6 +17,7 @@ import javax.swing.JOptionPane;
 import patent.data.converter.utilities.Tools;
 
 import org.xml.sax.*;
+import patent.data.converter.utilities.Record;
 
 /**
  *
@@ -39,27 +40,14 @@ public class PatentDataConverter {
                 if (f.isFile()) {
                     String filePath = f.getAbsolutePath();
                     if("xml".equals(Tools.getExtension(filePath))){
-                        System.out.println("XML File");
+                        Record r = new Record();
+                        r.parse(filePath);
                     }else{
                         System.out.println(filePath+" is not an XML File ("+Tools.getExtension(filePath)+")");
                     }
                     
                 }
             }
-        }
-    }
-
-    static void readFile(String filePath) {
-        try {
-            fr = new FileReader(filePath);
-            br = new BufferedReader(fr);
-            
-            System.out.println(br.readLine());
-            
-            fr.close();
-            br.close();
-        } catch (IOException e) {
-            JOptionPane.showMessageDialog(null, "There's an issue with the file"+ filePath +": " + e, "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
 }
