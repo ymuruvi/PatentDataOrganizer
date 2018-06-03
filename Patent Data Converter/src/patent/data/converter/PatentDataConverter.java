@@ -30,13 +30,15 @@ public class PatentDataConverter {
 
     public static void main(String[] args) {
 
-        System.out.println("Where are the files located?");
-        String folderPath = new Scanner(System.in).nextLine();
+        //System.out.println("Where are the files located?");
+        String folderPath;
+        //folderPath = new Scanner(System.in).nextLine();
+        folderPath = "D:\\Documents\\Programming\\Projects\\Patent Data Converter\\Data\\2006\\TestCases";
 
         File folder = new File(folderPath);
         if (folder.isDirectory()) {
             File[] files = folder.listFiles();
-            System.out.println(files.length + " files");
+            System.out.println(files.length + " files in " + folderPath);
             for (File f : files) {
                 if (f.isFile()) {
                     String filePath = f.getAbsolutePath();

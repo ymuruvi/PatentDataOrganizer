@@ -20,25 +20,21 @@ import patent.data.converter.utilities.Tools;
  */
 public class Record {
 
+    /**
+     * Type of document.
+     */
     enum DocumentType {
         PATENT, PATENT_APP
     };
-    
-    private HashMap dataNodes;
-
-    private String docNum;
-    private String appNum;
-    private String englishTitle;
-    private String frenchTitle;
-
-    private static int s = 0;
-    private Inventor[] inventors;
 
     private boolean searchingForNode;
     
-    
-    public Record(){
-        dataNodes = new HashMap();
+    private DocumentType docType;
+
+    /**
+     *
+     */
+    public Record() {
     }
 
     /**
@@ -48,15 +44,15 @@ public class Record {
      * @param fileName
      */
     public void parse(String fileName) {
-        
+
         Document xmlDoc;
         NodeList listOfFields;
         NodeList nl;
         Node n;
         NodeList documentID;
-        
+
         if (fileName != null) {
-            
+
             xmlDoc = null;
             for (int i = 0; i < 5 && (xmlDoc == null); i++) {
                 xmlDoc = getDocument(fileName);
@@ -67,29 +63,29 @@ public class Record {
                 System.out.println(Tools.Contstants.ANSI_GREEN + fileName
                         + " => Root: " + xmlDoc.getDocumentElement().getNodeName()
                         + Tools.Contstants.ANSI_RESET);
-                
+
                 listOfFields = xmlDoc.getElementsByTagName("ca-bibliographic-data");
-                
+
                 /*
                 nl = getElementAndAttribute(listOfFields, "invention-title", "lang");
                 documentID = getElementNodeList(listOfFields, "publication-reference");
-                */
-                
+                 */
                 n = null;
-                
-                SearchNode[] searchNodes = { new SearchNode("publication-reference")
-                        , new SearchNode("classifications-ipcr"), new SearchNode("classification-national")
-                        , new SearchNode("application-reference"), new SearchNode("language-of-filing")
-                        , new SearchNode("priority-claims"), new SearchNode("dates-of-public-availability")
-                        , new SearchNode("pct-or-regional-filing-data"), new SearchNode("pct-or-regional-publishing-data")
-                        , new SearchNode("ca-office-specific-bib-data"), new SearchNode("invention-title",0)
-                        , new SearchNode("invention-title",1)};
-                
-                for(SearchNode sn : searchNodes){
-                    sn.setNode(searchForNode(listOfFields, sn.getSearchTerm(),sn.getOccurance()));
-                    System.out.println(Tools.Contstants.ANSI_YELLOW+"Name: " + sn.getNodeName() + Tools.Contstants.ANSI_RESET);
+
+                SearchNode[] searchNodes = {new SearchNode("publication-reference"),
+                    new SearchNode("classifications-ipcr"), new SearchNode("classification-national"),
+                    new SearchNode("application-reference"), new SearchNode("language-of-filing"),
+                    new SearchNode("priority-claims"), new SearchNode("dates-of-public-availability"),
+                    new SearchNode("pct-or-regional-filing-data"), new SearchNode("pct-or-regional-publishing-data"),
+                    new SearchNode("ca-office-specific-bib-data"), new SearchNode("invention-title", 0),
+                    new SearchNode("invention-title", 1)};
+
+                for (SearchNode sn : searchNodes) {
+                    sn.setNode(searchForNode(listOfFields, sn.getSearchTerm(), sn.getOccurance()));
+                    //System.out.println(Tools.Contstants.ANSI_YELLOW + "Name: " + sn.getNodeName() + Tools.Contstants.ANSI_RESET);
+                    handleDataNode(sn);
                 }
-                
+
                 if (n != null) {
                 }
             } else {
@@ -101,6 +97,11 @@ public class Record {
         }
     }
 
+    /**
+     *
+     * @param docString
+     * @return
+     */
     private static Document getDocument(String docString) {
         DocumentBuilderFactory factory;
         DocumentBuilder builder;
@@ -109,7 +110,7 @@ public class Record {
             factory.setIgnoringComments(true);
             factory.setIgnoringElementContentWhitespace(true);
             factory.setValidating(true);
-            
+
             builder = factory.newDocumentBuilder();
             return builder.parse(new InputSource(docString));
 
@@ -118,7 +119,28 @@ public class Record {
         }
         return null;
     }
-    
+
+    /**
+     * 
+     * @param node
+     * @param searchTerm
+     * @return 
+     */
+    private Node searchForNode(Node node, String searchTerm) {
+        return searchForNode(node, searchTerm, 0);
+    }
+
+    /**
+     * 
+     * @param node
+     * @param searchTerm
+     * @param occurance
+     * @return 
+     */
+    private Node searchForNode(Node node, String searchTerm, int occurance) {
+        return searchForNode(node.getChildNodes(), searchTerm, occurance);
+    }
+
     /**
      * Returns the first occurrence of a node with a given name.
      *
@@ -132,16 +154,16 @@ public class Record {
     private Node searchForNode(NodeList listOfFields, String searchTerm) {
         return searchForNode(listOfFields, searchTerm, 0);
     }
-    
+
     /**
-     * 
+     *
      * @param listOfFields
      * @param searchTerm
      * @param occuranceIndex
-     * @return 
+     * @return
      */
     private Node searchForNode(NodeList listOfFields, String searchTerm, int occuranceIndex) {
-        
+
         Node node;
         Node out = null;
         Element element;
@@ -157,13 +179,13 @@ public class Record {
                 nodeName = node.getNodeName();
                 numChildNodes = node.getChildNodes().getLength();
                 if (node.getNodeName().equals(searchTerm)) {
-                    if(occuranceIndex == 0){
+                    if (occuranceIndex == 0) {
                         System.out.println(Tools.Contstants.ANSI_CYAN + "Found: " + searchTerm + Tools.Contstants.ANSI_RESET);
                         if (searchingForNode) {
                             searchingForNode = false;
                             return node;
                         }
-                    }else{
+                    } else {
                         occuranceIndex--;
                     }
                 } else {
@@ -190,15 +212,13 @@ public class Record {
      * @return
      */
     private NodeList getElementAndAttribute(NodeList listOfFields, String elementName, String searchAttr) {
-        
+
         NodeList out = null;
         Node node;
         Element elem;
         Element nElem;
         NodeList list;
         NodeList eList;
-        
-        
 
         try {
             for (int i = 0; i < listOfFields.getLength(); i++) {
@@ -258,29 +278,116 @@ public class Record {
         return out;
     }
 
+    /**
+     *
+     * @param node
+     * @return
+     */
     private String getNodeAttribute(Node node) {
         String attr = null;
         attr = node.getNodeValue();
         return attr;
     }
-    
-    private class SearchNode{
-        
+
+    public void handleDataNode(SearchNode searchNode) {
+
+        System.out.println(searchNode.getNodeName());
+        switch (searchNode.getNodeName()) {
+            case "publication-reference":
+                handlePubRef(searchNode);
+                break;
+            case "classifications-ipcr":
+                handleCLassIPCR(searchNode);
+                break;
+            case "classification-national":
+                handleClassNat(searchNode);
+                break;
+            case "application-reference":
+                handleAppRef(searchNode);
+                break;
+            case "language-of-filing":
+                handleLangOfFiling(searchNode);
+                break;
+            case "priority-claims":
+                handlePriorityClaims(searchNode);
+                break;
+            case "dates-of-public-availability":
+                handleDateOfPubAvail(searchNode);
+                break;
+            case "pct-or-regional-filing-data":
+                handlePctRegFilingData(searchNode);
+                break;
+            case "pct-or-regional-publishing-data":
+                handlePctRegPubData(searchNode);
+                break;
+            case "ca-office-specific-bib-data":
+                handleCaOfficeSpecBibData(searchNode);
+                break;
+            case "invention-title":
+                boolean eng = false;
+                if (eng) {
+                    handleInventionTitleEN(searchNode);
+                } else {
+                    handleInventionTitleFR(searchNode);
+                }
+                break;
+        }
+
+    }
+
+    private void handlePubRef(SearchNode sn) {
+    }
+
+    private void handleCLassIPCR(SearchNode sn) {
+    }
+
+    private void handleClassNat(SearchNode sn) {
+    }
+
+    private void handleAppRef(SearchNode sn) {
+    }
+
+    private void handleLangOfFiling(SearchNode sn) {
+    }
+
+    private void handlePriorityClaims(SearchNode sn) {
+    }
+
+    private void handleInventionTitleEN(SearchNode sn) {
+    }
+
+    private void handleInventionTitleFR(SearchNode sn) {
+    }
+
+    private void handleDateOfPubAvail(SearchNode sn) {
+    }
+
+    private void handlePctRegFilingData(SearchNode sn) {
+    }
+
+    private void handlePctRegPubData(SearchNode sn) {
+    }
+
+    private void handleCaOfficeSpecBibData(SearchNode sn) {
+    }
+
+    protected class SearchNode {
+
         private int occurance;
         private Node node;
         private String searchTerm;
-        
-        public SearchNode(String searchTerm, int occurance){
+
+        public SearchNode(String searchTerm, int occurance) {
             this.searchTerm = searchTerm;
             this.occurance = occurance;
         }
-        
-        public SearchNode (String searchTerm){
-            this(searchTerm,0);
+
+        public SearchNode(String searchTerm) {
+            this(searchTerm, 0);
         }
-        
-        public SearchNode(){
-            this("",0);
+
+        public SearchNode() {
+            this("", 0);
         }
 
         public int getOccurance() {
@@ -294,11 +401,11 @@ public class Record {
         public Node getNode() {
             return node;
         }
-        
-        public String getNodeName(){
-            if(node == null){
+
+        public String getNodeName() {
+            if (node == null) {
                 return "";
-            }else{
+            } else {
                 return node.getNodeName();
             }
         }
@@ -314,6 +421,7 @@ public class Record {
         public void setSearchTerm(String searchTerm) {
             this.searchTerm = searchTerm;
         }
-        
+
     }
+
 }
