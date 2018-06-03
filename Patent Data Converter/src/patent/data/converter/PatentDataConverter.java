@@ -36,6 +36,7 @@ public class PatentDataConverter {
         File folder = new File(folderPath);
         if (folder.isDirectory()) {
             File[] files = folder.listFiles();
+            System.out.println(files.length + " files");
             for (File f : files) {
                 if (f.isFile()) {
                     String filePath = f.getAbsolutePath();
@@ -43,7 +44,9 @@ public class PatentDataConverter {
                         Record r = new Record();
                         r.parse(filePath);
                     }else{
-                        System.out.println(filePath+" is not an XML File ("+Tools.getExtension(filePath)+")");
+                        System.out.println(Tools.Contstants.ANSI_RED + filePath 
+                                + " is not an XML File (" + Tools.getExtension(filePath) 
+                                + ")" + Tools.Contstants.ANSI_RESET);
                     }
                     
                 }
