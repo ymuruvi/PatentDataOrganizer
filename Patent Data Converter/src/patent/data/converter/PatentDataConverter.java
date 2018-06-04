@@ -13,6 +13,7 @@ import java.io.IOException;
 import java.util.Scanner;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import patent.data.converter.utilities.Tools;
 
@@ -28,29 +29,41 @@ public class PatentDataConverter {
     static BufferedReader br;
     static FileReader fr;
 
+    public static void chooseFiles() {
+        final JFileChooser fc = new JFileChooser();
+    }
+
     public static void main(String[] args) {
 
-        //System.out.println("Where are the files located?");
         String folderPath;
-        //folderPath = new Scanner(System.in).nextLine();
-        folderPath = "D:\\Documents\\Programming\\Projects\\Patent Data Converter\\Data\\2006\\TestCases";
+        File folder;
+        File[] files;
+        Record r;
+        String filePath;
 
-        File folder = new File(folderPath);
+        chooseFiles();
+
+        System.out.println("Where are the files located?");
+        folderPath = new Scanner(System.in).nextLine();
+        folder = new File(folderPath);
+
         if (folder.isDirectory()) {
-            File[] files = folder.listFiles();
+            files = folder.listFiles();
             System.out.println(files.length + " files in " + folderPath);
             for (File f : files) {
                 if (f.isFile()) {
-                    String filePath = f.getAbsolutePath();
-                    if("xml".equals(Tools.getExtension(filePath))){
-                        Record r = new Record();
+                    filePath = f.getAbsolutePath();
+                    if ("xml".equals(Tools.getExtension(filePath))) {
+                        System.out.println(Tools.Contstants.ANSI_GREEN + "Reading: " + filePath + Tools.Contstants.ANSI_RESET);
+                        r = new Record();
                         r.parse(filePath);
-                    }else{
-                        System.out.println(Tools.Contstants.ANSI_RED + filePath 
-                                + " is not an XML File (" + Tools.getExtension(filePath) 
+
+                    } else {
+                        System.out.println(Tools.Contstants.ANSI_RED + filePath
+                                + " is not an XML File (" + Tools.getExtension(filePath)
                                 + ")" + Tools.Contstants.ANSI_RESET);
                     }
-                    
+
                 }
             }
         }

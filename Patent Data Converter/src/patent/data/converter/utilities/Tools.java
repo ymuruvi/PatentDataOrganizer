@@ -5,19 +5,24 @@
  */
 package patent.data.converter.utilities;
 
-import java.util.Date;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.Stack;
 import java.util.Queue;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
  * @author Nano
  */
 public class Tools {
-    
-    public class Contstants{
+
+    public class Contstants {
+
         public static final String ANSI_RESET = "\u001B[0m";
         public static final String ANSI_BLACK = "\u001B[30m";
         public static final String ANSI_RED = "\u001B[31m";
@@ -29,20 +34,13 @@ public class Tools {
         public static final String ANSI_WHITE = "\u001B[37m";
     }
 
-    public Date strToDate(String s) {
-        Date date = new Date();
-
-        return date;
-    }
-
     /**
-     * Returns the extension of a given file.
-     * For files with no period being used to dictate the file extention
-     * an empty string will be returned
-     * 
+     * Returns the extension of a given file. For files with no period being
+     * used to dictate the file extention an empty string will be returned
+     *
      * @param fileName Name of the file for who's extension will be returned
-     * @return String containing either the given file name's extension or
-     * an empty string for files with no extension.
+     * @return String containing either the given file name's extension or an
+     * empty string for files with no extension.
      */
     public static String getExtension(final String fileName) {
 
@@ -50,7 +48,7 @@ public class Tools {
         StringBuilder extension = new StringBuilder();
         boolean searching = true;
 
-        if(fileName == null){
+        if (fileName == null) {
             return "";
         }
         for (int i = 1; i <= fileName.length() && searching; i++) {
@@ -74,7 +72,9 @@ public class Tools {
 
         return extension.toString();
     }
+
     
-    
-    
+
 }
+
+
