@@ -19,11 +19,13 @@ public class ConverterGUI extends javax.swing.JFrame {
     private File currentDirectory;
     
     private static HashMap records;
+    private static Record currentRecord;
     
     public static void main(String[] args) {
 
         File folder;
         records = new HashMap();
+        currentRecord = new Record();
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
@@ -81,7 +83,6 @@ public class ConverterGUI extends javax.swing.JFrame {
                         
                         r.parse(filePath);
                         try{
-                            System.out.println("Record Print: " + r);
                             records.put(r.getRecordID(), r);
                         }catch(Exception e){
                             System.out.println(Tools.Contstants.ANSI_RED + "Error: " + e + Tools.Contstants.ANSI_RESET);
@@ -419,8 +420,12 @@ public class ConverterGUI extends javax.swing.JFrame {
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
     private void searchDocNumBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchDocNumBtnActionPerformed
+        
+        Record r;
         String searchNum;
         searchNum = docNumSearchBox.getText();
+        r = (Record) records.get(searchNum);
+        
     }//GEN-LAST:event_searchDocNumBtnActionPerformed
 
     /**
