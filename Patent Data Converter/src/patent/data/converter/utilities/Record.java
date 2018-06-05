@@ -1,4 +1,3 @@
-
 package patent.data.converter.utilities;
 
 import org.xml.sax.*;
@@ -11,67 +10,30 @@ import javax.xml.parsers.*;
  */
 public class Record {
 
+    //<editor-fold defaultstate="collapsed" desc=" Private class variables ">
     /**
      * Type of document.
      */
-    enum DocumentType {
+    private enum DocumentType {
         PATENT, PATENT_APP
     };
 
     /**
-     * Variable indicating whether a search is being done 
+     * Variable indicating whether a search is being done
      */
     private boolean searchingForNode;
 
-    /**
-     * (45) Issued Date
-     */
-    private Date issuedDate;
+    private RecordDataPoints dataPoints;
+    
+    private String recordID;
+    
+    //</editor-fold>
     
     /**
-     * (22) Filing Date
-     */
-    private Date filedDate;
-    
-    /**
-     * (41) Open to Public Inspection Date
-     */
-    private Date openToPubInsp;
-    
-    /**
-     * (74) Agent
-     */
-    private String agent;
-    
-    /**
-     * (21) Application Number
-     */
-    private String applicationNumber;
-    /**
-     * (11)Document Number
-     */
-    private String documentNumber;
-    
-    /**
-     * (54) English Title
-     */
-    private String englishTitle;
-    
-    /**
-     * (54) French Title
-     */
-    private String frenchTitle;
-    
-    /**
-     * Examination Requested
-     */
-    private String examReq;
-
-    /**
-     * 
+     *
      */
     public Record() {
-        issuedDate = new Date();
+        dataPoints = new RecordDataPoints();
     }
 
     /**
@@ -96,10 +58,7 @@ public class Record {
             }
 
             if (xmlDoc != null) {
-
-                /*System.out.println(Tools.Contstants.ANSI_GREEN + fileName
-                + " => Root: " + xmlDoc.getDocumentElement().getNodeName()
-                + Tools.Contstants.ANSI_RESET);*/
+                
                 listOfFields = xmlDoc.getElementsByTagName("ca-bibliographic-data");
 
                 //nl = getElementAndAttribute(listOfFields, "invention-title", "lang");
@@ -210,15 +169,15 @@ public class Record {
 
         searchingForNode = true;
         try {
-            //System.out.println("Trying search for: " + name);
+            
             for (int i = 0; i < listOfFields.getLength() && searchingForNode; i++) {
-                //System.out.println("Trying Deeper: " + i);
+                
                 node = listOfFields.item(i);
                 nodeName = node.getNodeName();
                 numChildNodes = node.getChildNodes().getLength();
                 if (node.getNodeName().equals(searchTerm)) {
                     if (occuranceIndex == 0) {
-                        System.out.println(Tools.Contstants.ANSI_CYAN + "Found: " + searchTerm + Tools.Contstants.ANSI_RESET);
+                        
                         if (searchingForNode) {
                             searchingForNode = false;
                             return node;
@@ -227,9 +186,9 @@ public class Record {
                         occuranceIndex--;
                     }
                 } else {
-                    //System.out.println(Tools.Contstants.ANSI_PURPLE + "Search Unsuccessful (" + node.getNodeName() + " " + searchingForNode + ")");
+                    
                     if (numChildNodes > 0 && searchingForNode) {
-                        //System.out.println("Going In Fam");
+                        
                         element = (Element) node;
                         NodeList list = element.getChildNodes();
                         out = searchForNode(list, searchTerm, occuranceIndex);
@@ -341,7 +300,39 @@ public class Record {
 
     /**
      * 
-     * @param searchNode 
+     * @return 
+     */
+    public RecordDataPoints getDataPoints() {
+        return dataPoints;
+    }
+
+    /**
+     * 
+     * @param dataPoints 
+     */
+    public void setDataPoints(RecordDataPoints dataPoints) {
+        this.dataPoints = dataPoints;
+    }
+
+    /**
+     * 
+     * @return 
+     */
+    public String getRecordID() {
+        return getDataPoints().getDocumentNumber();
+    }
+
+    /**
+     * 
+     * @param recordID 
+     */
+    public void setRecordID(String recordID) {
+        getDataPoints().setDocumentNumber(recordID);
+    }
+    
+    /**
+     *
+     * @param searchNode
      */
     public void handleDataNode(SearchNode searchNode) {
 
@@ -386,88 +377,88 @@ public class Record {
     }
 
     /**
-     * 
-     * @param sn 
+     *
+     * @param sn
      */
     private void handlePubRef(SearchNode sn) {
+        Node docID;
+        Node dateNode;
+        Date issuedDate;
+        String date;
         if (sn.getNode() != null) {
-            Node docID = searchForNode(sn.getNode(), "document-id");
+            docID = searchForNode(sn.getNode(), "document-id");
             if (docID != null) {
-                Node dateNode = searchForNode(docID, "date");
-                String date = getNodeText(dateNode);
-                System.out.println(date);
+                dateNode = searchForNode(docID, "date");
+                date = getNodeText(dateNode);
                 issuedDate = new Date(date);
-                System.out.println(issuedDate);
+                dataPoints.setIssuedDate(issuedDate);
             }
         }
     }
 
     /**
-     * 
-     * @param sn 
+     *
+     * @param sn
      */
     private void handleCLassIPCR(SearchNode sn) {
     }
 
     /**
-     * 
-     * @param sn 
+     *
+     * @param sn
      */
     private void handleClassNat(SearchNode sn) {
     }
 
     /**
-     * 
-     * @param sn 
+     *
+     * @param sn
      */
     private void handleAppRef(SearchNode sn) {
     }
 
     /**
-     * 
-     * @param sn 
+     *
+     * @param sn
      */
     private void handleLangOfFiling(SearchNode sn) {
         if (sn.getNode() != null) {
             Node lof = sn.getNode();
             if (lof != null) {
-                System.out.println("Filing Language: " + getNodeText(lof).toUpperCase());
             }
         }
 
     }
 
     /**
-     * 
-     * @param sn 
+     *
+     * @param sn
      */
     private void handlePriorityClaims(SearchNode sn) {
 
     }
 
     /**
-     * 
-     * @param sn 
+     *
+     * @param sn
      */
     private void handleInventionTitleEN(SearchNode sn) {
         if (getNodeAttributeValue(sn.getNode(), "lang").toLowerCase().equals("en")) {
-            System.out.println("English: " + getNodeAttributeValue(sn.getNode(), "lang").toUpperCase());
         }
     }
 
     /**
-     * 
-     * @param sn 
+     *
+     * @param sn
      */
     private void handleInventionTitleFR(SearchNode sn) {
         if (getNodeAttributeValue(sn.getNode(), "lang").toLowerCase().equals("fr")) {
-            System.out.println("French: " + getNodeAttributeValue(sn.getNode(), "lang").toUpperCase());
         }
     }
 
     /**
-     * 
-     * @param sn 
+     *
+     * @param sn
      */
     private void handleDateOfPubAvail(SearchNode sn) {
 
@@ -481,26 +472,26 @@ public class Record {
         if (sn.getNode() != null) {
             Node dateNode = searchForNode(sn.getNode(), "date");
             String date = getNodeText(dateNode);
-            this.filedDate = new Date(date);
+            dataPoints.setFiledDate(new Date(date));
         }
     }
 
     /**
-     * 
-     * @param sn 
+     *
+     * @param sn
      */
     private void handlePctRegPubData(SearchNode sn) {
     }
 
     /**
-     * 
-     * @param sn 
+     *
+     * @param sn
      */
     private void handleCaOfficeSpecBibData(SearchNode sn) {
     }
 
     /**
-     * 
+     *
      */
     protected class SearchNode {
 
@@ -509,9 +500,9 @@ public class Record {
         private String searchTerm;
 
         /**
-         * 
+         *
          * @param searchTerm
-         * @param occurance 
+         * @param occurance
          */
         public SearchNode(String searchTerm, int occurance) {
             this.searchTerm = searchTerm;
@@ -519,47 +510,47 @@ public class Record {
         }
 
         /**
-         * 
-         * @param searchTerm 
+         *
+         * @param searchTerm
          */
         public SearchNode(String searchTerm) {
             this(searchTerm, 0);
         }
 
         /**
-         * 
+         *
          */
         public SearchNode() {
             this("", 0);
         }
 
         /**
-         * 
-         * @return 
+         *
+         * @return
          */
         public int getOccurance() {
             return occurance;
         }
 
         /**
-         * 
-         * @param occurance 
+         *
+         * @param occurance
          */
         public void setOccurance(int occurance) {
             this.occurance = occurance;
         }
 
         /**
-         * 
-         * @return 
+         *
+         * @return
          */
         public Node getNode() {
             return node;
         }
 
         /**
-         * 
-         * @return 
+         *
+         * @return
          */
         public String getNodeName() {
             if (node == null) {
@@ -570,24 +561,24 @@ public class Record {
         }
 
         /**
-         * 
-         * @param node 
+         *
+         * @param node
          */
         public void setNode(Node node) {
             this.node = node;
         }
 
         /**
-         * 
-         * @return 
+         *
+         * @return
          */
         public String getSearchTerm() {
             return searchTerm;
         }
 
         /**
-         * 
-         * @param searchTerm 
+         *
+         * @param searchTerm
          */
         public void setSearchTerm(String searchTerm) {
             this.searchTerm = searchTerm;
@@ -597,9 +588,7 @@ public class Record {
 
     @Override
     public String toString() {
-        return "Record{" + "searchingForNode=" + searchingForNode + ", issuedDate=" + issuedDate + ", filedDate=" + filedDate + ", openToPubInsp=" + openToPubInsp + ", agent=" + agent + ", applicationNumber=" + applicationNumber + ", documentNumber=" + documentNumber + ", englishTitle=" + englishTitle + ", frenchTitle=" + frenchTitle + ", examReq=" + examReq + '}';
+        return "Record{" + "searchingForNode=" + searchingForNode + ", dataPoints=" + dataPoints + '}';
     }
-
-    
     
 }
