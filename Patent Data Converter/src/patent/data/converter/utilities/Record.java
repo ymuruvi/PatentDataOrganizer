@@ -1,20 +1,9 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-package patent.data.converter.utilities;
 
-import com.sun.org.apache.xerces.internal.util.DOMUtil;
-import java.util.Calendar;
-import java.util.HashMap;
+package patent.data.converter.utilities;
 
 import org.xml.sax.*;
 import org.w3c.dom.*;
 import javax.xml.parsers.*;
-
-import patent.data.converter.utilities.Tools;
-import patent.data.converter.utilities.Date;
 
 /**
  *
@@ -606,4 +595,11 @@ public class Record {
 
     }
 
+    @Override
+    public String toString() {
+        return "Record{" + "searchingForNode=" + searchingForNode + ", issuedDate=" + issuedDate + ", filedDate=" + filedDate + ", openToPubInsp=" + openToPubInsp + ", agent=" + agent + ", applicationNumber=" + applicationNumber + ", documentNumber=" + documentNumber + ", englishTitle=" + englishTitle + ", frenchTitle=" + frenchTitle + ", examReq=" + examReq + '}';
+    }
+
+    
+    
 }

@@ -5,6 +5,7 @@
  */
 package patent.data.converter.utilities;
 
+import java.io.File;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -32,6 +33,8 @@ public class Tools {
         public static final String ANSI_PURPLE = "\u001B[35m";
         public static final String ANSI_CYAN = "\u001B[36m";
         public static final String ANSI_WHITE = "\u001B[37m";
+        
+        public static final String XML = "xml";
     }
 
     /**
@@ -41,7 +44,9 @@ public class Tools {
      * @param fileName Name of the file for who's extension will be returned
      * @return String containing either the given file name's extension or an
      * empty string for files with no extension.
+     * 
      */
+    /*
     public static String getExtension(final String fileName) {
 
         LinkedList ext = new LinkedList();
@@ -71,6 +76,33 @@ public class Tools {
         }
 
         return extension.toString();
+    }
+    */
+
+    /**
+     * Altered Oracle tutorial code.
+     * @see https://docs.oracle.com/javase/tutorial/uiswing/examples/components/index.html
+     * @param s
+     * @return
+     */
+    public static String getExtension(final String s) {
+        String ext = null;
+        int i = s.lastIndexOf('.');
+
+        if (i > 0 &&  i < s.length() - 1) {
+            ext = s.substring(i+1).toLowerCase();
+        }
+        return ext;
+    }
+    
+    /**
+     * Altered Oracle tutorial code.
+     * @see https://docs.oracle.com/javase/tutorial/uiswing/examples/components/index.html
+     * @param f
+     * @return 
+     */
+    public static String getExtension(File f) {
+        return getExtension(f.getName());
     }
 
     
