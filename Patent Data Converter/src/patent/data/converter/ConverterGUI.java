@@ -181,11 +181,12 @@ public class ConverterGUI extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(openFolderBtn)
-                    .addComponent(jButton3)
-                    .addComponent(refreshBtn)
-                    .addComponent(jProgressBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jProgressBar1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(openFolderBtn)
+                        .addComponent(jButton3)
+                        .addComponent(refreshBtn)))
                 .addContainerGap())
         );
 
@@ -194,7 +195,7 @@ public class ConverterGUI extends javax.swing.JFrame {
 
     private void openFolderBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_openFolderBtnActionPerformed
         currentDirectory = chooseGraphicDirectory(evt);
-        dirTxtField.setText(currentDirectory.getAbsolutePath());
+        //dirTxtField.setText(currentDirectory.getAbsolutePath());
         openDirectory(currentDirectory);
     }//GEN-LAST:event_openFolderBtnActionPerformed
 
