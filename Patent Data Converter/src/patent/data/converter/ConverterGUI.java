@@ -1,14 +1,13 @@
 package patent.data.converter;
 
 import java.awt.EventQueue;
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileReader;
-import java.util.ArrayList;
 import java.util.HashMap;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.UIManager;
+import javax.swing.JFrame;
+import javax.swing.Timer;
 import patent.data.converter.utilities.Record;
 import patent.data.converter.utilities.Tools;
 
@@ -16,16 +15,20 @@ import patent.data.converter.utilities.Tools;
  *
  * @author Nano
  */
-public class ConverterGUI extends javax.swing.JFrame {
+public class ConverterGUI extends JFrame {
 
+    //<editor-fold desc=" Custom Variable Declarations ">
     private File currentDirectory;
-    
     private static HashMap records;
     private static Record currentRecord;
-    
-    public static void main(String[] args) {
+    private static Timer t;
+    //</editor-fold>
 
-        File folder;
+    /**
+     *
+     * @param args
+     */
+    public static void main(String[] args) {
         records = new HashMap();
         currentRecord = new Record();
         /* Set the Nimbus look and feel */
@@ -35,7 +38,7 @@ public class ConverterGUI extends javax.swing.JFrame {
          */
         try {
             for (UIManager.LookAndFeelInfo info : UIManager.getInstalledLookAndFeels()) {
-                System.out.println(info.getName());
+                //System.out.println(info.getName());
                 if ("Windows".equals(info.getName())) {
                     UIManager.setLookAndFeel(info.getClassName());
                     break;
@@ -60,44 +63,94 @@ public class ConverterGUI extends javax.swing.JFrame {
         });
     }
 
+    public void resetBarValue() {
+        loadingProgressBar.setValue(0);
+    }
+
     /**
-     * 
-     * @param folder 
+     *
+     * @param folder
      */
     public void openDirectory(File folder) {
         File[] files;
-        String filePath;
-        String folderPath;
-        Record r;
-        
-        if (folder.isDirectory()) {
-            
-            records = new HashMap();
-            folderPath = folder.getAbsolutePath();
-            files = folder.listFiles();
-            System.out.println(files.length + " files in " + folderPath);
-            
-            for (File f : files) {
-                if (f.isFile()) {
-                    filePath = f.getAbsolutePath();
-                    if ("xml".equals(Tools.getExtension(filePath))) {
-                        System.out.println(Tools.Contstants.ANSI_GREEN + "Reading: " + filePath + Tools.Contstants.ANSI_RESET);
-                        r = new Record();
-                        
-                        r.parse(filePath);
-                        try{
-                            records.put(r.getRecordID(), r);
-                        }catch(Exception e){
-                            System.out.println(Tools.Contstants.ANSI_RED + "Error: " + e + Tools.Contstants.ANSI_RESET);
-                        }
-                    } else {
-                        System.out.println(Tools.Contstants.ANSI_RED + filePath
-                                + " is not an XML File (" + Tools.getExtension(filePath)
-                                + ")" + Tools.Contstants.ANSI_RESET);
-                    }
 
+        resetBarValue();
+
+        if (folder.isDirectory()) {
+            records = new HashMap();
+            files = folder.listFiles();
+
+            /**
+             * Opens and parses all the files.
+             */
+            Runnable openingFiles = new Runnable() {
+                /**
+                 *
+                 */
+                @Override
+                public void run() {
+                    int counter = 0;
+                    int value;
+                    double percent;
+                    Record r;
+                    String filePath;
+                    int eventsTimed = 0;
+                    int estimate = 0;
+                    double time = 0;
+                    long start = 0;
+                    long finish = 0;
+                    long duration = 0;
+                    long sum = 0;
+                    long average = 0;
+                    boolean timed = false;
+                    for (File f : files) {
+                        if (f.isFile()) {
+                            filePath = f.getAbsolutePath();
+                            if ("xml".equals(Tools.getExtension(filePath))) {
+                                System.out.println(Tools.Contstants.ANSI_GREEN + "Reading: "
+                                        + filePath + Tools.Contstants.ANSI_RESET);
+                                r = new Record();
+                                if (!timed) {
+                                    start = System.nanoTime();
+                                }
+                                r.parse(filePath);
+                                try {
+                                    records.put(r.getRecordID(), r);
+                                    if (eventsTimed < 10) {
+                                        finish = System.nanoTime();
+                                        duration = finish - start;
+                                        sum += duration;
+                                        eventsTimed++;
+                                        if (eventsTimed == 10) {
+                                            average = (long) ((double) (sum) / 10.0);
+                                            time = ((double) (average) / (1000000000.0));
+                                            estimate = (int) (files.length * time);
+                                            System.out.println("Average: " + average
+                                                    + " Time: " + time + "Estimate" + estimate);
+                                            if (files.length > 100) {
+                                                JOptionPane.showMessageDialog(null, "The program should take about " + estimate + " seconds.");
+                                            }
+                                        }
+                                    }
+                                } catch (Exception e) {
+                                    System.out.println(Tools.Contstants.ANSI_RED + "Error: "
+                                            + e + Tools.Contstants.ANSI_RESET);
+                                }
+                            } else {
+                                System.out.println(Tools.Contstants.ANSI_RED + filePath
+                                        + " is not an XML File (" + Tools.getExtension(filePath)
+                                        + ")" + Tools.Contstants.ANSI_RESET);
+                            }
+                        }
+                        counter++;
+                        percent = ((double) counter) / ((double) files.length);
+                        value = (int) (percent * 100.0);
+                        loadingProgressBar.setValue(value);
+                    }
                 }
-            }
+            };
+            Thread t = new Thread(openingFiles);
+            t.start();
         }
     }
 
@@ -131,7 +184,7 @@ public class ConverterGUI extends javax.swing.JFrame {
         tabbedPane = new javax.swing.JTabbedPane();
         recordPanel = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jPanel1 = new javax.swing.JPanel();
+        outputDocOptionsPanel = new javax.swing.JPanel();
         docTypeBox = new javax.swing.JCheckBox();
         docNumBox = new javax.swing.JCheckBox();
         appNumBox = new javax.swing.JCheckBox();
@@ -154,51 +207,54 @@ public class ConverterGUI extends javax.swing.JFrame {
         availOfLicBox = new javax.swing.JCheckBox();
         recordViewPanel = new javax.swing.JPanel();
         docNumSearchBox = new javax.swing.JTextField();
-        docNumLbl = new javax.swing.JLabel();
+        docNumSearchLbl = new javax.swing.JLabel();
         searchDocNumBtn = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         docTypeTxtBox = new javax.swing.JTextField();
-        jLabel1 = new javax.swing.JLabel();
-        jTextField2 = new javax.swing.JTextField();
-        jLabel2 = new javax.swing.JLabel();
-        jTextField3 = new javax.swing.JTextField();
-        jLabel3 = new javax.swing.JLabel();
-        jTextField4 = new javax.swing.JTextField();
-        jLabel4 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
-        jTextField5 = new javax.swing.JTextField();
-        jTextField6 = new javax.swing.JTextField();
-        jLabel6 = new javax.swing.JLabel();
-        jLabel7 = new javax.swing.JLabel();
-        jLabel8 = new javax.swing.JLabel();
-        jTextField7 = new javax.swing.JTextField();
-        jTextField8 = new javax.swing.JTextField();
-        jTextField9 = new javax.swing.JTextField();
-        jLabel9 = new javax.swing.JLabel();
-        jTextField10 = new javax.swing.JTextField();
-        jLabel10 = new javax.swing.JLabel();
-        jLabel11 = new javax.swing.JLabel();
-        jTextField11 = new javax.swing.JTextField();
-        jTextField12 = new javax.swing.JTextField();
-        jLabel12 = new javax.swing.JLabel();
-        jLabel13 = new javax.swing.JLabel();
-        jLabel14 = new javax.swing.JLabel();
-        jTextField13 = new javax.swing.JTextField();
-        jTextField14 = new javax.swing.JTextField();
-        jTextField15 = new javax.swing.JTextField();
-        jLabel15 = new javax.swing.JLabel();
-        jTextField16 = new javax.swing.JTextField();
-        jLabel16 = new javax.swing.JLabel();
-        jLabel17 = new javax.swing.JLabel();
-        jTextField17 = new javax.swing.JTextField();
-        jTextField18 = new javax.swing.JTextField();
-        jLabel18 = new javax.swing.JLabel();
-        jLabel20 = new javax.swing.JLabel();
-        jTextField20 = new javax.swing.JTextField();
-        jTextField21 = new javax.swing.JTextField();
-        jLabel21 = new javax.swing.JLabel();
-        jProgressBar1 = new javax.swing.JProgressBar();
+        docNumTxtBox = new javax.swing.JTextField();
+        appNumTxtBox = new javax.swing.JTextField();
+        engTitleTxtBox = new javax.swing.JTextField();
+        frTitleTxtBox = new javax.swing.JTextField();
+        investorTxtBox = new javax.swing.JTextField();
+        ownersTxtBox = new javax.swing.JTextField();
+        applicantsTxtBox = new javax.swing.JTextField();
+        agentTxtBox = new javax.swing.JTextField();
+        issuedTxtBox = new javax.swing.JTextField();
+        reissuedTxtBox = new javax.swing.JTextField();
+        filedTxtBox = new javax.swing.JTextField();
+        openToPubTxtBox = new javax.swing.JTextField();
+        examRequestTxtBox = new javax.swing.JTextField();
+        reExamCertTxtBox = new javax.swing.JTextField();
+        canPatClassTxtBox = new javax.swing.JTextField();
+        intPatentClassTxtBox = new javax.swing.JTextField();
+        patCoopTreTxtBox = new javax.swing.JTextField();
+        appPrioDataTxtBox = new javax.swing.JTextField();
+        availOfLicTxtBox = new javax.swing.JTextField();
+        docTypeLbl = new javax.swing.JLabel();
+        docNumLbl = new javax.swing.JLabel();
+        appNumLbl = new javax.swing.JLabel();
+        engTitleLbl = new javax.swing.JLabel();
+        frTitleLbl = new javax.swing.JLabel();
+        invLbl = new javax.swing.JLabel();
+        ownersLbl = new javax.swing.JLabel();
+        applicantsLbl = new javax.swing.JLabel();
+        agentLbl = new javax.swing.JLabel();
+        issuedLbl = new javax.swing.JLabel();
+        reissuedLbl = new javax.swing.JLabel();
+        filedLbl = new javax.swing.JLabel();
+        openToPubLbl = new javax.swing.JLabel();
+        examReqLbl = new javax.swing.JLabel();
+        reExamCertLbl = new javax.swing.JLabel();
+        canPatClassLbl = new javax.swing.JLabel();
+        intPatClassLbl = new javax.swing.JLabel();
+        patCoopTreatyLbl = new javax.swing.JLabel();
+        appPrioDataLbl = new javax.swing.JLabel();
+        availOfLicLbl = new javax.swing.JLabel();
+        loadingProgressBar = new javax.swing.JProgressBar();
+        exportBtn = new javax.swing.JButton();
         tab2Panel = new javax.swing.JPanel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTextArea1 = new javax.swing.JTextArea();
         menuBar = new javax.swing.JMenuBar();
         fileMenu = new javax.swing.JMenu();
         openFolderItem = new javax.swing.JMenuItem();
@@ -206,6 +262,7 @@ public class ConverterGUI extends javax.swing.JFrame {
         editMenu = new javax.swing.JMenu();
         viewMenu = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
+        helpMenu = new javax.swing.JMenu();
 
         jMenuItem2.setText("jMenuItem2");
 
@@ -219,11 +276,6 @@ public class ConverterGUI extends javax.swing.JFrame {
         jScrollPane2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
         docTypeBox.setText("(12) Document Type");
-        docTypeBox.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                docTypeBoxActionPerformed(evt);
-            }
-        });
 
         docNumBox.setText("Document Number");
 
@@ -263,13 +315,13 @@ public class ConverterGUI extends javax.swing.JFrame {
 
         availOfLicBox.setText("Availability of License");
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
+        javax.swing.GroupLayout outputDocOptionsPanelLayout = new javax.swing.GroupLayout(outputDocOptionsPanel);
+        outputDocOptionsPanel.setLayout(outputDocOptionsPanelLayout);
+        outputDocOptionsPanelLayout.setHorizontalGroup(
+            outputDocOptionsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(outputDocOptionsPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(outputDocOptionsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(docNumBox)
                     .addComponent(ownersBox)
                     .addComponent(applicantsBox)
@@ -292,9 +344,9 @@ public class ConverterGUI extends javax.swing.JFrame {
                     .addComponent(availOfLicBox))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
+        outputDocOptionsPanelLayout.setVerticalGroup(
+            outputDocOptionsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(outputDocOptionsPanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(docTypeBox)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -338,14 +390,14 @@ public class ConverterGUI extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jScrollPane2.setViewportView(jPanel1);
+        jScrollPane2.setViewportView(outputDocOptionsPanel);
 
         recordViewPanel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
         docNumSearchBox.setToolTipText("Search Using Document Number");
         docNumSearchBox.setName("Search Box"); // NOI18N
 
-        docNumLbl.setText("Document Number");
+        docNumSearchLbl.setText("Document Number to Search:");
 
         searchDocNumBtn.setText("Search");
         searchDocNumBtn.setToolTipText("Search");
@@ -360,122 +412,122 @@ public class ConverterGUI extends javax.swing.JFrame {
         docTypeTxtBox.setEditable(false);
         docTypeTxtBox.setBackground(new java.awt.Color(255, 255, 255));
 
-        jLabel1.setText("(12) Document Type");
-        jLabel1.setToolTipText("Document Type");
+        docNumTxtBox.setEditable(false);
+        docNumTxtBox.setBackground(new java.awt.Color(255, 255, 255));
 
-        jTextField2.setEditable(false);
-        jTextField2.setBackground(new java.awt.Color(255, 255, 255));
+        appNumTxtBox.setEditable(false);
+        appNumTxtBox.setBackground(new java.awt.Color(255, 255, 255));
 
-        jLabel2.setText("(11) Document Number");
-        jLabel2.setToolTipText("Document Number");
+        engTitleTxtBox.setEditable(false);
+        engTitleTxtBox.setBackground(new java.awt.Color(255, 255, 255));
 
-        jTextField3.setEditable(false);
-        jTextField3.setBackground(new java.awt.Color(255, 255, 255));
+        frTitleTxtBox.setEditable(false);
+        frTitleTxtBox.setBackground(new java.awt.Color(255, 255, 255));
 
-        jLabel3.setText("(21) Application Number");
-        jLabel3.setToolTipText("Application Number");
+        investorTxtBox.setEditable(false);
+        investorTxtBox.setBackground(new java.awt.Color(255, 255, 255));
 
-        jTextField4.setEditable(false);
-        jTextField4.setBackground(new java.awt.Color(255, 255, 255));
+        ownersTxtBox.setEditable(false);
+        ownersTxtBox.setBackground(new java.awt.Color(255, 255, 255));
 
-        jLabel4.setText("(72) Investors (Country)");
-        jLabel4.setToolTipText("Investors (Country)");
+        applicantsTxtBox.setEditable(false);
+        applicantsTxtBox.setBackground(new java.awt.Color(255, 255, 255));
 
-        jLabel5.setText("(54) French Title");
-        jLabel5.setToolTipText("French Title");
+        agentTxtBox.setEditable(false);
+        agentTxtBox.setBackground(new java.awt.Color(255, 255, 255));
 
-        jTextField5.setEditable(false);
-        jTextField5.setBackground(new java.awt.Color(255, 255, 255));
+        issuedTxtBox.setEditable(false);
+        issuedTxtBox.setBackground(new java.awt.Color(255, 255, 255));
 
-        jTextField6.setEditable(false);
-        jTextField6.setBackground(new java.awt.Color(255, 255, 255));
+        reissuedTxtBox.setEditable(false);
+        reissuedTxtBox.setBackground(new java.awt.Color(255, 255, 255));
 
-        jLabel6.setText("(54) English Title");
-        jLabel6.setToolTipText("English Title");
+        filedTxtBox.setEditable(false);
+        filedTxtBox.setBackground(new java.awt.Color(255, 255, 255));
 
-        jLabel7.setText("Reissued");
-        jLabel7.setToolTipText("Reissued");
+        openToPubTxtBox.setEditable(false);
+        openToPubTxtBox.setBackground(new java.awt.Color(255, 255, 255));
 
-        jLabel8.setText("(22) Filed");
-        jLabel8.setToolTipText("Filed");
+        examRequestTxtBox.setEditable(false);
+        examRequestTxtBox.setBackground(new java.awt.Color(255, 255, 255));
 
-        jTextField7.setEditable(false);
-        jTextField7.setBackground(new java.awt.Color(255, 255, 255));
+        reExamCertTxtBox.setEditable(false);
+        reExamCertTxtBox.setBackground(new java.awt.Color(255, 255, 255));
 
-        jTextField8.setEditable(false);
-        jTextField8.setBackground(new java.awt.Color(255, 255, 255));
+        canPatClassTxtBox.setEditable(false);
+        canPatClassTxtBox.setBackground(new java.awt.Color(255, 255, 255));
 
-        jTextField9.setEditable(false);
-        jTextField9.setBackground(new java.awt.Color(255, 255, 255));
+        intPatentClassTxtBox.setEditable(false);
+        intPatentClassTxtBox.setBackground(new java.awt.Color(255, 255, 255));
 
-        jLabel9.setText("(45) Issued");
-        jLabel9.setToolTipText("Issued");
+        patCoopTreTxtBox.setEditable(false);
+        patCoopTreTxtBox.setBackground(new java.awt.Color(255, 255, 255));
 
-        jTextField10.setEditable(false);
-        jTextField10.setBackground(new java.awt.Color(255, 255, 255));
+        appPrioDataTxtBox.setEditable(false);
+        appPrioDataTxtBox.setBackground(new java.awt.Color(255, 255, 255));
 
-        jLabel10.setText("(74) Agent");
-        jLabel10.setToolTipText("Agent");
+        availOfLicTxtBox.setEditable(false);
+        availOfLicTxtBox.setBackground(new java.awt.Color(255, 255, 255));
 
-        jLabel11.setText("(71) Applicants (Country)");
-        jLabel11.setToolTipText("Applicants (Country)");
+        docTypeLbl.setText("(12) Document Type");
+        docTypeLbl.setToolTipText("Document Type");
 
-        jTextField11.setEditable(false);
-        jTextField11.setBackground(new java.awt.Color(255, 255, 255));
+        docNumLbl.setText("(11) Document Number");
+        docNumLbl.setToolTipText("Document Number");
 
-        jTextField12.setEditable(false);
-        jTextField12.setBackground(new java.awt.Color(255, 255, 255));
+        appNumLbl.setText("(21) Application Number");
+        appNumLbl.setToolTipText("Application Number");
 
-        jLabel12.setText("(73) Owners (Country)");
-        jLabel12.setToolTipText("Owners (Country)");
+        engTitleLbl.setText("(54) English Title");
+        engTitleLbl.setToolTipText("English Title");
 
-        jLabel13.setText("(51) International Patent Classification");
-        jLabel13.setToolTipText("International Patent Classification");
+        frTitleLbl.setText("(54) French Title");
+        frTitleLbl.setToolTipText("French Title");
 
-        jLabel14.setText("Patent Cooperation Treaty");
-        jLabel14.setToolTipText("Patent Cooperation Treaty");
+        invLbl.setText("(72) Investor(s) (Country)");
+        invLbl.setToolTipText("Investors (Country)");
 
-        jTextField13.setEditable(false);
-        jTextField13.setBackground(new java.awt.Color(255, 255, 255));
+        ownersLbl.setText("(73) Owner(s) (Country)");
+        ownersLbl.setToolTipText("Owners (Country)");
 
-        jTextField14.setEditable(false);
-        jTextField14.setBackground(new java.awt.Color(255, 255, 255));
+        applicantsLbl.setText("(71) Applicant(s) (Country)");
+        applicantsLbl.setToolTipText("Applicants (Country)");
 
-        jTextField15.setEditable(false);
-        jTextField15.setBackground(new java.awt.Color(255, 255, 255));
+        agentLbl.setText("(74) Agent");
+        agentLbl.setToolTipText("Agent");
 
-        jLabel15.setText("(52) Canadian Patent Classification");
-        jLabel15.setToolTipText("Canadian Patent Classification");
+        issuedLbl.setText("(45) Issued");
+        issuedLbl.setToolTipText("Issued");
 
-        jTextField16.setEditable(false);
-        jTextField16.setBackground(new java.awt.Color(255, 255, 255));
+        reissuedLbl.setText("Reissued");
+        reissuedLbl.setToolTipText("Reissued");
 
-        jLabel16.setText("Re-examination Certificate(s)");
-        jLabel16.setToolTipText("Re-examination Certificate(s)");
+        filedLbl.setText("(22) Filed");
+        filedLbl.setToolTipText("Filed");
 
-        jLabel17.setText("Examination Requested");
-        jLabel17.setToolTipText("Examination Requested");
+        openToPubLbl.setText("(41) Open to Public Inspection");
+        openToPubLbl.setToolTipText("Open to Public Inspection");
 
-        jTextField17.setEditable(false);
-        jTextField17.setBackground(new java.awt.Color(255, 255, 255));
+        examReqLbl.setText("Examination Requested");
+        examReqLbl.setToolTipText("Examination Requested");
 
-        jTextField18.setEditable(false);
-        jTextField18.setBackground(new java.awt.Color(255, 255, 255));
+        reExamCertLbl.setText("Re-examination Certificate(s)");
+        reExamCertLbl.setToolTipText("Re-examination Certificate(s)");
 
-        jLabel18.setText("(41) Open to Public Inspection");
-        jLabel18.setToolTipText("Open to Public Inspection");
+        canPatClassLbl.setText("(52) Canadian Patent Classification");
+        canPatClassLbl.setToolTipText("Canadian Patent Classification");
 
-        jLabel20.setText("Availability of License");
-        jLabel20.setToolTipText("Availability of License");
+        intPatClassLbl.setText("(51) International Patent Classification");
+        intPatClassLbl.setToolTipText("International Patent Classification");
 
-        jTextField20.setEditable(false);
-        jTextField20.setBackground(new java.awt.Color(255, 255, 255));
+        patCoopTreatyLbl.setText("Patent Cooperation Treaty");
+        patCoopTreatyLbl.setToolTipText("Patent Cooperation Treaty");
 
-        jTextField21.setEditable(false);
-        jTextField21.setBackground(new java.awt.Color(255, 255, 255));
+        appPrioDataLbl.setText("(30) Application Priority Data");
+        appPrioDataLbl.setToolTipText("Application Priority Data");
 
-        jLabel21.setText("(30) Application Priority Data");
-        jLabel21.setToolTipText("Application Priority Data");
+        availOfLicLbl.setText("Availability of License");
+        availOfLicLbl.setToolTipText("Availability of License");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -487,83 +539,83 @@ public class ConverterGUI extends javax.swing.JFrame {
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(docTypeTxtBox)
-                            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, 150, Short.MAX_VALUE))
+                            .addComponent(docTypeLbl, javax.swing.GroupLayout.DEFAULT_SIZE, 150, Short.MAX_VALUE))
                         .addGap(18, 18, 18)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jTextField2)
-                            .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(docNumTxtBox)
+                            .addComponent(docNumLbl, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jTextField3)
-                            .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(appNumTxtBox)
+                            .addComponent(appNumLbl, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jTextField6)
-                            .addComponent(jLabel6, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(engTitleTxtBox)
+                            .addComponent(engTitleLbl, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jTextField5)
-                            .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(frTitleTxtBox)
+                            .addComponent(frTitleLbl, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jTextField4)
-                            .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(investorTxtBox)
+                            .addComponent(invLbl, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jTextField12)
-                            .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(ownersTxtBox)
+                            .addComponent(ownersLbl, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jTextField11)
-                            .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(applicantsTxtBox)
+                            .addComponent(applicantsLbl, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jTextField10)
-                            .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(agentTxtBox)
+                            .addComponent(agentLbl, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jTextField9)
-                            .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(issuedTxtBox)
+                            .addComponent(issuedLbl, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jTextField7)
-                            .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(reissuedTxtBox)
+                            .addComponent(reissuedLbl, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jTextField8)
-                            .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(filedTxtBox)
+                            .addComponent(filedLbl, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jTextField18)
-                            .addComponent(jLabel18, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(openToPubTxtBox)
+                            .addComponent(openToPubLbl, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jTextField17)
-                            .addComponent(jLabel17, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(examRequestTxtBox)
+                            .addComponent(examReqLbl, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jTextField16)
-                            .addComponent(jLabel16, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(reExamCertTxtBox)
+                            .addComponent(reExamCertLbl, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jTextField15)
-                            .addComponent(jLabel15, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(canPatClassTxtBox)
+                            .addComponent(canPatClassLbl, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jTextField13)
-                            .addComponent(jLabel13, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(intPatentClassTxtBox)
+                            .addComponent(intPatClassLbl, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jTextField14)
-                            .addComponent(jLabel14, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(patCoopTreTxtBox)
+                            .addComponent(patCoopTreatyLbl, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jTextField21)
-                            .addComponent(jLabel21, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(appPrioDataTxtBox)
+                            .addComponent(appPrioDataLbl, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(jTextField20)
-                            .addComponent(jLabel20, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(availOfLicTxtBox)
+                            .addComponent(availOfLicLbl, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap(12, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
@@ -572,104 +624,104 @@ public class ConverterGUI extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jLabel3)
+                        .addComponent(appNumLbl)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(appNumTxtBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(jPanel2Layout.createSequentialGroup()
-                            .addComponent(jLabel2)
+                            .addComponent(docNumLbl)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(docNumTxtBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGroup(jPanel2Layout.createSequentialGroup()
-                            .addComponent(jLabel1)
+                            .addComponent(docTypeLbl)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                             .addComponent(docTypeTxtBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jLabel4)
+                        .addComponent(invLbl)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(investorTxtBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(jPanel2Layout.createSequentialGroup()
-                            .addComponent(jLabel5)
+                            .addComponent(frTitleLbl)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(frTitleTxtBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGroup(jPanel2Layout.createSequentialGroup()
-                            .addComponent(jLabel6)
+                            .addComponent(engTitleLbl)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(jTextField6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(engTitleTxtBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jLabel10)
+                        .addComponent(agentLbl)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTextField10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(agentTxtBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(jPanel2Layout.createSequentialGroup()
-                            .addComponent(jLabel11)
+                            .addComponent(applicantsLbl)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(jTextField11, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(applicantsTxtBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGroup(jPanel2Layout.createSequentialGroup()
-                            .addComponent(jLabel12)
+                            .addComponent(ownersLbl)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(jTextField12, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(ownersTxtBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jLabel8)
+                        .addComponent(filedLbl)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTextField8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(filedTxtBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(jPanel2Layout.createSequentialGroup()
-                            .addComponent(jLabel7)
+                            .addComponent(reissuedLbl)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(jTextField7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(reissuedTxtBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGroup(jPanel2Layout.createSequentialGroup()
-                            .addComponent(jLabel9)
+                            .addComponent(issuedLbl)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(jTextField9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(issuedTxtBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jLabel16)
+                        .addComponent(reExamCertLbl)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTextField16, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(reExamCertTxtBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(jPanel2Layout.createSequentialGroup()
-                            .addComponent(jLabel17)
+                            .addComponent(examReqLbl)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(jTextField17, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(examRequestTxtBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGroup(jPanel2Layout.createSequentialGroup()
-                            .addComponent(jLabel18)
+                            .addComponent(openToPubLbl)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(jTextField18, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(openToPubTxtBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jLabel14)
+                        .addComponent(patCoopTreatyLbl)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTextField14, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(patCoopTreTxtBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(jPanel2Layout.createSequentialGroup()
-                            .addComponent(jLabel13)
+                            .addComponent(intPatClassLbl)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(jTextField13, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(intPatentClassTxtBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGroup(jPanel2Layout.createSequentialGroup()
-                            .addComponent(jLabel15)
+                            .addComponent(canPatClassLbl)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                            .addComponent(jTextField15, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(canPatClassTxtBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jLabel20)
+                        .addComponent(availOfLicLbl)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTextField20, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(availOfLicTxtBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jLabel21)
+                        .addComponent(appPrioDataLbl)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTextField21, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(18, Short.MAX_VALUE))
+                        .addComponent(appPrioDataTxtBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout recordViewPanelLayout = new javax.swing.GroupLayout(recordViewPanel);
@@ -681,11 +733,11 @@ public class ConverterGUI extends javax.swing.JFrame {
                 .addGroup(recordViewPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(recordViewPanelLayout.createSequentialGroup()
-                        .addComponent(docNumLbl, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(docNumSearchBox, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(searchDocNumBtn)
+                        .addComponent(docNumSearchLbl)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(docNumSearchBox, javax.swing.GroupLayout.PREFERRED_SIZE, 128, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(searchDocNumBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -695,12 +747,23 @@ public class ConverterGUI extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(recordViewPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(docNumSearchBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(docNumLbl)
+                    .addComponent(docNumSearchLbl)
                     .addComponent(searchDocNumBtn))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
+
+        loadingProgressBar.setToolTipText("");
+        loadingProgressBar.setStringPainted(true);
+
+        exportBtn.setText("Export");
+        exportBtn.setEnabled(false);
+        exportBtn.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                exportBtnActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout recordPanelLayout = new javax.swing.GroupLayout(recordPanel);
         recordPanel.setLayout(recordPanelLayout);
@@ -710,35 +773,48 @@ public class ConverterGUI extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(recordViewPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(recordPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(recordPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 187, Short.MAX_VALUE)
-                    .addComponent(jProgressBar1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(loadingProgressBar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(exportBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         recordPanelLayout.setVerticalGroup(
             recordPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, recordPanelLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(recordPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(recordViewPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(recordPanelLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(recordPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(recordPanelLayout.createSequentialGroup()
-                        .addComponent(jProgressBar1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(loadingProgressBar, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)))
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 330, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(exportBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(recordViewPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
 
         tabbedPane.addTab("Record Data", recordPanel);
 
+        jTextArea1.setColumns(20);
+        jTextArea1.setRows(5);
+        jScrollPane1.setViewportView(jTextArea1);
+
         javax.swing.GroupLayout tab2PanelLayout = new javax.swing.GroupLayout(tab2Panel);
         tab2Panel.setLayout(tab2PanelLayout);
         tab2PanelLayout.setHorizontalGroup(
             tab2PanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 745, Short.MAX_VALUE)
+            .addGroup(tab2PanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 725, Short.MAX_VALUE)
+                .addContainerGap())
         );
         tab2PanelLayout.setVerticalGroup(
             tab2PanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 422, Short.MAX_VALUE)
+            .addGroup(tab2PanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 391, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         tabbedPane.addTab("tab2", tab2Panel);
@@ -773,6 +849,9 @@ public class ConverterGUI extends javax.swing.JFrame {
 
         menuBar.add(viewMenu);
 
+        helpMenu.setText("Help");
+        menuBar.add(helpMenu);
+
         setJMenuBar(menuBar);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -788,44 +867,86 @@ public class ConverterGUI extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(tabbedPane)
-                .addContainerGap())
+                .addComponent(tabbedPane, javax.swing.GroupLayout.PREFERRED_SIZE, 441, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
     /**
-     * 
-     * @param evt 
+     *
+     * @param evt
      */
     private void openFolderItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_openFolderItemActionPerformed
         currentDirectory = chooseGraphicDirectory();
         openDirectory(currentDirectory);
     }//GEN-LAST:event_openFolderItemActionPerformed
 
+    /**
+     *
+     * @param evt
+     */
     private void jMenuItem1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem1ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
+    /**
+     *
+     * @param evt
+     */
     private void searchDocNumBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchDocNumBtnActionPerformed
-        
+        resetTxtBoxes();
         Record r;
         String searchNum;
-        
+
         searchNum = docNumSearchBox.getText();
         r = null;
         r = (Record) records.get(searchNum);
-        
-        if(r == null){
-            JOptionPane.showMessageDialog(null, "No such record found.","Warning",JOptionPane.CANCEL_OPTION);
+
+        if (r == null) {
+            JOptionPane.showMessageDialog(null, "No such record found.", "Warning", JOptionPane.CANCEL_OPTION);
+        } else {
+            docNumTxtBox.setText(r.getDataPoints().getDocumentNumber());
+            engTitleTxtBox.setText(r.getDataPoints().getEnglishTitle());
+            frTitleTxtBox.setText(r.getDataPoints().getFrenchTitle());
         }
     }//GEN-LAST:event_searchDocNumBtnActionPerformed
 
-    private void docTypeBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_docTypeBoxActionPerformed
-        if(docTypeBox.isSelected()){
-        }
-    }//GEN-LAST:event_docTypeBoxActionPerformed
+    /**
+     *
+     * @param evt
+     */
+    private void exportBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exportBtnActionPerformed
+        System.out.println("Exporting");
+        
+    }//GEN-LAST:event_exportBtnActionPerformed
+
+    /**
+     * Resets JTextField boxes
+     */
+    public void resetTxtBoxes() {
+        docTypeTxtBox.setText("");
+        docNumTxtBox.setText("");
+        appNumTxtBox.setText("");
+        engTitleTxtBox.setText("");
+        frTitleTxtBox.setText("");
+        investorTxtBox.setText("");
+        ownersTxtBox.setText("");
+        applicantsTxtBox.setText("");
+        agentTxtBox.setText("");
+        issuedTxtBox.setText("");
+        reissuedTxtBox.setText("");
+        filedTxtBox.setText("");
+        openToPubTxtBox.setText("");
+        examRequestTxtBox.setText("");
+        reExamCertTxtBox.setText("");
+        canPatClassTxtBox.setText("");
+        intPatentClassTxtBox.setText("");
+        patCoopTreTxtBox.setText("");
+        appPrioDataTxtBox.setText("");
+        availOfLicTxtBox.setText("");
+    }
 
     /**
      *
@@ -846,88 +967,93 @@ public class ConverterGUI extends javax.swing.JFrame {
         return out;
     }
 
+    //<editor-fold defaultstate="collapsed" desc=" Default Private Variable Declarations ">
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JCheckBox agentBox;
+    private javax.swing.JLabel agentLbl;
+    private javax.swing.JTextField agentTxtBox;
     private javax.swing.JCheckBox appNumBox;
+    private javax.swing.JLabel appNumLbl;
+    private javax.swing.JTextField appNumTxtBox;
+    private javax.swing.JLabel appPrioDataLbl;
+    private javax.swing.JTextField appPrioDataTxtBox;
     private javax.swing.JCheckBox appPriorityDataBox;
     private javax.swing.JCheckBox applicantsBox;
+    private javax.swing.JLabel applicantsLbl;
+    private javax.swing.JTextField applicantsTxtBox;
     private javax.swing.JCheckBox availOfLicBox;
+    private javax.swing.JLabel availOfLicLbl;
+    private javax.swing.JTextField availOfLicTxtBox;
     private javax.swing.JCheckBox canPatClassBox;
+    private javax.swing.JLabel canPatClassLbl;
+    private javax.swing.JTextField canPatClassTxtBox;
     private javax.swing.JCheckBox docNumBox;
     private javax.swing.JLabel docNumLbl;
     private javax.swing.JTextField docNumSearchBox;
+    private javax.swing.JLabel docNumSearchLbl;
+    private javax.swing.JTextField docNumTxtBox;
     private javax.swing.JCheckBox docTypeBox;
+    private javax.swing.JLabel docTypeLbl;
     private javax.swing.JTextField docTypeTxtBox;
     private javax.swing.JMenu editMenu;
     private javax.swing.JCheckBox engTitleBox;
+    private javax.swing.JLabel engTitleLbl;
+    private javax.swing.JTextField engTitleTxtBox;
     private javax.swing.JCheckBox examReqBox;
+    private javax.swing.JLabel examReqLbl;
+    private javax.swing.JTextField examRequestTxtBox;
+    private javax.swing.JButton exportBtn;
     private javax.swing.JMenuItem exportDataItem;
     private javax.swing.JMenu fileMenu;
     private javax.swing.JCheckBox filedBox;
+    private javax.swing.JLabel filedLbl;
+    private javax.swing.JTextField filedTxtBox;
     private javax.swing.JFileChooser folderChooser;
     private javax.swing.JCheckBox frTitleBox;
+    private javax.swing.JLabel frTitleLbl;
+    private javax.swing.JTextField frTitleTxtBox;
+    private javax.swing.JMenu helpMenu;
+    private javax.swing.JLabel intPatClassLbl;
     private javax.swing.JCheckBox intPatentClassBox;
+    private javax.swing.JTextField intPatentClassTxtBox;
+    private javax.swing.JLabel invLbl;
     private javax.swing.JCheckBox inventorsBox;
+    private javax.swing.JTextField investorTxtBox;
     private javax.swing.JCheckBox issuedBox;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel10;
-    private javax.swing.JLabel jLabel11;
-    private javax.swing.JLabel jLabel12;
-    private javax.swing.JLabel jLabel13;
-    private javax.swing.JLabel jLabel14;
-    private javax.swing.JLabel jLabel15;
-    private javax.swing.JLabel jLabel16;
-    private javax.swing.JLabel jLabel17;
-    private javax.swing.JLabel jLabel18;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel20;
-    private javax.swing.JLabel jLabel21;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
-    private javax.swing.JLabel jLabel9;
+    private javax.swing.JLabel issuedLbl;
+    private javax.swing.JTextField issuedTxtBox;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem2;
-    private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPopupMenu jPopupMenu1;
-    private javax.swing.JProgressBar jProgressBar1;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTextField jTextField10;
-    private javax.swing.JTextField jTextField11;
-    private javax.swing.JTextField jTextField12;
-    private javax.swing.JTextField jTextField13;
-    private javax.swing.JTextField jTextField14;
-    private javax.swing.JTextField jTextField15;
-    private javax.swing.JTextField jTextField16;
-    private javax.swing.JTextField jTextField17;
-    private javax.swing.JTextField jTextField18;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField20;
-    private javax.swing.JTextField jTextField21;
-    private javax.swing.JTextField jTextField3;
-    private javax.swing.JTextField jTextField4;
-    private javax.swing.JTextField jTextField5;
-    private javax.swing.JTextField jTextField6;
-    private javax.swing.JTextField jTextField7;
-    private javax.swing.JTextField jTextField8;
-    private javax.swing.JTextField jTextField9;
+    private javax.swing.JTextArea jTextArea1;
+    private javax.swing.JProgressBar loadingProgressBar;
     private javax.swing.JMenuBar menuBar;
     private javax.swing.JMenuItem openFolderItem;
     private javax.swing.JCheckBox openToPubInspBox;
+    private javax.swing.JLabel openToPubLbl;
+    private javax.swing.JTextField openToPubTxtBox;
+    private javax.swing.JPanel outputDocOptionsPanel;
     private javax.swing.JCheckBox ownersBox;
+    private javax.swing.JLabel ownersLbl;
+    private javax.swing.JTextField ownersTxtBox;
+    private javax.swing.JTextField patCoopTreTxtBox;
+    private javax.swing.JLabel patCoopTreatyLbl;
     private javax.swing.JCheckBox patentCoopTreatyBox;
     private javax.swing.JCheckBox reExamCertBox;
+    private javax.swing.JLabel reExamCertLbl;
+    private javax.swing.JTextField reExamCertTxtBox;
     private javax.swing.JPanel recordPanel;
     private javax.swing.JPanel recordViewPanel;
     private javax.swing.JCheckBox reissuedBox;
+    private javax.swing.JLabel reissuedLbl;
+    private javax.swing.JTextField reissuedTxtBox;
     private javax.swing.JButton searchDocNumBtn;
     private javax.swing.JPanel tab2Panel;
     private javax.swing.JTabbedPane tabbedPane;
     private javax.swing.JMenu viewMenu;
     // End of variables declaration//GEN-END:variables
-
+    //</editor-fold>
 }
