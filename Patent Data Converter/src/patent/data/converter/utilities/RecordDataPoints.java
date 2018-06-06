@@ -10,28 +10,24 @@ package patent.data.converter.utilities;
  * @author nano
  */
 public class RecordDataPoints {
-    
+
     //<editor-fold defaultstate="collapsed" desc=" Private class variables ">
     /**
      * (45) Issued Date
      */
     private Date issuedDate;
-
     /**
      * (22) Filing Date
      */
     private Date filedDate;
-
     /**
      * (41) Open to Public Inspection Date
      */
     private Date openToPubInsp;
-
     /**
      * (74) Agent
      */
     private String agent;
-
     /**
      * (21) Application Number
      */
@@ -40,27 +36,46 @@ public class RecordDataPoints {
      * (11)Document Number
      */
     private String documentNumber;
-
     /**
      * (54) English Title
      */
     private String englishTitle;
-
     /**
      * (54) French Title
      */
     private String frenchTitle;
-
     /**
      * Examination Requested
      */
     private String examReq;
-    
-    //</editor-fold>
+    /**
+     * Record Kind
+     */
+    private String kind;
+    /**
+     * Record Country
+     */
+    private String country;
 
+    //</editor-fold>
+    /**
+     * Constructor
+     */
     public RecordDataPoints() {
+        issuedDate = new Date();
+        filedDate = new Date();
+        openToPubInsp = new Date();
+        agent = "";
+        applicationNumber = "";
+        documentNumber = "";
+        englishTitle = "";
+        frenchTitle = "";
+        examReq = "";
+        kind = "";
+        country = "";
     }
 
+    //<editor-fold defaultstate="collapsed" desc=" Accessors and Mutators ">
     public Date getIssuedDate() {
         return issuedDate;
     }
@@ -133,13 +148,30 @@ public class RecordDataPoints {
         this.examReq = examReq;
     }
 
+    public String getKind() {
+        return kind;
+    }
+
+    public void setKind(String kind) {
+        this.kind = kind;
+    }
+
+    public String getCountry() {
+        return country;
+    }
+
+    public void setCountry(String country) {
+        this.country = country;
+    }
+
+    //</editor-fold>
     @Override
     public String toString() {
-        return "RecordDataPoints{" + "issuedDate=" + issuedDate + ", filedDate=" 
-                + filedDate + ", openToPubInsp=" + openToPubInsp + ", agent=" 
-                + agent + ", applicationNumber=" + applicationNumber + ", documentNumber=" 
-                + documentNumber + ", englishTitle=" + englishTitle + ", frenchTitle=" 
+        return "RecordDataPoints{" + "issuedDate=" + issuedDate + ", filedDate="
+                + filedDate + ", openToPubInsp=" + openToPubInsp + ", agent="
+                + agent + ", applicationNumber=" + applicationNumber + ", documentNumber="
+                + documentNumber + ", englishTitle=" + englishTitle + ", frenchTitle="
                 + frenchTitle + ", examReq=" + examReq + '}';
     }
-    
+
 }
