@@ -886,19 +886,19 @@
                     </Component>
                     <Component class="javax.swing.JLabel" name="invLbl">
                       <Properties>
-                        <Property name="text" type="java.lang.String" value="(72) Investors (Country)"/>
+                        <Property name="text" type="java.lang.String" value="(72) Investor(s) (Country)"/>
                         <Property name="toolTipText" type="java.lang.String" value="Investors (Country)"/>
                       </Properties>
                     </Component>
                     <Component class="javax.swing.JLabel" name="ownersLbl">
                       <Properties>
-                        <Property name="text" type="java.lang.String" value="(73) Owners (Country)"/>
+                        <Property name="text" type="java.lang.String" value="(73) Owner(s) (Country)"/>
                         <Property name="toolTipText" type="java.lang.String" value="Owners (Country)"/>
                       </Properties>
                     </Component>
                     <Component class="javax.swing.JLabel" name="applicantsLbl">
                       <Properties>
-                        <Property name="text" type="java.lang.String" value="(71) Applicants (Country)"/>
+                        <Property name="text" type="java.lang.String" value="(71) Applicant(s) (Country)"/>
                         <Property name="toolTipText" type="java.lang.String" value="Applicants (Country)"/>
                       </Properties>
                     </Component>

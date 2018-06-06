@@ -482,13 +482,13 @@ public class ConverterGUI extends JFrame {
         frTitleLbl.setText("(54) French Title");
         frTitleLbl.setToolTipText("French Title");
 
-        invLbl.setText("(72) Investors (Country)");
+        invLbl.setText("(72) Investor(s) (Country)");
         invLbl.setToolTipText("Investors (Country)");
 
-        ownersLbl.setText("(73) Owners (Country)");
+        ownersLbl.setText("(73) Owner(s) (Country)");
         ownersLbl.setToolTipText("Owners (Country)");
 
-        applicantsLbl.setText("(71) Applicants (Country)");
+        applicantsLbl.setText("(71) Applicant(s) (Country)");
         applicantsLbl.setToolTipText("Applicants (Country)");
 
         agentLbl.setText("(74) Agent");
