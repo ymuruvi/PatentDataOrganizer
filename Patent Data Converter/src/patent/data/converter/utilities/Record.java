@@ -1,8 +1,13 @@
 package patent.data.converter.utilities;
 
-import org.xml.sax.*;
-import org.w3c.dom.*;
-import javax.xml.parsers.*;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+import org.xml.sax.InputSource;
+
 
 /**
  *
@@ -294,7 +299,12 @@ public class Record {
         if (n == null) {
             return "";
         } else {
-            return n.getChildNodes().item(0).getNodeValue().trim();
+            if(n.getChildNodes().getLength() > 0){
+                return n.getChildNodes().item(0).getNodeValue().trim();
+            }else{
+                return "";
+            }
+            
         }
     }
 
@@ -383,15 +393,20 @@ public class Record {
     private void handlePubRef(SearchNode sn) {
         Node docID;
         Node dateNode;
+        Node docNumNode;
         Date issuedDate;
         String date;
+        String docNum;
         if (sn.getNode() != null) {
             docID = searchForNode(sn.getNode(), "document-id");
             if (docID != null) {
                 dateNode = searchForNode(docID, "date");
+                docNumNode = searchForNode(docID, "doc-number");
                 date = getNodeText(dateNode);
+                docNum = getNodeText(docNumNode);
                 issuedDate = new Date(date);
                 dataPoints.setIssuedDate(issuedDate);
+                dataPoints.setDocumentNumber(docNum);
             }
         }
     }
@@ -444,6 +459,7 @@ public class Record {
      */
     private void handleInventionTitleEN(SearchNode sn) {
         if (getNodeAttributeValue(sn.getNode(), "lang").toLowerCase().equals("en")) {
+            dataPoints.setEnglishTitle(getNodeText(sn.getNode()));
         }
     }
 
@@ -453,6 +469,7 @@ public class Record {
      */
     private void handleInventionTitleFR(SearchNode sn) {
         if (getNodeAttributeValue(sn.getNode(), "lang").toLowerCase().equals("fr")) {
+            dataPoints.setFrenchTitle(getNodeText(sn.getNode()));
         }
     }
 
