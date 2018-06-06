@@ -410,64 +410,64 @@ public class ConverterGUI extends JFrame {
         jPanel2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
         docTypeTxtBox.setEditable(false);
-        docTypeTxtBox.setBackground(new java.awt.Color(255, 255, 255));
+        docTypeTxtBox.setMaximumSize(new java.awt.Dimension(10, 26));
 
         docNumTxtBox.setEditable(false);
-        docNumTxtBox.setBackground(new java.awt.Color(255, 255, 255));
+        docNumTxtBox.setMaximumSize(new java.awt.Dimension(10, 26));
 
         appNumTxtBox.setEditable(false);
-        appNumTxtBox.setBackground(new java.awt.Color(255, 255, 255));
+        appNumTxtBox.setMaximumSize(new java.awt.Dimension(10, 26));
 
         engTitleTxtBox.setEditable(false);
-        engTitleTxtBox.setBackground(new java.awt.Color(255, 255, 255));
+        engTitleTxtBox.setMaximumSize(new java.awt.Dimension(10, 26));
 
         frTitleTxtBox.setEditable(false);
-        frTitleTxtBox.setBackground(new java.awt.Color(255, 255, 255));
+        frTitleTxtBox.setMaximumSize(new java.awt.Dimension(10, 26));
 
         investorTxtBox.setEditable(false);
-        investorTxtBox.setBackground(new java.awt.Color(255, 255, 255));
+        investorTxtBox.setMaximumSize(new java.awt.Dimension(10, 26));
 
         ownersTxtBox.setEditable(false);
-        ownersTxtBox.setBackground(new java.awt.Color(255, 255, 255));
+        ownersTxtBox.setMaximumSize(new java.awt.Dimension(10, 26));
 
         applicantsTxtBox.setEditable(false);
-        applicantsTxtBox.setBackground(new java.awt.Color(255, 255, 255));
+        applicantsTxtBox.setMaximumSize(new java.awt.Dimension(10, 26));
 
         agentTxtBox.setEditable(false);
-        agentTxtBox.setBackground(new java.awt.Color(255, 255, 255));
+        agentTxtBox.setMaximumSize(new java.awt.Dimension(10, 26));
 
         issuedTxtBox.setEditable(false);
-        issuedTxtBox.setBackground(new java.awt.Color(255, 255, 255));
+        issuedTxtBox.setMaximumSize(new java.awt.Dimension(10, 26));
 
         reissuedTxtBox.setEditable(false);
-        reissuedTxtBox.setBackground(new java.awt.Color(255, 255, 255));
+        reissuedTxtBox.setMaximumSize(new java.awt.Dimension(10, 26));
 
         filedTxtBox.setEditable(false);
-        filedTxtBox.setBackground(new java.awt.Color(255, 255, 255));
+        filedTxtBox.setMaximumSize(new java.awt.Dimension(10, 26));
 
         openToPubTxtBox.setEditable(false);
-        openToPubTxtBox.setBackground(new java.awt.Color(255, 255, 255));
+        openToPubTxtBox.setMaximumSize(new java.awt.Dimension(10, 26));
 
         examRequestTxtBox.setEditable(false);
-        examRequestTxtBox.setBackground(new java.awt.Color(255, 255, 255));
+        examRequestTxtBox.setMaximumSize(new java.awt.Dimension(10, 26));
 
         reExamCertTxtBox.setEditable(false);
-        reExamCertTxtBox.setBackground(new java.awt.Color(255, 255, 255));
+        reExamCertTxtBox.setMaximumSize(new java.awt.Dimension(10, 26));
 
         canPatClassTxtBox.setEditable(false);
-        canPatClassTxtBox.setBackground(new java.awt.Color(255, 255, 255));
+        canPatClassTxtBox.setMaximumSize(new java.awt.Dimension(10, 26));
 
         intPatentClassTxtBox.setEditable(false);
-        intPatentClassTxtBox.setBackground(new java.awt.Color(255, 255, 255));
+        intPatentClassTxtBox.setMaximumSize(new java.awt.Dimension(10, 26));
 
         patCoopTreTxtBox.setEditable(false);
-        patCoopTreTxtBox.setBackground(new java.awt.Color(255, 255, 255));
+        patCoopTreTxtBox.setMaximumSize(new java.awt.Dimension(10, 26));
 
         appPrioDataTxtBox.setEditable(false);
-        appPrioDataTxtBox.setBackground(new java.awt.Color(255, 255, 255));
+        appPrioDataTxtBox.setMaximumSize(new java.awt.Dimension(10, 26));
 
         availOfLicTxtBox.setEditable(false);
-        availOfLicTxtBox.setBackground(new java.awt.Color(255, 255, 255));
+        availOfLicTxtBox.setMaximumSize(new java.awt.Dimension(10, 26));
 
         docTypeLbl.setText("(12) Document Type");
         docTypeLbl.setToolTipText("Document Type");
@@ -538,85 +538,85 @@ public class ConverterGUI extends JFrame {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(docTypeTxtBox)
+                            .addComponent(docTypeTxtBox, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(docTypeLbl, javax.swing.GroupLayout.DEFAULT_SIZE, 150, Short.MAX_VALUE))
                         .addGap(18, 18, 18)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(docNumTxtBox)
+                            .addComponent(docNumTxtBox, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(docNumLbl, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(appNumTxtBox)
+                            .addComponent(appNumTxtBox, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(appNumLbl, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(engTitleTxtBox)
+                            .addComponent(engTitleTxtBox, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(engTitleLbl, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(frTitleTxtBox)
+                            .addComponent(frTitleTxtBox, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(frTitleLbl, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(investorTxtBox)
+                            .addComponent(investorTxtBox, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(invLbl, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(ownersTxtBox)
+                            .addComponent(ownersTxtBox, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(ownersLbl, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(applicantsTxtBox)
+                            .addComponent(applicantsTxtBox, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(applicantsLbl, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(agentTxtBox)
+                            .addComponent(agentTxtBox, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(agentLbl, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(issuedTxtBox)
+                            .addComponent(issuedTxtBox, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(issuedLbl, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(reissuedTxtBox)
+                            .addComponent(reissuedTxtBox, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(reissuedLbl, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(filedTxtBox)
+                            .addComponent(filedTxtBox, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(filedLbl, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(openToPubTxtBox)
+                            .addComponent(openToPubTxtBox, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(openToPubLbl, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(examRequestTxtBox)
+                            .addComponent(examRequestTxtBox, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(examReqLbl, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(reExamCertTxtBox)
+                            .addComponent(reExamCertTxtBox, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(reExamCertLbl, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(canPatClassTxtBox)
+                            .addComponent(canPatClassTxtBox, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(canPatClassLbl, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(intPatentClassTxtBox)
+                            .addComponent(intPatentClassTxtBox, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(intPatClassLbl, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(patCoopTreTxtBox)
+                            .addComponent(patCoopTreTxtBox, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(patCoopTreatyLbl, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(appPrioDataTxtBox)
+                            .addComponent(appPrioDataTxtBox, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(appPrioDataLbl, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(18, 18, 18)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(availOfLicTxtBox)
+                            .addComponent(availOfLicTxtBox, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(availOfLicLbl, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(12, Short.MAX_VALUE))
+                .addContainerGap(21, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -774,7 +774,7 @@ public class ConverterGUI extends JFrame {
                 .addComponent(recordViewPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(recordPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 187, Short.MAX_VALUE)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 190, Short.MAX_VALUE)
                     .addComponent(loadingProgressBar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(exportBtn, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
