@@ -8,7 +8,6 @@ import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
 
-
 /**
  *
  * @author Nano
@@ -29,11 +28,10 @@ public class Record {
     private boolean searchingForNode;
 
     private RecordDataPoints dataPoints;
-    
+
     private String recordID;
-    
+
     //</editor-fold>
-    
     /**
      *
      */
@@ -63,7 +61,7 @@ public class Record {
             }
 
             if (xmlDoc != null) {
-                
+
                 listOfFields = xmlDoc.getElementsByTagName("ca-bibliographic-data");
 
                 //nl = getElementAndAttribute(listOfFields, "invention-title", "lang");
@@ -174,15 +172,15 @@ public class Record {
 
         searchingForNode = true;
         try {
-            
+
             for (int i = 0; i < listOfFields.getLength() && searchingForNode; i++) {
-                
+
                 node = listOfFields.item(i);
                 nodeName = node.getNodeName();
                 numChildNodes = node.getChildNodes().getLength();
                 if (node.getNodeName().equals(searchTerm)) {
                     if (occuranceIndex == 0) {
-                        
+
                         if (searchingForNode) {
                             searchingForNode = false;
                             return node;
@@ -191,9 +189,9 @@ public class Record {
                         occuranceIndex--;
                     }
                 } else {
-                    
+
                     if (numChildNodes > 0 && searchingForNode) {
-                        
+
                         element = (Element) node;
                         NodeList list = element.getChildNodes();
                         out = searchForNode(list, searchTerm, occuranceIndex);
@@ -299,47 +297,47 @@ public class Record {
         if (n == null) {
             return "";
         } else {
-            if(n.getChildNodes().getLength() > 0){
+            if (n.getChildNodes().getLength() > 0) {
                 return n.getChildNodes().item(0).getNodeValue().trim();
-            }else{
+            } else {
                 return "";
             }
-            
+
         }
     }
 
     /**
-     * 
-     * @return 
+     *
+     * @return
      */
     public RecordDataPoints getDataPoints() {
         return dataPoints;
     }
 
     /**
-     * 
-     * @param dataPoints 
+     *
+     * @param dataPoints
      */
     public void setDataPoints(RecordDataPoints dataPoints) {
         this.dataPoints = dataPoints;
     }
 
     /**
-     * 
-     * @return 
+     *
+     * @return
      */
     public String getRecordID() {
         return getDataPoints().getDocumentNumber();
     }
 
     /**
-     * 
-     * @param recordID 
+     *
+     * @param recordID
      */
     public void setRecordID(String recordID) {
         getDataPoints().setDocumentNumber(recordID);
     }
-    
+
     /**
      *
      * @param searchNode
@@ -607,5 +605,5 @@ public class Record {
     public String toString() {
         return "Record{" + "searchingForNode=" + searchingForNode + ", dataPoints=" + dataPoints + '}';
     }
-    
+
 }

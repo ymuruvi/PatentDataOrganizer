@@ -25,8 +25,8 @@ public class ConverterGUI extends JFrame {
     //</editor-fold>
 
     /**
-     * 
-     * @param args 
+     *
+     * @param args
      */
     public static void main(String[] args) {
         records = new HashMap();
@@ -253,6 +253,8 @@ public class ConverterGUI extends JFrame {
         loadingProgressBar = new javax.swing.JProgressBar();
         exportBtn = new javax.swing.JButton();
         tab2Panel = new javax.swing.JPanel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTextArea1 = new javax.swing.JTextArea();
         menuBar = new javax.swing.JMenuBar();
         fileMenu = new javax.swing.JMenu();
         openFolderItem = new javax.swing.JMenuItem();
@@ -756,6 +758,7 @@ public class ConverterGUI extends JFrame {
         loadingProgressBar.setStringPainted(true);
 
         exportBtn.setText("Export");
+        exportBtn.setEnabled(false);
         exportBtn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 exportBtnActionPerformed(evt);
@@ -793,15 +796,25 @@ public class ConverterGUI extends JFrame {
 
         tabbedPane.addTab("Record Data", recordPanel);
 
+        jTextArea1.setColumns(20);
+        jTextArea1.setRows(5);
+        jScrollPane1.setViewportView(jTextArea1);
+
         javax.swing.GroupLayout tab2PanelLayout = new javax.swing.GroupLayout(tab2Panel);
         tab2Panel.setLayout(tab2PanelLayout);
         tab2PanelLayout.setHorizontalGroup(
             tab2PanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 745, Short.MAX_VALUE)
+            .addGroup(tab2PanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 725, Short.MAX_VALUE)
+                .addContainerGap())
         );
         tab2PanelLayout.setVerticalGroup(
             tab2PanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 413, Short.MAX_VALUE)
+            .addGroup(tab2PanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 391, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         tabbedPane.addTab("tab2", tab2Panel);
@@ -906,6 +919,7 @@ public class ConverterGUI extends JFrame {
      */
     private void exportBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exportBtnActionPerformed
         System.out.println("Exporting");
+        
     }//GEN-LAST:event_exportBtnActionPerformed
 
     /**
@@ -1012,7 +1026,9 @@ public class ConverterGUI extends JFrame {
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPopupMenu jPopupMenu1;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JTextArea jTextArea1;
     private javax.swing.JProgressBar loadingProgressBar;
     private javax.swing.JMenuBar menuBar;
     private javax.swing.JMenuItem openFolderItem;

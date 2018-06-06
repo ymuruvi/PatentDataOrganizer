@@ -17,6 +17,10 @@ public class RecordDataPoints {
      */
     private Date issuedDate;
     /**
+     * Reissued dates
+     */
+    private Date[] reissuedDates;
+    /**
      * (22) Filing Date
      */
     private Date filedDate;
@@ -82,6 +86,14 @@ public class RecordDataPoints {
 
     public void setIssuedDate(Date issuedDate) {
         this.issuedDate = issuedDate;
+    }
+
+    public Date[] getReissuedDates() {
+        return reissuedDates;
+    }
+
+    public void setReissuedDates(Date[] reissuedDates) {
+        this.reissuedDates = reissuedDates;
     }
 
     public Date getFiledDate() {
