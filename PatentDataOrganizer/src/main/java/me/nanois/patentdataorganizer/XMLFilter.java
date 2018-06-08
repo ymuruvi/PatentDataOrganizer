@@ -1,13 +1,8 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-package patent.data.converter;
+package me.nanois.patentdataorganizer;
 
 import java.io.File;
 import javax.swing.filechooser.FileFilter;
-import patent.data.converter.utilities.Tools;
+import me.nanois.patentdataorganizer.utilities.Tools;
 
 /**
  *
