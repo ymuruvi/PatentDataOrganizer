@@ -6,15 +6,19 @@
 package patent.data.converter.utilities;
 
 import java.io.File;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.Stack;
-import java.util.Queue;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.CellStyle;
+import org.apache.poi.ss.usermodel.CreationHelper;
+import org.apache.poi.ss.usermodel.Font;
+import org.apache.poi.ss.usermodel.IndexedColors;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 /**
  *
@@ -108,4 +112,64 @@ public class Tools {
         return getExtension(f.getName());
     }
 
+    /**
+     *
+     * @param records
+     * @param keys
+     * @param columns
+     * @param filePath xlsx File path
+     */
+    public static void writeExcelFile(HashMap records, ArrayList<String> keys, ArrayList<String> columns, String filePath) {
+        CellStyle headerCellStyle;
+        CellStyle dateCellStyle;
+        Sheet sheet;
+        FileOutputStream fileOut;
+        Row headerRow;
+        Workbook workbook;
+        CreationHelper createHelper;
+        Font headerFont;
+
+        workbook = new XSSFWorkbook();
+        createHelper = workbook.getCreationHelper();
+        sheet = workbook.createSheet("Patent Data");
+        headerFont = workbook.createFont();
+        headerFont.setBold(true);
+        headerFont.setFontHeightInPoints((short) 14);
+        headerFont.setColor(IndexedColors.RED.getIndex());
+
+        headerCellStyle = workbook.createCellStyle();
+        headerCellStyle.setFont(headerFont);
+
+        headerRow = sheet.createRow(0);
+
+        for (int i = 0; i < columns.size(); i++) {
+            Cell cell = headerRow.createCell(i);
+            cell.setCellValue(columns.get(i));
+            cell.setCellStyle(headerCellStyle);
+        }
+
+        dateCellStyle = workbook.createCellStyle();
+        dateCellStyle.setDataFormat(createHelper.createDataFormat().getFormat("dd-MM-yyyy"));
+
+        int rowNum = 1;
+        for (String key : keys) {
+            Row row = sheet.createRow(rowNum++);
+            row.createCell(0).setCellValue(key);
+            row.createCell(1).setCellValue(key.toUpperCase());
+        }
+
+        for (int i = 0; i < columns.size(); i++) {
+            sheet.autoSizeColumn(i);
+        }
+
+        try {
+            fileOut = new FileOutputStream(filePath);
+            workbook.write(fileOut);
+            fileOut.close();
+            workbook.close();
+        } catch (IOException ex) {
+            System.out.println("Error: " + ex.getMessage());
+        }
+
+    }
 }

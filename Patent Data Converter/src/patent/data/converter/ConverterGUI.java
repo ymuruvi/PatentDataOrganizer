@@ -1,8 +1,13 @@
 package patent.data.converter;
 
+import java.awt.Cursor;
 import java.awt.EventQueue;
 import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.UIManager;
@@ -20,8 +25,18 @@ public class ConverterGUI extends JFrame {
     //<editor-fold desc=" Custom Variable Declarations ">
     private File currentDirectory;
     private static HashMap records;
-    private static Record currentRecord;
-    private static Timer t;
+    private static ArrayList<String> keys;
+    private volatile int threads;
+    private final static int MAX_THREADS = 100;
+    private volatile static int counter;
+
+    /**
+     *
+     */
+    private enum Status {
+        DEFAULT, LOADING_DATA, READING_DATA, EXPORTING_DATA
+    };
+    private static Status currentStatus;
     //</editor-fold>
 
     /**
@@ -30,7 +45,7 @@ public class ConverterGUI extends JFrame {
      */
     public static void main(String[] args) {
         records = new HashMap();
-        currentRecord = new Record();
+        currentStatus = Status.DEFAULT;
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
         /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
@@ -72,86 +87,117 @@ public class ConverterGUI extends JFrame {
      * @param folder
      */
     public void openDirectory(File folder) {
-        File[] files;
 
+        File[] files;
         resetBarValue();
 
-        if (folder.isDirectory()) {
-            records = new HashMap();
-            files = folder.listFiles();
+        if (folder != null) {
+            if (folder.isDirectory()) {
+                
+                records = new HashMap();
+                keys = new ArrayList<>();
+                exportBtn.setEnabled(false);
+                files = folder.listFiles();
 
-            /**
-             * Opens and parses all the files.
-             */
-            Runnable openingFiles = new Runnable() {
                 /**
-                 *
+                 * Opens and parses all the files.
                  */
-                @Override
-                public void run() {
-                    int counter = 0;
-                    int value;
-                    double percent;
-                    Record r;
-                    String filePath;
-                    int eventsTimed = 0;
-                    int estimate = 0;
-                    double time = 0;
-                    long start = 0;
-                    long finish = 0;
-                    long duration = 0;
-                    long sum = 0;
-                    long average = 0;
-                    boolean timed = false;
-                    for (File f : files) {
-                        if (f.isFile()) {
-                            filePath = f.getAbsolutePath();
-                            if ("xml".equals(Tools.getExtension(filePath))) {
-                                System.out.println(Tools.Contstants.ANSI_GREEN + "Reading: "
-                                        + filePath + Tools.Contstants.ANSI_RESET);
-                                r = new Record();
-                                if (!timed) {
-                                    start = System.nanoTime();
+                Runnable openingFiles;
+                openingFiles = new Runnable() {
+                    /**
+                     *
+                     */
+                    @Override
+                    public void run() {
+                        
+                        counter = 0;
+                        
+
+                        currentStatus = Status.LOADING_DATA;
+                        threads = 0;
+
+                        for (File f : files) {
+                            class FileHandler implements Runnable {
+
+                                private File file;
+                                private String filePath;
+                                private Record r;
+
+                                /**
+                                 *
+                                 * @param file
+                                 */
+                                public FileHandler(File file) {
+                                    this.file = file;
+                                    filePath = f.getAbsolutePath();
                                 }
-                                r.parse(filePath);
-                                try {
-                                    records.put(r.getRecordID(), r);
-                                    if (eventsTimed < 10) {
-                                        finish = System.nanoTime();
-                                        duration = finish - start;
-                                        sum += duration;
-                                        eventsTimed++;
-                                        if (eventsTimed == 10) {
-                                            average = (long) ((double) (sum) / 10.0);
-                                            time = ((double) (average) / (1000000000.0));
-                                            estimate = (int) (files.length * time);
-                                            System.out.println("Average: " + average
-                                                    + " Time: " + time + "Estimate" + estimate);
-                                            if (files.length > 100) {
-                                                JOptionPane.showMessageDialog(null, "The program should take about " + estimate + " seconds.");
+
+                                /**
+                                 *
+                                 */
+                                @Override
+                                public void run() {
+                                    
+                                    try {
+                                        if (f.isFile()) {
+                                            if ("xml".equals(Tools.getExtension(filePath))) {
+                                                System.out.println(Tools.Contstants.ANSI_GREEN + "Reading: "
+                                                        + filePath + Tools.Contstants.ANSI_RESET);
+                                                r = new Record();
+                                                r.parse(filePath);
+                                                try {
+                                                    records.put(r.getRecordID(), r);
+                                                    keys.add(r.getRecordID());
+                                                } catch (Exception e) {
+                                                    System.out.println(Tools.Contstants.ANSI_RED + "Error: "
+                                                            + e + Tools.Contstants.ANSI_RESET);
+                                                }
+                                            } else {
+                                                System.out.println(Tools.Contstants.ANSI_RED + filePath
+                                                        + " is not an XML File (" + Tools.getExtension(filePath)
+                                                        + ")" + Tools.Contstants.ANSI_RESET);
                                             }
                                         }
+                                    } catch (Exception ex) {
+                                        System.out.println("Error: " + ex.getMessage());
                                     }
-                                } catch (Exception e) {
-                                    System.out.println(Tools.Contstants.ANSI_RED + "Error: "
-                                            + e + Tools.Contstants.ANSI_RESET);
+                                    incrementProgressBar(files.length);
+                                    threads--;
                                 }
-                            } else {
-                                System.out.println(Tools.Contstants.ANSI_RED + filePath
-                                        + " is not an XML File (" + Tools.getExtension(filePath)
-                                        + ")" + Tools.Contstants.ANSI_RESET);
                             }
+
+                            /**
+                             * Pauses the program while the maximum number of
+                             * threads has been met.
+                             */
+                            while (threads >= Math.min(MAX_THREADS,files.length)-1) {
+                                System.out.println("Waiting");
+                            }
+                            Thread handleFileThread = new Thread(new FileHandler(f));
+                            threads++;
+                            handleFileThread.start();
+
+                            
                         }
-                        counter++;
-                        percent = ((double) counter) / ((double) files.length);
-                        value = (int) (percent * 100.0);
-                        loadingProgressBar.setValue(value);
+                        if (records.size() > 0) {
+                            exportBtn.setEnabled(true);
+                        }
+                        currentStatus = Status.READING_DATA;
                     }
-                }
-            };
-            Thread t = new Thread(openingFiles);
-            t.start();
+                };
+                Thread t = new Thread(openingFiles);
+                t.start();
+            }
         }
+    }
+    
+    private void incrementProgressBar(double fileAmount){
+        int value;
+        double percent;
+        counter++;
+        percent = ((double) counter) / (fileAmount);
+        value = (int) (percent * 100.0);
+        loadingProgressBar.setValue(value);
     }
 
     /**
@@ -267,6 +313,8 @@ public class ConverterGUI extends JFrame {
         jMenuItem2.setText("jMenuItem2");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Patent Data Organizer");
+        setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         setResizable(false);
 
         tabbedPane.setToolTipText("Other Data Panel");
@@ -276,44 +324,64 @@ public class ConverterGUI extends JFrame {
         jScrollPane2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
         docTypeBox.setText("(12) Document Type");
+        docTypeBox.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
 
         docNumBox.setText("Document Number");
+        docNumBox.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
 
         appNumBox.setText("Application Number");
+        appNumBox.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
 
         engTitleBox.setText("English Title");
+        engTitleBox.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
 
         frTitleBox.setText("French Title");
+        frTitleBox.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
 
         inventorsBox.setText("Inventors");
+        inventorsBox.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
 
         ownersBox.setText("Owners");
+        ownersBox.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
 
         applicantsBox.setText("Applicants");
+        applicantsBox.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
 
         agentBox.setText("Agent");
+        agentBox.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
 
         issuedBox.setText("Issued");
+        issuedBox.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
 
         reissuedBox.setText("Reissued");
+        reissuedBox.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
 
         filedBox.setText("Filed");
+        filedBox.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
 
         openToPubInspBox.setText("Open To Public Inspection");
+        openToPubInspBox.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
 
         examReqBox.setText("Examination Requested");
+        examReqBox.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
 
         reExamCertBox.setText("Re-examination Certificate");
+        reExamCertBox.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
 
         canPatClassBox.setText("Canadian Patent Classification");
+        canPatClassBox.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
 
         intPatentClassBox.setText("International Patent Classification");
+        intPatentClassBox.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
 
         patentCoopTreatyBox.setText("Patent Cooperation Treaty");
+        patentCoopTreatyBox.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
 
         appPriorityDataBox.setText("Application Priority Data");
+        appPriorityDataBox.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
 
         availOfLicBox.setText("Availability of License");
+        availOfLicBox.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
 
         javax.swing.GroupLayout outputDocOptionsPanelLayout = new javax.swing.GroupLayout(outputDocOptionsPanel);
         outputDocOptionsPanel.setLayout(outputDocOptionsPanelLayout);
@@ -395,6 +463,7 @@ public class ConverterGUI extends JFrame {
         recordViewPanel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
         docNumSearchBox.setToolTipText("Search Using Document Number");
+        docNumSearchBox.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
         docNumSearchBox.setName("Search Box"); // NOI18N
 
         docNumSearchLbl.setText("Document Number to Search:");
@@ -755,6 +824,7 @@ public class ConverterGUI extends JFrame {
         );
 
         loadingProgressBar.setToolTipText("");
+        loadingProgressBar.setCursor(new java.awt.Cursor(java.awt.Cursor.WAIT_CURSOR));
         loadingProgressBar.setStringPainted(true);
 
         exportBtn.setText("Export");
@@ -919,7 +989,18 @@ public class ConverterGUI extends JFrame {
      */
     private void exportBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exportBtnActionPerformed
         System.out.println("Exporting");
-        
+        currentStatus = Status.EXPORTING_DATA;
+        currentStatus = Status.READING_DATA;
+        ArrayList<String> columns = new ArrayList<>();
+        columns.add("Apple");
+        columns.add("Pie");
+        columns.add("Is");
+        columns.add("Good");
+        try {
+            Tools.writeExcelFile(records, keys, columns, "testFile.xlsx");
+        } catch (Exception ex) {
+            Logger.getLogger(ConverterGUI.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_exportBtnActionPerformed
 
     /**
