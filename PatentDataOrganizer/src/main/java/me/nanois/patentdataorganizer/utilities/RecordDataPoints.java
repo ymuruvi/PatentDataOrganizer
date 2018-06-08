@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package patent.data.converter.utilities;
+package me.nanois.patentdataorganizer.utilities;
 
 /**
  *

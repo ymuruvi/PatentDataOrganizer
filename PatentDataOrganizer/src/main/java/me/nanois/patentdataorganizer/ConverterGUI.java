@@ -1,4 +1,4 @@
-package patent.data.converter;
+package me.nanois.patentdataorganizer;
 
 import java.awt.Cursor;
 import java.awt.EventQueue;
@@ -13,8 +13,8 @@ import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 import javax.swing.JFrame;
 import javax.swing.Timer;
-import patent.data.converter.utilities.Record;
-import patent.data.converter.utilities.Tools;
+import me.nanois.patentdataorganizer.utilities.Record;
+import me.nanois.patentdataorganizer.utilities.Tools;
 
 /**
  *

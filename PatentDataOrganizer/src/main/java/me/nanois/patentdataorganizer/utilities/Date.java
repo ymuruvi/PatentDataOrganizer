@@ -1,4 +1,4 @@
-package patent.data.converter.utilities;
+package me.nanois.patentdataorganizer.utilities;
 
 /**
  *
