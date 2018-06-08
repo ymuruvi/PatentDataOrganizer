@@ -41,47 +41,7 @@ public class Tools {
         public static final String XML = "xml";
     }
 
-    /**
-     * Returns the extension of a given file. For files with no period being
-     * used to dictate the file extention an empty string will be returned
-     *
-     * @param fileName Name of the file for who's extension will be returned
-     * @return String containing either the given file name's extension or an
-     * empty string for files with no extension.
-     *
-     */
-    /*
-    public static String getExtension(final String fileName) {
-
-        LinkedList ext = new LinkedList();
-        StringBuilder extension = new StringBuilder();
-        boolean searching = true;
-
-        if (fileName == null) {
-            return "";
-        }
-        for (int i = 1; i <= fileName.length() && searching; i++) {
-            char c = fileName.charAt(fileName.length() - i);
-            if (c == '.') {
-                searching = false;
-            } else {
-                ext.push(c);
-            }
-        }
-        if (searching) {
-            return "";
-        }
-
-        Iterator iter = ext.iterator();
-
-        for (int i = 0; iter.hasNext(); i++) {
-            char c = (Character) iter.next();
-            extension.insert(i, c);
-        }
-
-        return extension.toString();
-    }
-     */
+    
     /**
      * Altered Oracle tutorial code.
      *
@@ -113,11 +73,14 @@ public class Tools {
     }
 
     /**
-     *
+     * This code is derrived from some code I found online, I lost track of
+     * the link because windoze 10 decided to go rogue and update. If and
+     * when I find the site again I will credit them.
      * @param records
      * @param keys
      * @param columns
      * @param filePath xlsx File path
+     * 
      */
     public static void writeExcelFile(HashMap records, ArrayList<String> keys, ArrayList<String> columns, String filePath) {
         CellStyle headerCellStyle;
