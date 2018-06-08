@@ -15,7 +15,12 @@ import patent.data.converter.utilities.Tools;
  */
 public class XMLFilter extends FileFilter{
 
-    //Accept all directories and all gif, jpg, tiff, or png files.
+    /**
+     * Don't really recall where this was in 
+     * spired from but I don't think I'm using 
+     * it anymore.
+     * @deprecated 
+     */
     public boolean accept(File f) {
         if (f.isDirectory()) {
             return true;

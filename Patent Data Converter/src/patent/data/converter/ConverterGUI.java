@@ -169,9 +169,11 @@ public class ConverterGUI extends JFrame {
                             /**
                              * Pauses the program while the maximum number of
                              * threads has been met.
+                             * Used this thread to come to the conclusion of using volatile variables.
+                             * https://meta.stackoverflow.com/questions/269174/questions-about-threadloop-not-working-without-print-statement
                              */
                             while (threads >= Math.min(MAX_THREADS,files.length)-1) {
-                                System.out.println("Waiting");
+                                //System.out.println("Waiting");
                             }
                             Thread handleFileThread = new Thread(new FileHandler(f));
                             threads++;
