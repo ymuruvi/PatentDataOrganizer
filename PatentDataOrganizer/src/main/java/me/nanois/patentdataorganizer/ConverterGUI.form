@@ -24,6 +24,9 @@
           <SubComponents>
             <MenuItem class="javax.swing.JMenuItem" name="openFolderItem">
               <Properties>
+                <Property name="accelerator" type="javax.swing.KeyStroke" editor="org.netbeans.modules.form.editors.KeyStrokeEditor">
+                  <KeyStroke key="Ctrl+O"/>
+                </Property>
                 <Property name="text" type="java.lang.String" value="Open Folder"/>
               </Properties>
               <Events>
@@ -32,6 +35,9 @@
             </MenuItem>
             <MenuItem class="javax.swing.JMenuItem" name="exportDataItem">
               <Properties>
+                <Property name="accelerator" type="javax.swing.KeyStroke" editor="org.netbeans.modules.form.editors.KeyStrokeEditor">
+                  <KeyStroke key="Ctrl+S"/>
+                </Property>
                 <Property name="text" type="java.lang.String" value="Export Data"/>
               </Properties>
             </MenuItem>
@@ -46,21 +52,22 @@
           <Properties>
             <Property name="text" type="java.lang.String" value="View"/>
           </Properties>
-          <SubComponents>
-            <MenuItem class="javax.swing.JMenuItem" name="jMenuItem1">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="jMenuItem1"/>
-              </Properties>
-              <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMenuItem1ActionPerformed"/>
-              </Events>
-            </MenuItem>
-          </SubComponents>
         </Menu>
         <Menu class="javax.swing.JMenu" name="helpMenu">
           <Properties>
             <Property name="text" type="java.lang.String" value="Help"/>
           </Properties>
+          <SubComponents>
+            <MenuItem class="javax.swing.JCheckBoxMenuItem" name="jCheckBoxMenuItem1">
+              <Properties>
+                <Property name="accelerator" type="javax.swing.KeyStroke" editor="org.netbeans.modules.form.editors.KeyStrokeEditor">
+                  <KeyStroke key="Ctrl+H"/>
+                </Property>
+                <Property name="selected" type="boolean" value="true"/>
+                <Property name="text" type="java.lang.String" value="Report Issue"/>
+              </Properties>
+            </MenuItem>
+          </SubComponents>
         </Menu>
       </SubComponents>
     </Menu>
@@ -95,8 +102,8 @@
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="tabbedPane" max="32767" attributes="0"/>
-              <EmptySpace max="-2" attributes="0"/>
+              <Component id="tabbedPane" min="-2" pref="729" max="-2" attributes="0"/>
+              <EmptySpace max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -104,7 +111,7 @@
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="tabbedPane" min="-2" pref="441" max="-2" attributes="0"/>
+              <Component id="tabbedPane" min="-2" pref="443" max="-2" attributes="0"/>
               <EmptySpace max="32767" attributes="0"/>
           </Group>
       </Group>
@@ -135,12 +142,17 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="1" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="recordViewPanel" max="32767" attributes="0"/>
-                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="recordViewPanel" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Component id="jScrollPane2" pref="190" max="32767" attributes="0"/>
                           <Component id="loadingProgressBar" max="32767" attributes="0"/>
-                          <Component id="exportBtn" max="32767" attributes="0"/>
+                          <Group type="102" alignment="0" attributes="0">
+                              <Group type="103" groupAlignment="1" max="-2" attributes="0">
+                                  <Component id="exportBtn" alignment="0" pref="162" max="32767" attributes="0"/>
+                                  <Component id="scrollPanel" alignment="0" pref="0" max="32767" attributes="0"/>
+                              </Group>
+                              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                          </Group>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                   </Group>
@@ -149,24 +161,24 @@
             <DimensionLayout dim="1">
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
-                      <EmptySpace max="32767" attributes="0"/>
-                      <Group type="103" groupAlignment="1" attributes="0">
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                          <Component id="recordViewPanel" min="-2" max="-2" attributes="0"/>
                           <Group type="102" attributes="0">
                               <Component id="loadingProgressBar" min="-2" pref="21" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
-                              <Component id="jScrollPane2" min="-2" pref="330" max="-2" attributes="0"/>
-                              <EmptySpace max="-2" attributes="0"/>
-                              <Component id="exportBtn" max="32767" attributes="0"/>
+                              <Component id="scrollPanel" min="-2" pref="316" max="-2" attributes="0"/>
+                              <EmptySpace max="32767" attributes="0"/>
+                              <Component id="exportBtn" min="-2" pref="44" max="-2" attributes="0"/>
                           </Group>
-                          <Component id="recordViewPanel" min="-2" max="-2" attributes="0"/>
                       </Group>
-                      <EmptySpace max="-2" attributes="0"/>
+                      <EmptySpace max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
           </Layout>
           <SubComponents>
-            <Container class="javax.swing.JScrollPane" name="jScrollPane2">
+            <Container class="javax.swing.JScrollPane" name="scrollPanel">
               <Properties>
                 <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
                   <Border info="org.netbeans.modules.form.compat2.border.LineBorderInfo">
@@ -435,20 +447,19 @@
               <Layout>
                 <DimensionLayout dim="0">
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Group type="102" alignment="0" attributes="0">
+                      <Group type="102" attributes="0">
                           <EmptySpace max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="jPanel2" max="32767" attributes="0"/>
                               <Group type="102" attributes="0">
                                   <Component id="docNumSearchLbl" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                                  <EmptySpace type="separate" max="-2" attributes="0"/>
                                   <Component id="docNumSearchBox" min="-2" pref="128" max="-2" attributes="0"/>
                                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                                  <Component id="searchDocNumBtn" min="-2" pref="76" max="-2" attributes="0"/>
-                                  <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                                  <Component id="searchDocNumBtn" min="-2" pref="89" max="-2" attributes="0"/>
                               </Group>
+                              <Component id="jScrollPane2" alignment="0" min="-2" max="-2" attributes="0"/>
                           </Group>
-                          <EmptySpace max="-2" attributes="0"/>
+                          <EmptySpace max="32767" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
@@ -457,12 +468,12 @@
                       <Group type="102" alignment="0" attributes="0">
                           <EmptySpace max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
+                              <Component id="searchDocNumBtn" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="docNumSearchBox" alignment="3" min="-2" max="-2" attributes="0"/>
                               <Component id="docNumSearchLbl" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="searchDocNumBtn" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="jPanel2" min="-2" max="-2" attributes="0"/>
+                          <Component id="jScrollPane2" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="32767" attributes="0"/>
                       </Group>
                   </Group>
@@ -492,555 +503,561 @@
                     <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="searchDocNumBtnActionPerformed"/>
                   </Events>
                 </Component>
-                <Container class="javax.swing.JPanel" name="jPanel2">
-                  <Properties>
-                    <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
-                      <Border info="org.netbeans.modules.form.compat2.border.LineBorderInfo">
-                        <LineBorder/>
-                      </Border>
-                    </Property>
-                  </Properties>
+                <Container class="javax.swing.JScrollPane" name="jScrollPane2">
 
-                  <Layout>
-                    <DimensionLayout dim="0">
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="102" attributes="0">
-                              <EmptySpace max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="0" attributes="0">
-                                  <Group type="102" attributes="0">
-                                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                          <Component id="docTypeTxtBox" max="32767" attributes="0"/>
-                                          <Component id="docTypeLbl" pref="150" max="32767" attributes="0"/>
-                                      </Group>
-                                      <EmptySpace type="separate" max="-2" attributes="0"/>
-                                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                          <Component id="docNumTxtBox" alignment="0" max="32767" attributes="0"/>
-                                          <Component id="docNumLbl" alignment="0" min="-2" pref="150" max="-2" attributes="0"/>
-                                      </Group>
-                                      <EmptySpace type="separate" max="-2" attributes="0"/>
-                                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                          <Component id="appNumTxtBox" alignment="0" max="32767" attributes="0"/>
-                                          <Component id="appNumLbl" alignment="0" min="-2" pref="150" max="-2" attributes="0"/>
-                                      </Group>
-                                  </Group>
-                                  <Group type="102" alignment="0" attributes="0">
-                                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                          <Component id="engTitleTxtBox" alignment="0" max="32767" attributes="0"/>
-                                          <Component id="engTitleLbl" alignment="0" min="-2" pref="150" max="-2" attributes="0"/>
-                                      </Group>
-                                      <EmptySpace type="separate" max="-2" attributes="0"/>
-                                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                          <Component id="frTitleTxtBox" alignment="0" max="32767" attributes="0"/>
-                                          <Component id="frTitleLbl" alignment="0" min="-2" pref="150" max="-2" attributes="0"/>
-                                      </Group>
-                                      <EmptySpace type="separate" max="-2" attributes="0"/>
-                                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                          <Component id="investorTxtBox" alignment="0" max="32767" attributes="0"/>
-                                          <Component id="invLbl" alignment="0" min="-2" pref="150" max="-2" attributes="0"/>
-                                      </Group>
-                                  </Group>
-                                  <Group type="102" alignment="0" attributes="0">
-                                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                          <Component id="ownersTxtBox" alignment="0" max="32767" attributes="0"/>
-                                          <Component id="ownersLbl" alignment="0" min="-2" pref="150" max="-2" attributes="0"/>
-                                      </Group>
-                                      <EmptySpace type="separate" max="-2" attributes="0"/>
-                                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                          <Component id="applicantsTxtBox" alignment="0" max="32767" attributes="0"/>
-                                          <Component id="applicantsLbl" alignment="0" min="-2" pref="150" max="-2" attributes="0"/>
-                                      </Group>
-                                      <EmptySpace type="separate" max="-2" attributes="0"/>
-                                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                          <Component id="agentTxtBox" alignment="0" max="32767" attributes="0"/>
-                                          <Component id="agentLbl" alignment="0" min="-2" pref="150" max="-2" attributes="0"/>
-                                      </Group>
-                                  </Group>
-                                  <Group type="102" alignment="0" attributes="0">
-                                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                          <Component id="issuedTxtBox" alignment="0" max="32767" attributes="0"/>
-                                          <Component id="issuedLbl" alignment="0" min="-2" pref="150" max="-2" attributes="0"/>
-                                      </Group>
-                                      <EmptySpace type="separate" max="-2" attributes="0"/>
-                                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                          <Component id="reissuedTxtBox" alignment="0" max="32767" attributes="0"/>
-                                          <Component id="reissuedLbl" alignment="0" min="-2" pref="150" max="-2" attributes="0"/>
-                                      </Group>
-                                      <EmptySpace type="separate" max="-2" attributes="0"/>
-                                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                          <Component id="filedTxtBox" alignment="0" max="32767" attributes="0"/>
-                                          <Component id="filedLbl" alignment="0" min="-2" pref="150" max="-2" attributes="0"/>
-                                      </Group>
-                                  </Group>
-                                  <Group type="102" alignment="0" attributes="0">
-                                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                          <Component id="openToPubTxtBox" alignment="0" max="32767" attributes="0"/>
-                                          <Component id="openToPubLbl" alignment="0" min="-2" pref="150" max="-2" attributes="0"/>
-                                      </Group>
-                                      <EmptySpace type="separate" max="-2" attributes="0"/>
-                                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                          <Component id="examRequestTxtBox" alignment="0" max="32767" attributes="0"/>
-                                          <Component id="examReqLbl" alignment="0" min="-2" pref="150" max="-2" attributes="0"/>
-                                      </Group>
-                                      <EmptySpace type="separate" max="-2" attributes="0"/>
-                                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                          <Component id="reExamCertTxtBox" alignment="0" max="32767" attributes="0"/>
-                                          <Component id="reExamCertLbl" alignment="0" min="-2" pref="150" max="-2" attributes="0"/>
-                                      </Group>
-                                  </Group>
-                                  <Group type="102" alignment="0" attributes="0">
-                                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                          <Component id="canPatClassTxtBox" alignment="0" max="32767" attributes="0"/>
-                                          <Component id="canPatClassLbl" alignment="0" min="-2" pref="150" max="-2" attributes="0"/>
-                                      </Group>
-                                      <EmptySpace type="separate" max="-2" attributes="0"/>
-                                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                          <Component id="intPatentClassTxtBox" alignment="0" max="32767" attributes="0"/>
-                                          <Component id="intPatClassLbl" alignment="0" min="-2" pref="150" max="-2" attributes="0"/>
-                                      </Group>
-                                      <EmptySpace type="separate" max="-2" attributes="0"/>
-                                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                          <Component id="patCoopTreTxtBox" alignment="0" max="32767" attributes="0"/>
-                                          <Component id="patCoopTreatyLbl" alignment="0" min="-2" pref="150" max="-2" attributes="0"/>
-                                      </Group>
-                                  </Group>
-                                  <Group type="102" alignment="0" attributes="0">
-                                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                          <Component id="appPrioDataTxtBox" alignment="0" max="32767" attributes="0"/>
-                                          <Component id="appPrioDataLbl" alignment="0" min="-2" pref="150" max="-2" attributes="0"/>
-                                      </Group>
-                                      <EmptySpace type="separate" max="-2" attributes="0"/>
-                                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                          <Component id="availOfLicTxtBox" alignment="0" max="32767" attributes="0"/>
-                                          <Component id="availOfLicLbl" alignment="0" min="-2" pref="150" max="-2" attributes="0"/>
-                                      </Group>
-                                  </Group>
-                              </Group>
-                              <EmptySpace pref="21" max="32767" attributes="0"/>
-                          </Group>
-                      </Group>
-                    </DimensionLayout>
-                    <DimensionLayout dim="1">
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="102" alignment="0" attributes="0">
-                              <EmptySpace max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="1" attributes="0">
-                                  <Group type="102" attributes="0">
-                                      <Component id="appNumLbl" min="-2" max="-2" attributes="0"/>
-                                      <EmptySpace max="-2" attributes="0"/>
-                                      <Component id="appNumTxtBox" min="-2" max="-2" attributes="0"/>
-                                  </Group>
+                  <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
+                  <SubComponents>
+                    <Container class="javax.swing.JPanel" name="recordDataPanel">
+                      <Properties>
+                        <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+                          <Border info="org.netbeans.modules.form.compat2.border.LineBorderInfo">
+                            <LineBorder/>
+                          </Border>
+                        </Property>
+                      </Properties>
+
+                      <Layout>
+                        <DimensionLayout dim="0">
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Group type="102" attributes="0">
+                                  <EmptySpace max="-2" attributes="0"/>
                                   <Group type="103" groupAlignment="0" attributes="0">
                                       <Group type="102" attributes="0">
-                                          <Component id="docNumLbl" min="-2" max="-2" attributes="0"/>
-                                          <EmptySpace max="-2" attributes="0"/>
-                                          <Component id="docNumTxtBox" min="-2" max="-2" attributes="0"/>
+                                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                              <Component id="docTypeTxtBox" max="32767" attributes="0"/>
+                                              <Component id="docTypeLbl" pref="150" max="32767" attributes="0"/>
+                                          </Group>
+                                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                              <Component id="docNumTxtBox" alignment="0" max="32767" attributes="0"/>
+                                              <Component id="docNumLbl" alignment="0" min="-2" pref="150" max="-2" attributes="0"/>
+                                          </Group>
+                                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                              <Component id="appNumTxtBox" alignment="0" max="32767" attributes="0"/>
+                                              <Component id="appNumLbl" alignment="0" min="-2" pref="150" max="-2" attributes="0"/>
+                                          </Group>
                                       </Group>
-                                      <Group type="102" attributes="0">
-                                          <Component id="docTypeLbl" min="-2" max="-2" attributes="0"/>
-                                          <EmptySpace max="-2" attributes="0"/>
-                                          <Component id="docTypeTxtBox" min="-2" max="-2" attributes="0"/>
+                                      <Group type="102" alignment="0" attributes="0">
+                                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                              <Component id="engTitleTxtBox" alignment="0" max="32767" attributes="0"/>
+                                              <Component id="engTitleLbl" alignment="0" min="-2" pref="150" max="-2" attributes="0"/>
+                                          </Group>
+                                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                              <Component id="frTitleTxtBox" alignment="0" max="32767" attributes="0"/>
+                                              <Component id="frTitleLbl" alignment="0" min="-2" pref="150" max="-2" attributes="0"/>
+                                          </Group>
+                                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                              <Component id="investorTxtBox" alignment="0" max="32767" attributes="0"/>
+                                              <Component id="invLbl" alignment="0" min="-2" pref="150" max="-2" attributes="0"/>
+                                          </Group>
+                                      </Group>
+                                      <Group type="102" alignment="0" attributes="0">
+                                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                              <Component id="ownersTxtBox" alignment="0" max="32767" attributes="0"/>
+                                              <Component id="ownersLbl" alignment="0" min="-2" pref="150" max="-2" attributes="0"/>
+                                          </Group>
+                                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                              <Component id="applicantsTxtBox" alignment="0" max="32767" attributes="0"/>
+                                              <Component id="applicantsLbl" alignment="0" min="-2" pref="150" max="-2" attributes="0"/>
+                                          </Group>
+                                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                              <Component id="agentTxtBox" alignment="0" max="32767" attributes="0"/>
+                                              <Component id="agentLbl" alignment="0" min="-2" pref="150" max="-2" attributes="0"/>
+                                          </Group>
+                                      </Group>
+                                      <Group type="102" alignment="0" attributes="0">
+                                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                              <Component id="issuedTxtBox" alignment="0" max="32767" attributes="0"/>
+                                              <Component id="issuedLbl" alignment="0" min="-2" pref="150" max="-2" attributes="0"/>
+                                          </Group>
+                                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                              <Component id="reissuedTxtBox" alignment="0" max="32767" attributes="0"/>
+                                              <Component id="reissuedLbl" alignment="0" min="-2" pref="150" max="-2" attributes="0"/>
+                                          </Group>
+                                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                              <Component id="filedTxtBox" alignment="0" max="32767" attributes="0"/>
+                                              <Component id="filedLbl" alignment="0" min="-2" pref="150" max="-2" attributes="0"/>
+                                          </Group>
+                                      </Group>
+                                      <Group type="102" alignment="0" attributes="0">
+                                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                              <Component id="openToPubTxtBox" alignment="0" max="32767" attributes="0"/>
+                                              <Component id="openToPubLbl" alignment="0" min="-2" pref="150" max="-2" attributes="0"/>
+                                          </Group>
+                                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                              <Component id="examRequestTxtBox" alignment="0" max="32767" attributes="0"/>
+                                              <Component id="examReqLbl" alignment="0" min="-2" pref="150" max="-2" attributes="0"/>
+                                          </Group>
+                                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                              <Component id="reExamCertTxtBox" alignment="0" max="32767" attributes="0"/>
+                                              <Component id="reExamCertLbl" alignment="0" min="-2" pref="150" max="-2" attributes="0"/>
+                                          </Group>
+                                      </Group>
+                                      <Group type="102" alignment="0" attributes="0">
+                                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                              <Component id="canPatClassTxtBox" alignment="0" max="32767" attributes="0"/>
+                                              <Component id="canPatClassLbl" alignment="0" min="-2" pref="150" max="-2" attributes="0"/>
+                                          </Group>
+                                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                              <Component id="intPatentClassTxtBox" alignment="0" max="32767" attributes="0"/>
+                                              <Component id="intPatClassLbl" alignment="0" min="-2" pref="150" max="-2" attributes="0"/>
+                                          </Group>
+                                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                              <Component id="patCoopTreTxtBox" alignment="0" max="32767" attributes="0"/>
+                                              <Component id="patCoopTreatyLbl" alignment="0" min="-2" pref="150" max="-2" attributes="0"/>
+                                          </Group>
+                                      </Group>
+                                      <Group type="102" alignment="0" attributes="0">
+                                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                              <Component id="appPrioDataTxtBox" alignment="0" max="32767" attributes="0"/>
+                                              <Component id="appPrioDataLbl" alignment="0" min="-2" pref="150" max="-2" attributes="0"/>
+                                          </Group>
+                                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                              <Component id="availOfLicTxtBox" alignment="0" max="32767" attributes="0"/>
+                                              <Component id="availOfLicLbl" alignment="0" min="-2" pref="150" max="-2" attributes="0"/>
+                                          </Group>
                                       </Group>
                                   </Group>
+                                  <EmptySpace max="32767" attributes="0"/>
                               </Group>
-                              <EmptySpace max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="1" attributes="0">
-                                  <Group type="102" alignment="1" attributes="0">
-                                      <Component id="invLbl" min="-2" max="-2" attributes="0"/>
-                                      <EmptySpace max="-2" attributes="0"/>
-                                      <Component id="investorTxtBox" min="-2" max="-2" attributes="0"/>
-                                  </Group>
-                                  <Group type="103" alignment="1" groupAlignment="0" attributes="0">
-                                      <Group type="102" alignment="0" attributes="0">
-                                          <Component id="frTitleLbl" min="-2" max="-2" attributes="0"/>
-                                          <EmptySpace max="-2" attributes="0"/>
-                                          <Component id="frTitleTxtBox" min="-2" max="-2" attributes="0"/>
-                                      </Group>
-                                      <Group type="102" alignment="0" attributes="0">
-                                          <Component id="engTitleLbl" min="-2" max="-2" attributes="0"/>
-                                          <EmptySpace max="-2" attributes="0"/>
-                                          <Component id="engTitleTxtBox" min="-2" max="-2" attributes="0"/>
-                                      </Group>
-                                  </Group>
-                              </Group>
-                              <EmptySpace max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="1" attributes="0">
-                                  <Group type="102" alignment="1" attributes="0">
-                                      <Component id="agentLbl" min="-2" max="-2" attributes="0"/>
-                                      <EmptySpace max="-2" attributes="0"/>
-                                      <Component id="agentTxtBox" min="-2" max="-2" attributes="0"/>
-                                  </Group>
-                                  <Group type="103" alignment="1" groupAlignment="0" attributes="0">
-                                      <Group type="102" alignment="0" attributes="0">
-                                          <Component id="applicantsLbl" min="-2" max="-2" attributes="0"/>
-                                          <EmptySpace max="-2" attributes="0"/>
-                                          <Component id="applicantsTxtBox" min="-2" max="-2" attributes="0"/>
-                                      </Group>
-                                      <Group type="102" alignment="0" attributes="0">
-                                          <Component id="ownersLbl" min="-2" max="-2" attributes="0"/>
-                                          <EmptySpace max="-2" attributes="0"/>
-                                          <Component id="ownersTxtBox" min="-2" max="-2" attributes="0"/>
-                                      </Group>
-                                  </Group>
-                              </Group>
-                              <EmptySpace max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="1" attributes="0">
-                                  <Group type="102" alignment="1" attributes="0">
-                                      <Component id="filedLbl" min="-2" max="-2" attributes="0"/>
-                                      <EmptySpace max="-2" attributes="0"/>
-                                      <Component id="filedTxtBox" min="-2" max="-2" attributes="0"/>
-                                  </Group>
-                                  <Group type="103" alignment="1" groupAlignment="0" attributes="0">
-                                      <Group type="102" alignment="0" attributes="0">
-                                          <Component id="reissuedLbl" min="-2" max="-2" attributes="0"/>
-                                          <EmptySpace max="-2" attributes="0"/>
-                                          <Component id="reissuedTxtBox" min="-2" max="-2" attributes="0"/>
-                                      </Group>
-                                      <Group type="102" alignment="0" attributes="0">
-                                          <Component id="issuedLbl" min="-2" max="-2" attributes="0"/>
-                                          <EmptySpace max="-2" attributes="0"/>
-                                          <Component id="issuedTxtBox" min="-2" max="-2" attributes="0"/>
-                                      </Group>
-                                  </Group>
-                              </Group>
-                              <EmptySpace max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="1" attributes="0">
-                                  <Group type="102" alignment="1" attributes="0">
-                                      <Component id="reExamCertLbl" min="-2" max="-2" attributes="0"/>
-                                      <EmptySpace max="-2" attributes="0"/>
-                                      <Component id="reExamCertTxtBox" min="-2" max="-2" attributes="0"/>
-                                  </Group>
-                                  <Group type="103" alignment="1" groupAlignment="0" attributes="0">
-                                      <Group type="102" alignment="0" attributes="0">
-                                          <Component id="examReqLbl" min="-2" max="-2" attributes="0"/>
-                                          <EmptySpace max="-2" attributes="0"/>
-                                          <Component id="examRequestTxtBox" min="-2" max="-2" attributes="0"/>
-                                      </Group>
-                                      <Group type="102" alignment="0" attributes="0">
-                                          <Component id="openToPubLbl" min="-2" max="-2" attributes="0"/>
-                                          <EmptySpace max="-2" attributes="0"/>
-                                          <Component id="openToPubTxtBox" min="-2" max="-2" attributes="0"/>
-                                      </Group>
-                                  </Group>
-                              </Group>
-                              <EmptySpace max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="1" attributes="0">
-                                  <Group type="102" alignment="1" attributes="0">
-                                      <Component id="patCoopTreatyLbl" min="-2" max="-2" attributes="0"/>
-                                      <EmptySpace max="-2" attributes="0"/>
-                                      <Component id="patCoopTreTxtBox" min="-2" max="-2" attributes="0"/>
-                                  </Group>
-                                  <Group type="103" alignment="1" groupAlignment="0" attributes="0">
-                                      <Group type="102" alignment="0" attributes="0">
-                                          <Component id="intPatClassLbl" min="-2" max="-2" attributes="0"/>
-                                          <EmptySpace max="-2" attributes="0"/>
-                                          <Component id="intPatentClassTxtBox" min="-2" max="-2" attributes="0"/>
-                                      </Group>
-                                      <Group type="102" alignment="0" attributes="0">
-                                          <Component id="canPatClassLbl" min="-2" max="-2" attributes="0"/>
-                                          <EmptySpace max="-2" attributes="0"/>
-                                          <Component id="canPatClassTxtBox" min="-2" max="-2" attributes="0"/>
-                                      </Group>
-                                  </Group>
-                              </Group>
-                              <EmptySpace max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="0" attributes="0">
-                                  <Group type="102" alignment="0" attributes="0">
-                                      <Component id="availOfLicLbl" min="-2" max="-2" attributes="0"/>
-                                      <EmptySpace max="-2" attributes="0"/>
-                                      <Component id="availOfLicTxtBox" min="-2" max="-2" attributes="0"/>
-                                  </Group>
-                                  <Group type="102" alignment="0" attributes="0">
-                                      <Component id="appPrioDataLbl" min="-2" max="-2" attributes="0"/>
-                                      <EmptySpace max="-2" attributes="0"/>
-                                      <Component id="appPrioDataTxtBox" min="-2" max="-2" attributes="0"/>
-                                  </Group>
-                              </Group>
-                              <EmptySpace max="32767" attributes="0"/>
                           </Group>
-                      </Group>
-                    </DimensionLayout>
-                  </Layout>
-                  <SubComponents>
-                    <Component class="javax.swing.JTextField" name="docTypeTxtBox">
-                      <Properties>
-                        <Property name="editable" type="boolean" value="false"/>
-                        <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-                          <Dimension value="[10, 26]"/>
-                        </Property>
-                      </Properties>
-                    </Component>
-                    <Component class="javax.swing.JTextField" name="docNumTxtBox">
-                      <Properties>
-                        <Property name="editable" type="boolean" value="false"/>
-                        <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-                          <Dimension value="[10, 26]"/>
-                        </Property>
-                      </Properties>
-                    </Component>
-                    <Component class="javax.swing.JTextField" name="appNumTxtBox">
-                      <Properties>
-                        <Property name="editable" type="boolean" value="false"/>
-                        <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-                          <Dimension value="[10, 26]"/>
-                        </Property>
-                      </Properties>
-                    </Component>
-                    <Component class="javax.swing.JTextField" name="engTitleTxtBox">
-                      <Properties>
-                        <Property name="editable" type="boolean" value="false"/>
-                        <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-                          <Dimension value="[10, 26]"/>
-                        </Property>
-                      </Properties>
-                    </Component>
-                    <Component class="javax.swing.JTextField" name="frTitleTxtBox">
-                      <Properties>
-                        <Property name="editable" type="boolean" value="false"/>
-                        <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-                          <Dimension value="[10, 26]"/>
-                        </Property>
-                      </Properties>
-                    </Component>
-                    <Component class="javax.swing.JTextField" name="investorTxtBox">
-                      <Properties>
-                        <Property name="editable" type="boolean" value="false"/>
-                        <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-                          <Dimension value="[10, 26]"/>
-                        </Property>
-                      </Properties>
-                    </Component>
-                    <Component class="javax.swing.JTextField" name="ownersTxtBox">
-                      <Properties>
-                        <Property name="editable" type="boolean" value="false"/>
-                        <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-                          <Dimension value="[10, 26]"/>
-                        </Property>
-                      </Properties>
-                    </Component>
-                    <Component class="javax.swing.JTextField" name="applicantsTxtBox">
-                      <Properties>
-                        <Property name="editable" type="boolean" value="false"/>
-                        <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-                          <Dimension value="[10, 26]"/>
-                        </Property>
-                      </Properties>
-                    </Component>
-                    <Component class="javax.swing.JTextField" name="agentTxtBox">
-                      <Properties>
-                        <Property name="editable" type="boolean" value="false"/>
-                        <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-                          <Dimension value="[10, 26]"/>
-                        </Property>
-                      </Properties>
-                    </Component>
-                    <Component class="javax.swing.JTextField" name="issuedTxtBox">
-                      <Properties>
-                        <Property name="editable" type="boolean" value="false"/>
-                        <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-                          <Dimension value="[10, 26]"/>
-                        </Property>
-                      </Properties>
-                    </Component>
-                    <Component class="javax.swing.JTextField" name="reissuedTxtBox">
-                      <Properties>
-                        <Property name="editable" type="boolean" value="false"/>
-                        <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-                          <Dimension value="[10, 26]"/>
-                        </Property>
-                      </Properties>
-                    </Component>
-                    <Component class="javax.swing.JTextField" name="filedTxtBox">
-                      <Properties>
-                        <Property name="editable" type="boolean" value="false"/>
-                        <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-                          <Dimension value="[10, 26]"/>
-                        </Property>
-                      </Properties>
-                    </Component>
-                    <Component class="javax.swing.JTextField" name="openToPubTxtBox">
-                      <Properties>
-                        <Property name="editable" type="boolean" value="false"/>
-                        <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-                          <Dimension value="[10, 26]"/>
-                        </Property>
-                      </Properties>
-                    </Component>
-                    <Component class="javax.swing.JTextField" name="examRequestTxtBox">
-                      <Properties>
-                        <Property name="editable" type="boolean" value="false"/>
-                        <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-                          <Dimension value="[10, 26]"/>
-                        </Property>
-                      </Properties>
-                    </Component>
-                    <Component class="javax.swing.JTextField" name="reExamCertTxtBox">
-                      <Properties>
-                        <Property name="editable" type="boolean" value="false"/>
-                        <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-                          <Dimension value="[10, 26]"/>
-                        </Property>
-                      </Properties>
-                    </Component>
-                    <Component class="javax.swing.JTextField" name="canPatClassTxtBox">
-                      <Properties>
-                        <Property name="editable" type="boolean" value="false"/>
-                        <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-                          <Dimension value="[10, 26]"/>
-                        </Property>
-                      </Properties>
-                    </Component>
-                    <Component class="javax.swing.JTextField" name="intPatentClassTxtBox">
-                      <Properties>
-                        <Property name="editable" type="boolean" value="false"/>
-                        <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-                          <Dimension value="[10, 26]"/>
-                        </Property>
-                      </Properties>
-                    </Component>
-                    <Component class="javax.swing.JTextField" name="patCoopTreTxtBox">
-                      <Properties>
-                        <Property name="editable" type="boolean" value="false"/>
-                        <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-                          <Dimension value="[10, 26]"/>
-                        </Property>
-                      </Properties>
-                    </Component>
-                    <Component class="javax.swing.JTextField" name="appPrioDataTxtBox">
-                      <Properties>
-                        <Property name="editable" type="boolean" value="false"/>
-                        <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-                          <Dimension value="[10, 26]"/>
-                        </Property>
-                      </Properties>
-                    </Component>
-                    <Component class="javax.swing.JTextField" name="availOfLicTxtBox">
-                      <Properties>
-                        <Property name="editable" type="boolean" value="false"/>
-                        <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-                          <Dimension value="[10, 26]"/>
-                        </Property>
-                      </Properties>
-                    </Component>
-                    <Component class="javax.swing.JLabel" name="docTypeLbl">
-                      <Properties>
-                        <Property name="text" type="java.lang.String" value="(12) Document Type"/>
-                        <Property name="toolTipText" type="java.lang.String" value="Document Type"/>
-                      </Properties>
-                    </Component>
-                    <Component class="javax.swing.JLabel" name="docNumLbl">
-                      <Properties>
-                        <Property name="text" type="java.lang.String" value="(11) Document Number"/>
-                        <Property name="toolTipText" type="java.lang.String" value="Document Number"/>
-                      </Properties>
-                    </Component>
-                    <Component class="javax.swing.JLabel" name="appNumLbl">
-                      <Properties>
-                        <Property name="text" type="java.lang.String" value="(21) Application Number"/>
-                        <Property name="toolTipText" type="java.lang.String" value="Application Number"/>
-                      </Properties>
-                    </Component>
-                    <Component class="javax.swing.JLabel" name="engTitleLbl">
-                      <Properties>
-                        <Property name="text" type="java.lang.String" value="(54) English Title"/>
-                        <Property name="toolTipText" type="java.lang.String" value="English Title"/>
-                      </Properties>
-                    </Component>
-                    <Component class="javax.swing.JLabel" name="frTitleLbl">
-                      <Properties>
-                        <Property name="text" type="java.lang.String" value="(54) French Title"/>
-                        <Property name="toolTipText" type="java.lang.String" value="French Title"/>
-                      </Properties>
-                    </Component>
-                    <Component class="javax.swing.JLabel" name="invLbl">
-                      <Properties>
-                        <Property name="text" type="java.lang.String" value="(72) Investor(s) (Country)"/>
-                        <Property name="toolTipText" type="java.lang.String" value="Investors (Country)"/>
-                      </Properties>
-                    </Component>
-                    <Component class="javax.swing.JLabel" name="ownersLbl">
-                      <Properties>
-                        <Property name="text" type="java.lang.String" value="(73) Owner(s) (Country)"/>
-                        <Property name="toolTipText" type="java.lang.String" value="Owners (Country)"/>
-                      </Properties>
-                    </Component>
-                    <Component class="javax.swing.JLabel" name="applicantsLbl">
-                      <Properties>
-                        <Property name="text" type="java.lang.String" value="(71) Applicant(s) (Country)"/>
-                        <Property name="toolTipText" type="java.lang.String" value="Applicants (Country)"/>
-                      </Properties>
-                    </Component>
-                    <Component class="javax.swing.JLabel" name="agentLbl">
-                      <Properties>
-                        <Property name="text" type="java.lang.String" value="(74) Agent"/>
-                        <Property name="toolTipText" type="java.lang.String" value="Agent"/>
-                      </Properties>
-                    </Component>
-                    <Component class="javax.swing.JLabel" name="issuedLbl">
-                      <Properties>
-                        <Property name="text" type="java.lang.String" value="(45) Issued"/>
-                        <Property name="toolTipText" type="java.lang.String" value="Issued"/>
-                      </Properties>
-                    </Component>
-                    <Component class="javax.swing.JLabel" name="reissuedLbl">
-                      <Properties>
-                        <Property name="text" type="java.lang.String" value="Reissued"/>
-                        <Property name="toolTipText" type="java.lang.String" value="Reissued"/>
-                      </Properties>
-                    </Component>
-                    <Component class="javax.swing.JLabel" name="filedLbl">
-                      <Properties>
-                        <Property name="text" type="java.lang.String" value="(22) Filed"/>
-                        <Property name="toolTipText" type="java.lang.String" value="Filed"/>
-                      </Properties>
-                    </Component>
-                    <Component class="javax.swing.JLabel" name="openToPubLbl">
-                      <Properties>
-                        <Property name="text" type="java.lang.String" value="(41) Open to Public Inspection"/>
-                        <Property name="toolTipText" type="java.lang.String" value="Open to Public Inspection"/>
-                      </Properties>
-                    </Component>
-                    <Component class="javax.swing.JLabel" name="examReqLbl">
-                      <Properties>
-                        <Property name="text" type="java.lang.String" value="Examination Requested"/>
-                        <Property name="toolTipText" type="java.lang.String" value="Examination Requested"/>
-                      </Properties>
-                    </Component>
-                    <Component class="javax.swing.JLabel" name="reExamCertLbl">
-                      <Properties>
-                        <Property name="text" type="java.lang.String" value="Re-examination Certificate(s)"/>
-                        <Property name="toolTipText" type="java.lang.String" value="Re-examination Certificate(s)"/>
-                      </Properties>
-                    </Component>
-                    <Component class="javax.swing.JLabel" name="canPatClassLbl">
-                      <Properties>
-                        <Property name="text" type="java.lang.String" value="(52) Canadian Patent Classification"/>
-                        <Property name="toolTipText" type="java.lang.String" value="Canadian Patent Classification"/>
-                      </Properties>
-                    </Component>
-                    <Component class="javax.swing.JLabel" name="intPatClassLbl">
-                      <Properties>
-                        <Property name="text" type="java.lang.String" value="(51) International Patent Classification"/>
-                        <Property name="toolTipText" type="java.lang.String" value="International Patent Classification"/>
-                      </Properties>
-                    </Component>
-                    <Component class="javax.swing.JLabel" name="patCoopTreatyLbl">
-                      <Properties>
-                        <Property name="text" type="java.lang.String" value="Patent Cooperation Treaty"/>
-                        <Property name="toolTipText" type="java.lang.String" value="Patent Cooperation Treaty"/>
-                      </Properties>
-                    </Component>
-                    <Component class="javax.swing.JLabel" name="appPrioDataLbl">
-                      <Properties>
-                        <Property name="text" type="java.lang.String" value="(30) Application Priority Data"/>
-                        <Property name="toolTipText" type="java.lang.String" value="Application Priority Data"/>
-                      </Properties>
-                    </Component>
-                    <Component class="javax.swing.JLabel" name="availOfLicLbl">
-                      <Properties>
-                        <Property name="text" type="java.lang.String" value="Availability of License"/>
-                        <Property name="toolTipText" type="java.lang.String" value="Availability of License"/>
-                      </Properties>
-                    </Component>
+                        </DimensionLayout>
+                        <DimensionLayout dim="1">
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Group type="102" alignment="0" attributes="0">
+                                  <EmptySpace max="-2" attributes="0"/>
+                                  <Group type="103" groupAlignment="1" attributes="0">
+                                      <Group type="102" attributes="0">
+                                          <Component id="appNumLbl" min="-2" max="-2" attributes="0"/>
+                                          <EmptySpace max="-2" attributes="0"/>
+                                          <Component id="appNumTxtBox" min="-2" max="-2" attributes="0"/>
+                                      </Group>
+                                      <Group type="103" groupAlignment="0" attributes="0">
+                                          <Group type="102" attributes="0">
+                                              <Component id="docNumLbl" min="-2" max="-2" attributes="0"/>
+                                              <EmptySpace max="-2" attributes="0"/>
+                                              <Component id="docNumTxtBox" min="-2" max="-2" attributes="0"/>
+                                          </Group>
+                                          <Group type="102" attributes="0">
+                                              <Component id="docTypeLbl" min="-2" max="-2" attributes="0"/>
+                                              <EmptySpace max="-2" attributes="0"/>
+                                              <Component id="docTypeTxtBox" min="-2" max="-2" attributes="0"/>
+                                          </Group>
+                                      </Group>
+                                  </Group>
+                                  <EmptySpace max="-2" attributes="0"/>
+                                  <Group type="103" groupAlignment="1" attributes="0">
+                                      <Group type="102" alignment="1" attributes="0">
+                                          <Component id="invLbl" min="-2" max="-2" attributes="0"/>
+                                          <EmptySpace max="-2" attributes="0"/>
+                                          <Component id="investorTxtBox" min="-2" max="-2" attributes="0"/>
+                                      </Group>
+                                      <Group type="103" alignment="1" groupAlignment="0" attributes="0">
+                                          <Group type="102" alignment="0" attributes="0">
+                                              <Component id="frTitleLbl" min="-2" max="-2" attributes="0"/>
+                                              <EmptySpace max="-2" attributes="0"/>
+                                              <Component id="frTitleTxtBox" min="-2" max="-2" attributes="0"/>
+                                          </Group>
+                                          <Group type="102" alignment="0" attributes="0">
+                                              <Component id="engTitleLbl" min="-2" max="-2" attributes="0"/>
+                                              <EmptySpace max="-2" attributes="0"/>
+                                              <Component id="engTitleTxtBox" min="-2" max="-2" attributes="0"/>
+                                          </Group>
+                                      </Group>
+                                  </Group>
+                                  <EmptySpace max="-2" attributes="0"/>
+                                  <Group type="103" groupAlignment="1" attributes="0">
+                                      <Group type="102" alignment="1" attributes="0">
+                                          <Component id="agentLbl" min="-2" max="-2" attributes="0"/>
+                                          <EmptySpace max="-2" attributes="0"/>
+                                          <Component id="agentTxtBox" min="-2" max="-2" attributes="0"/>
+                                      </Group>
+                                      <Group type="103" alignment="1" groupAlignment="0" attributes="0">
+                                          <Group type="102" alignment="0" attributes="0">
+                                              <Component id="applicantsLbl" min="-2" max="-2" attributes="0"/>
+                                              <EmptySpace max="-2" attributes="0"/>
+                                              <Component id="applicantsTxtBox" min="-2" max="-2" attributes="0"/>
+                                          </Group>
+                                          <Group type="102" alignment="0" attributes="0">
+                                              <Component id="ownersLbl" min="-2" max="-2" attributes="0"/>
+                                              <EmptySpace max="-2" attributes="0"/>
+                                              <Component id="ownersTxtBox" min="-2" max="-2" attributes="0"/>
+                                          </Group>
+                                      </Group>
+                                  </Group>
+                                  <EmptySpace max="-2" attributes="0"/>
+                                  <Group type="103" groupAlignment="1" attributes="0">
+                                      <Group type="102" alignment="1" attributes="0">
+                                          <Component id="filedLbl" min="-2" max="-2" attributes="0"/>
+                                          <EmptySpace max="-2" attributes="0"/>
+                                          <Component id="filedTxtBox" min="-2" max="-2" attributes="0"/>
+                                      </Group>
+                                      <Group type="103" alignment="1" groupAlignment="0" attributes="0">
+                                          <Group type="102" alignment="0" attributes="0">
+                                              <Component id="reissuedLbl" min="-2" max="-2" attributes="0"/>
+                                              <EmptySpace max="-2" attributes="0"/>
+                                              <Component id="reissuedTxtBox" min="-2" max="-2" attributes="0"/>
+                                          </Group>
+                                          <Group type="102" alignment="0" attributes="0">
+                                              <Component id="issuedLbl" min="-2" max="-2" attributes="0"/>
+                                              <EmptySpace max="-2" attributes="0"/>
+                                              <Component id="issuedTxtBox" min="-2" max="-2" attributes="0"/>
+                                          </Group>
+                                      </Group>
+                                  </Group>
+                                  <EmptySpace max="-2" attributes="0"/>
+                                  <Group type="103" groupAlignment="1" attributes="0">
+                                      <Group type="102" alignment="1" attributes="0">
+                                          <Component id="reExamCertLbl" min="-2" max="-2" attributes="0"/>
+                                          <EmptySpace max="-2" attributes="0"/>
+                                          <Component id="reExamCertTxtBox" min="-2" max="-2" attributes="0"/>
+                                      </Group>
+                                      <Group type="103" alignment="1" groupAlignment="0" attributes="0">
+                                          <Group type="102" alignment="0" attributes="0">
+                                              <Component id="examReqLbl" min="-2" max="-2" attributes="0"/>
+                                              <EmptySpace max="-2" attributes="0"/>
+                                              <Component id="examRequestTxtBox" min="-2" max="-2" attributes="0"/>
+                                          </Group>
+                                          <Group type="102" alignment="0" attributes="0">
+                                              <Component id="openToPubLbl" min="-2" max="-2" attributes="0"/>
+                                              <EmptySpace max="-2" attributes="0"/>
+                                              <Component id="openToPubTxtBox" min="-2" max="-2" attributes="0"/>
+                                          </Group>
+                                      </Group>
+                                  </Group>
+                                  <EmptySpace max="-2" attributes="0"/>
+                                  <Group type="103" groupAlignment="1" attributes="0">
+                                      <Group type="102" alignment="1" attributes="0">
+                                          <Component id="patCoopTreatyLbl" min="-2" max="-2" attributes="0"/>
+                                          <EmptySpace max="-2" attributes="0"/>
+                                          <Component id="patCoopTreTxtBox" min="-2" max="-2" attributes="0"/>
+                                      </Group>
+                                      <Group type="103" alignment="1" groupAlignment="0" attributes="0">
+                                          <Group type="102" alignment="0" attributes="0">
+                                              <Component id="intPatClassLbl" min="-2" max="-2" attributes="0"/>
+                                              <EmptySpace max="-2" attributes="0"/>
+                                              <Component id="intPatentClassTxtBox" min="-2" max="-2" attributes="0"/>
+                                          </Group>
+                                          <Group type="102" alignment="0" attributes="0">
+                                              <Component id="canPatClassLbl" min="-2" max="-2" attributes="0"/>
+                                              <EmptySpace max="-2" attributes="0"/>
+                                              <Component id="canPatClassTxtBox" min="-2" max="-2" attributes="0"/>
+                                          </Group>
+                                      </Group>
+                                  </Group>
+                                  <EmptySpace max="-2" attributes="0"/>
+                                  <Group type="103" groupAlignment="0" attributes="0">
+                                      <Group type="102" alignment="0" attributes="0">
+                                          <Component id="availOfLicLbl" min="-2" max="-2" attributes="0"/>
+                                          <EmptySpace max="-2" attributes="0"/>
+                                          <Component id="availOfLicTxtBox" min="-2" max="-2" attributes="0"/>
+                                      </Group>
+                                      <Group type="102" alignment="0" attributes="0">
+                                          <Component id="appPrioDataLbl" min="-2" max="-2" attributes="0"/>
+                                          <EmptySpace max="-2" attributes="0"/>
+                                          <Component id="appPrioDataTxtBox" min="-2" max="-2" attributes="0"/>
+                                      </Group>
+                                  </Group>
+                                  <EmptySpace max="32767" attributes="0"/>
+                              </Group>
+                          </Group>
+                        </DimensionLayout>
+                      </Layout>
+                      <SubComponents>
+                        <Component class="javax.swing.JTextField" name="docTypeTxtBox">
+                          <Properties>
+                            <Property name="editable" type="boolean" value="false"/>
+                            <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+                              <Dimension value="[10, 26]"/>
+                            </Property>
+                          </Properties>
+                        </Component>
+                        <Component class="javax.swing.JTextField" name="docNumTxtBox">
+                          <Properties>
+                            <Property name="editable" type="boolean" value="false"/>
+                            <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+                              <Dimension value="[10, 26]"/>
+                            </Property>
+                          </Properties>
+                        </Component>
+                        <Component class="javax.swing.JTextField" name="appNumTxtBox">
+                          <Properties>
+                            <Property name="editable" type="boolean" value="false"/>
+                            <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+                              <Dimension value="[10, 26]"/>
+                            </Property>
+                          </Properties>
+                        </Component>
+                        <Component class="javax.swing.JTextField" name="engTitleTxtBox">
+                          <Properties>
+                            <Property name="editable" type="boolean" value="false"/>
+                            <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+                              <Dimension value="[10, 26]"/>
+                            </Property>
+                          </Properties>
+                        </Component>
+                        <Component class="javax.swing.JTextField" name="frTitleTxtBox">
+                          <Properties>
+                            <Property name="editable" type="boolean" value="false"/>
+                            <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+                              <Dimension value="[10, 26]"/>
+                            </Property>
+                          </Properties>
+                        </Component>
+                        <Component class="javax.swing.JTextField" name="investorTxtBox">
+                          <Properties>
+                            <Property name="editable" type="boolean" value="false"/>
+                            <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+                              <Dimension value="[10, 26]"/>
+                            </Property>
+                          </Properties>
+                        </Component>
+                        <Component class="javax.swing.JTextField" name="ownersTxtBox">
+                          <Properties>
+                            <Property name="editable" type="boolean" value="false"/>
+                            <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+                              <Dimension value="[10, 26]"/>
+                            </Property>
+                          </Properties>
+                        </Component>
+                        <Component class="javax.swing.JTextField" name="applicantsTxtBox">
+                          <Properties>
+                            <Property name="editable" type="boolean" value="false"/>
+                            <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+                              <Dimension value="[10, 26]"/>
+                            </Property>
+                          </Properties>
+                        </Component>
+                        <Component class="javax.swing.JTextField" name="agentTxtBox">
+                          <Properties>
+                            <Property name="editable" type="boolean" value="false"/>
+                            <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+                              <Dimension value="[10, 26]"/>
+                            </Property>
+                          </Properties>
+                        </Component>
+                        <Component class="javax.swing.JTextField" name="issuedTxtBox">
+                          <Properties>
+                            <Property name="editable" type="boolean" value="false"/>
+                            <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+                              <Dimension value="[10, 26]"/>
+                            </Property>
+                          </Properties>
+                        </Component>
+                        <Component class="javax.swing.JTextField" name="reissuedTxtBox">
+                          <Properties>
+                            <Property name="editable" type="boolean" value="false"/>
+                            <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+                              <Dimension value="[10, 26]"/>
+                            </Property>
+                          </Properties>
+                        </Component>
+                        <Component class="javax.swing.JTextField" name="filedTxtBox">
+                          <Properties>
+                            <Property name="editable" type="boolean" value="false"/>
+                            <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+                              <Dimension value="[10, 26]"/>
+                            </Property>
+                          </Properties>
+                        </Component>
+                        <Component class="javax.swing.JTextField" name="openToPubTxtBox">
+                          <Properties>
+                            <Property name="editable" type="boolean" value="false"/>
+                            <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+                              <Dimension value="[10, 26]"/>
+                            </Property>
+                          </Properties>
+                        </Component>
+                        <Component class="javax.swing.JTextField" name="examRequestTxtBox">
+                          <Properties>
+                            <Property name="editable" type="boolean" value="false"/>
+                            <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+                              <Dimension value="[10, 26]"/>
+                            </Property>
+                          </Properties>
+                        </Component>
+                        <Component class="javax.swing.JTextField" name="reExamCertTxtBox">
+                          <Properties>
+                            <Property name="editable" type="boolean" value="false"/>
+                            <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+                              <Dimension value="[10, 26]"/>
+                            </Property>
+                          </Properties>
+                        </Component>
+                        <Component class="javax.swing.JTextField" name="canPatClassTxtBox">
+                          <Properties>
+                            <Property name="editable" type="boolean" value="false"/>
+                            <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+                              <Dimension value="[10, 26]"/>
+                            </Property>
+                          </Properties>
+                        </Component>
+                        <Component class="javax.swing.JTextField" name="intPatentClassTxtBox">
+                          <Properties>
+                            <Property name="editable" type="boolean" value="false"/>
+                            <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+                              <Dimension value="[10, 26]"/>
+                            </Property>
+                          </Properties>
+                        </Component>
+                        <Component class="javax.swing.JTextField" name="patCoopTreTxtBox">
+                          <Properties>
+                            <Property name="editable" type="boolean" value="false"/>
+                            <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+                              <Dimension value="[10, 26]"/>
+                            </Property>
+                          </Properties>
+                        </Component>
+                        <Component class="javax.swing.JTextField" name="appPrioDataTxtBox">
+                          <Properties>
+                            <Property name="editable" type="boolean" value="false"/>
+                            <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+                              <Dimension value="[10, 26]"/>
+                            </Property>
+                          </Properties>
+                        </Component>
+                        <Component class="javax.swing.JTextField" name="availOfLicTxtBox">
+                          <Properties>
+                            <Property name="editable" type="boolean" value="false"/>
+                            <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+                              <Dimension value="[10, 26]"/>
+                            </Property>
+                          </Properties>
+                        </Component>
+                        <Component class="javax.swing.JLabel" name="docTypeLbl">
+                          <Properties>
+                            <Property name="text" type="java.lang.String" value="(12) Document Type"/>
+                            <Property name="toolTipText" type="java.lang.String" value="Document Type"/>
+                          </Properties>
+                        </Component>
+                        <Component class="javax.swing.JLabel" name="docNumLbl">
+                          <Properties>
+                            <Property name="text" type="java.lang.String" value="(11) Document Number"/>
+                            <Property name="toolTipText" type="java.lang.String" value="Document Number"/>
+                          </Properties>
+                        </Component>
+                        <Component class="javax.swing.JLabel" name="appNumLbl">
+                          <Properties>
+                            <Property name="text" type="java.lang.String" value="(21) Application Number"/>
+                            <Property name="toolTipText" type="java.lang.String" value="Application Number"/>
+                          </Properties>
+                        </Component>
+                        <Component class="javax.swing.JLabel" name="engTitleLbl">
+                          <Properties>
+                            <Property name="text" type="java.lang.String" value="(54) English Title"/>
+                            <Property name="toolTipText" type="java.lang.String" value="English Title"/>
+                          </Properties>
+                        </Component>
+                        <Component class="javax.swing.JLabel" name="frTitleLbl">
+                          <Properties>
+                            <Property name="text" type="java.lang.String" value="(54) French Title"/>
+                            <Property name="toolTipText" type="java.lang.String" value="French Title"/>
+                          </Properties>
+                        </Component>
+                        <Component class="javax.swing.JLabel" name="invLbl">
+                          <Properties>
+                            <Property name="text" type="java.lang.String" value="(72) Investor(s) (Country)"/>
+                            <Property name="toolTipText" type="java.lang.String" value="Investors (Country)"/>
+                          </Properties>
+                        </Component>
+                        <Component class="javax.swing.JLabel" name="ownersLbl">
+                          <Properties>
+                            <Property name="text" type="java.lang.String" value="(73) Owner(s) (Country)"/>
+                            <Property name="toolTipText" type="java.lang.String" value="Owners (Country)"/>
+                          </Properties>
+                        </Component>
+                        <Component class="javax.swing.JLabel" name="applicantsLbl">
+                          <Properties>
+                            <Property name="text" type="java.lang.String" value="(71) Applicant(s) (Country)"/>
+                            <Property name="toolTipText" type="java.lang.String" value="Applicants (Country)"/>
+                          </Properties>
+                        </Component>
+                        <Component class="javax.swing.JLabel" name="agentLbl">
+                          <Properties>
+                            <Property name="text" type="java.lang.String" value="(74) Agent"/>
+                            <Property name="toolTipText" type="java.lang.String" value="Agent"/>
+                          </Properties>
+                        </Component>
+                        <Component class="javax.swing.JLabel" name="issuedLbl">
+                          <Properties>
+                            <Property name="text" type="java.lang.String" value="(45) Issued"/>
+                            <Property name="toolTipText" type="java.lang.String" value="Issued"/>
+                          </Properties>
+                        </Component>
+                        <Component class="javax.swing.JLabel" name="reissuedLbl">
+                          <Properties>
+                            <Property name="text" type="java.lang.String" value="Reissued"/>
+                            <Property name="toolTipText" type="java.lang.String" value="Reissued"/>
+                          </Properties>
+                        </Component>
+                        <Component class="javax.swing.JLabel" name="filedLbl">
+                          <Properties>
+                            <Property name="text" type="java.lang.String" value="(22) Filed"/>
+                            <Property name="toolTipText" type="java.lang.String" value="Filed"/>
+                          </Properties>
+                        </Component>
+                        <Component class="javax.swing.JLabel" name="openToPubLbl">
+                          <Properties>
+                            <Property name="text" type="java.lang.String" value="(41) Open to Public Inspection"/>
+                            <Property name="toolTipText" type="java.lang.String" value="Open to Public Inspection"/>
+                          </Properties>
+                        </Component>
+                        <Component class="javax.swing.JLabel" name="examReqLbl">
+                          <Properties>
+                            <Property name="text" type="java.lang.String" value="Examination Requested"/>
+                            <Property name="toolTipText" type="java.lang.String" value="Examination Requested"/>
+                          </Properties>
+                        </Component>
+                        <Component class="javax.swing.JLabel" name="reExamCertLbl">
+                          <Properties>
+                            <Property name="text" type="java.lang.String" value="Re-examination Certificate(s)"/>
+                            <Property name="toolTipText" type="java.lang.String" value="Re-examination Certificate(s)"/>
+                          </Properties>
+                        </Component>
+                        <Component class="javax.swing.JLabel" name="canPatClassLbl">
+                          <Properties>
+                            <Property name="text" type="java.lang.String" value="(52) Canadian Patent Classification"/>
+                            <Property name="toolTipText" type="java.lang.String" value="Canadian Patent Classification"/>
+                          </Properties>
+                        </Component>
+                        <Component class="javax.swing.JLabel" name="intPatClassLbl">
+                          <Properties>
+                            <Property name="text" type="java.lang.String" value="(51) International Patent Classification"/>
+                            <Property name="toolTipText" type="java.lang.String" value="International Patent Classification"/>
+                          </Properties>
+                        </Component>
+                        <Component class="javax.swing.JLabel" name="patCoopTreatyLbl">
+                          <Properties>
+                            <Property name="text" type="java.lang.String" value="Patent Cooperation Treaty"/>
+                            <Property name="toolTipText" type="java.lang.String" value="Patent Cooperation Treaty"/>
+                          </Properties>
+                        </Component>
+                        <Component class="javax.swing.JLabel" name="appPrioDataLbl">
+                          <Properties>
+                            <Property name="text" type="java.lang.String" value="(30) Application Priority Data"/>
+                            <Property name="toolTipText" type="java.lang.String" value="Application Priority Data"/>
+                          </Properties>
+                        </Component>
+                        <Component class="javax.swing.JLabel" name="availOfLicLbl">
+                          <Properties>
+                            <Property name="text" type="java.lang.String" value="Availability of License"/>
+                            <Property name="toolTipText" type="java.lang.String" value="Availability of License"/>
+                          </Properties>
+                        </Component>
+                      </SubComponents>
+                    </Container>
                   </SubComponents>
                 </Container>
               </SubComponents>
@@ -1077,9 +1094,9 @@
           <Layout>
             <DimensionLayout dim="0">
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" alignment="0" attributes="0">
+                  <Group type="102" alignment="1" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="jScrollPane1" pref="725" max="32767" attributes="0"/>
+                      <Component id="jScrollPane1" pref="704" max="32767" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                   </Group>
               </Group>
@@ -1088,7 +1105,7 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="jScrollPane1" pref="391" max="32767" attributes="0"/>
+                      <Component id="jScrollPane1" pref="393" max="32767" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                   </Group>
               </Group>
