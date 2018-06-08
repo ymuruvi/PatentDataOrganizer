@@ -35,7 +35,7 @@ public class XMLFilter extends FileFilter{
 
     //The description of this filter
     public String getDescription() {
-        return "Just Images";
+        return "XML Files";
     }
     
 }
