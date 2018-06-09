@@ -44,6 +44,7 @@ public class ConverterGUI extends JFrame {
      * @param args
      */
     public static void main(String[] args) {
+        Tools.showIssueDialiogBox();
         records = new HashMap();
         currentStatus = Status.DEFAULT;
         /* Set the Nimbus look and feel */
