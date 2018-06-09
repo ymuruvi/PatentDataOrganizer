@@ -42,8 +42,8 @@ public class Tools {
         public static final String XML = "xml";
     }
 
-    public static void showIssueDialiogBox(){
-        JOptionPane.showMessageDialog(null, "Hello");
+    public static void testAccess(){
+        System.out.println("Access to " + Tools.class + " is working.");
     }
     
     /**
