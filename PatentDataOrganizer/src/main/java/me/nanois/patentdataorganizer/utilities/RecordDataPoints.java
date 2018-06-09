@@ -185,5 +185,10 @@ public class RecordDataPoints {
                 + documentNumber + ", englishTitle=" + englishTitle + ", frenchTitle="
                 + frenchTitle + ", examReq=" + examReq + '}';
     }
+    
+    private class RecordDataPoint{
+        Object data;
+        boolean enabled;
+    }
 
 }
