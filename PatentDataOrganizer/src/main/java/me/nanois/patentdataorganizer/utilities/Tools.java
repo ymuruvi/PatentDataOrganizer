@@ -10,6 +10,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import javax.swing.JOptionPane;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
 import org.apache.poi.ss.usermodel.CreationHelper;
@@ -41,6 +42,9 @@ public class Tools {
         public static final String XML = "xml";
     }
 
+    public static void testMessage(){
+        JOptionPane.showMessageDialog(null, "Error!!");
+    }
     
     /**
      * Altered Oracle tutorial code.

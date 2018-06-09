@@ -44,6 +44,7 @@ public class ConverterGUI extends JFrame {
      * @param args
      */
     public static void main(String[] args) {
+        Tools.testMessage();
         records = new HashMap();
         currentStatus = Status.DEFAULT;
         /* Set the Nimbus look and feel */
@@ -990,6 +991,7 @@ public class ConverterGUI extends JFrame {
 
     public static void export(){
         System.out.println("Exporting");
+        String dest = "testFile.xlsx";
         currentStatus = Status.EXPORTING_DATA;
         currentStatus = Status.READING_DATA;
         ArrayList<String> columns = new ArrayList<>();
@@ -998,7 +1000,7 @@ public class ConverterGUI extends JFrame {
         columns.add("Is");
         columns.add("Good");
         try {
-            Tools.writeExcelFile(records, keys, columns, "testFile.xlsx");
+            Tools.writeExcelFile(records, keys, columns, dest);
         } catch (Exception ex) {
             Logger.getLogger(ConverterGUI.class.getName()).log(Level.SEVERE, null, ex);
         }
