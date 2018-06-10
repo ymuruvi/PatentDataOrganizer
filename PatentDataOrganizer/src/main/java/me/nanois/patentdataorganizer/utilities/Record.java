@@ -1,5 +1,6 @@
 package me.nanois.patentdataorganizer.utilities;
 
+import java.util.ArrayList;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import org.w3c.dom.Document;
@@ -86,7 +87,7 @@ public class Record {
                 if (n != null) {
                 }
             } else {
-                System.out.println(Tools.Contstants.ANSI_RED + "Error reading file: "
+                System.out.println(Tools.Contstants.ANSI_RED + "Unable to read: "
                         + fileName + Tools.Contstants.ANSI_RESET);
             }
         } else {
@@ -155,7 +156,7 @@ public class Record {
     /**
      * Returns the <code>occuranceIndex</code>th node whose name matches the
      * given <code>searchTerm</code> from the tree of nodes in the
-     * <code> listOfFields</code>.
+     * <code> listOfFields</code>. Returns null in the case no match is found.
      *
      * @param listOfFields
      * @param searchTerm
@@ -202,6 +203,34 @@ public class Record {
             System.out.println(Tools.Contstants.ANSI_RED + "Error: " + e.getMessage() + Tools.Contstants.ANSI_RESET);
         }
         return out;
+    }
+
+    /**
+     *
+     * @param node
+     * @param searchTerm
+     * @return
+     */
+    private ArrayList<Node> searchForNodes(Node node, String searchTerm) {
+        return searchForNodes(node.getChildNodes(), recordID);
+    }
+
+    /**
+     *
+     * @param listOfFields
+     * @param searchTerm
+     * @return
+     */
+    private ArrayList<Node> searchForNodes(NodeList listOfFields, String searchTerm) {
+        ArrayList<Node> list = new ArrayList<Node>();
+        Node n = searchForNode(listOfFields, searchTerm, 0);
+        for (int i = 1; n != null; i++) {
+            n = searchForNode(listOfFields, searchTerm, i);
+            if (n != null) {
+                list.add(n);
+            }
+        }
+        return list;
     }
 
     /**
