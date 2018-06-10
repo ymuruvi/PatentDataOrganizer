@@ -1,9 +1,7 @@
 package me.nanois.patentdataorganizer;
 
-import java.awt.Cursor;
 import java.awt.EventQueue;
 import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.logging.Level;
@@ -12,7 +10,7 @@ import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 import javax.swing.JFrame;
-import javax.swing.Timer;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import me.nanois.patentdataorganizer.utilities.Record;
 import me.nanois.patentdataorganizer.utilities.Tools;
 
@@ -44,9 +42,11 @@ public class ConverterGUI extends JFrame {
      * @param args
      */
     public static void main(String[] args) {
-        try{
+        try {
             Tools.testAccess();
-        }catch(Exception e){
+        } catch (Exception e) {
+            System.out.println("Error loading classes.");
+            JOptionPane.showMessageDialog(null, "Error loading classes.");
             System.exit(0);
         }
         records = new HashMap();
@@ -98,7 +98,7 @@ public class ConverterGUI extends JFrame {
 
         if (folder != null) {
             if (folder.isDirectory()) {
-                
+
                 records = new HashMap();
                 keys = new ArrayList<>();
                 exportBtn.setEnabled(false);
@@ -114,9 +114,8 @@ public class ConverterGUI extends JFrame {
                      */
                     @Override
                     public void run() {
-                        
+
                         counter = 0;
-                        
 
                         currentStatus = Status.LOADING_DATA;
                         threads = 0;
@@ -142,7 +141,7 @@ public class ConverterGUI extends JFrame {
                                  */
                                 @Override
                                 public void run() {
-                                    
+
                                     try {
                                         if (f.isFile()) {
                                             if ("xml".equals(Tools.getExtension(filePath))) {
@@ -173,18 +172,17 @@ public class ConverterGUI extends JFrame {
 
                             /**
                              * Pauses the program while the maximum number of
-                             * threads has been met.
-                             * Used this thread to come to the conclusion of using volatile variables.
+                             * threads has been met. Used this thread to come to
+                             * the conclusion of using volatile variables.
                              * https://meta.stackoverflow.com/questions/269174/questions-about-threadloop-not-working-without-print-statement
                              */
-                            while (threads >= Math.min(MAX_THREADS,files.length)-1) {
+                            while (threads >= Math.min(MAX_THREADS, files.length) - 1) {
                                 //System.out.println("Waiting");
                             }
                             Thread handleFileThread = new Thread(new FileHandler(f));
                             threads++;
                             handleFileThread.start();
 
-                            
                         }
                         if (records.size() > 0) {
                             exportBtn.setEnabled(true);
@@ -197,8 +195,8 @@ public class ConverterGUI extends JFrame {
             }
         }
     }
-    
-    private void incrementProgressBar(double fileAmount){
+
+    private void incrementProgressBar(double fileAmount) {
         int value;
         double percent;
         counter++;
@@ -331,8 +329,10 @@ public class ConverterGUI extends JFrame {
 
         scrollPanel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
+        docTypeBox.setSelected(true);
         docTypeBox.setText("(12) Document Type");
         docTypeBox.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        docTypeBox.setEnabled(false);
 
         docNumBox.setText("Document Number");
         docNumBox.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
@@ -912,6 +912,11 @@ public class ConverterGUI extends JFrame {
 
         exportDataItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_S, java.awt.event.InputEvent.CTRL_MASK));
         exportDataItem.setText("Export Data");
+        exportDataItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                exportDataItemActionPerformed(evt);
+            }
+        });
         fileMenu.add(exportDataItem);
 
         menuBar.add(fileMenu);
@@ -962,7 +967,6 @@ public class ConverterGUI extends JFrame {
         openDirectory(currentDirectory);
     }//GEN-LAST:event_openFolderItemActionPerformed
 
-
     /**
      *
      * @param evt
@@ -993,23 +997,35 @@ public class ConverterGUI extends JFrame {
         export();
     }//GEN-LAST:event_exportBtnActionPerformed
 
-    public static void export(){
+    private void exportDataItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exportDataItemActionPerformed
+        if (currentStatus == Status.READING_DATA) {
+            export();
+        }
+    }//GEN-LAST:event_exportDataItemActionPerformed
+
+    public void export() {
         System.out.println("Exporting");
-        String dest = "testFile.xlsx";
-        currentStatus = Status.EXPORTING_DATA;
-        currentStatus = Status.READING_DATA;
-        ArrayList<String> columns = new ArrayList<>();
-        columns.add("Apple");
-        columns.add("Pie");
-        columns.add("Is");
-        columns.add("Good");
-        try {
-            Tools.writeExcelFile(records, keys, columns, dest);
-        } catch (Exception ex) {
-            Logger.getLogger(ConverterGUI.class.getName()).log(Level.SEVERE, null, ex);
+        String dest = chooseGraphicFilePath();
+
+        if (dest != null) {
+            if (!dest.endsWith(".xlsx")) {
+                dest += ".xlsx";
+            }
+            currentStatus = Status.EXPORTING_DATA;
+            currentStatus = Status.READING_DATA;
+            ArrayList<String> columns = new ArrayList<>();
+            columns.add("Apple");
+            columns.add("Pie");
+            columns.add("Is");
+            columns.add("Good");
+            try {
+                Tools.writeExcelFile(records, keys, columns, dest);
+            } catch (Exception ex) {
+                Logger.getLogger(ConverterGUI.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
     }
-    
+
     /**
      * Resets JTextField boxes
      */
@@ -1053,6 +1069,18 @@ public class ConverterGUI extends JFrame {
             System.out.println("No Option");
         }
         return out;
+    }
+
+    public String chooseGraphicFilePath() {
+        JFileChooser fileChooser = new JFileChooser();
+        fileChooser.setDialogTitle("Choose a file");
+        fileChooser.setFileFilter(new FileNameExtensionFilter(".xlsx", "xlsx"));
+        int userSelection = fileChooser.showSaveDialog(this);
+        if (userSelection == JFileChooser.APPROVE_OPTION) {
+            File out = fileChooser.getSelectedFile();
+            return out.getAbsolutePath();
+        }
+        return null;
     }
 
     //<editor-fold defaultstate="collapsed" desc=" Default Private Variable Declarations ">

@@ -10,7 +10,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
-import javax.swing.JOptionPane;
+import javax.swing.filechooser.FileFilter;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
 import org.apache.poi.ss.usermodel.CreationHelper;
@@ -136,6 +136,25 @@ public class Tools {
             workbook.close();
         } catch (IOException ex) {
             System.out.println("Error: " + ex.getMessage());
+        }
+
+    }
+    public class ExcelFileFilter extends FileFilter{
+
+        @Override
+        public boolean accept(File f) {
+            if(f.isFile()){
+                String ext = f.getName();
+                if(ext.equals("xlsx") || ext.equals("xls")){
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        @Override
+        public String getDescription() {
+            return "Excel Files";
         }
 
     }
