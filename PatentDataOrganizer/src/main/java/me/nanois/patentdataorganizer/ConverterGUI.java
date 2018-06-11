@@ -116,7 +116,6 @@ public class ConverterGUI extends JFrame {
                     public void run() {
 
                         counter = 0;
-
                         currentStatus = Status.LOADING_DATA;
                         threads = 0;
 
@@ -141,7 +140,6 @@ public class ConverterGUI extends JFrame {
                                  */
                                 @Override
                                 public void run() {
-
                                     try {
                                         if (f.isFile()) {
                                             if ("xml".equals(Tools.getExtension(filePath))) {
@@ -169,7 +167,6 @@ public class ConverterGUI extends JFrame {
                                     threads--;
                                 }
                             }
-
                             /**
                              * Pauses the program while the maximum number of
                              * threads has been met. Used this thread to come to
@@ -211,13 +208,6 @@ public class ConverterGUI extends JFrame {
     public ConverterGUI() {
         currentDirectory = null;
         initComponents();
-    }
-
-    /**
-     *
-     */
-    public void initGUI() {
-        File f = chooseGraphicDirectory();
     }
 
     /**
@@ -972,23 +962,11 @@ public class ConverterGUI extends JFrame {
      * @param evt
      */
     private void searchDocNumBtnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_searchDocNumBtnActionPerformed
-        resetTxtBoxes();
-        Record r;
-        String searchNum;
-
-        searchNum = docNumSearchBox.getText();
-        r = null;
-        r = (Record) records.get(searchNum);
-
-        if (r == null) {
-            JOptionPane.showMessageDialog(null, "No such record found.", "Warning", JOptionPane.CANCEL_OPTION);
-        } else {
-            docNumTxtBox.setText(r.getDataPoints().getDocumentNumber());
-            engTitleTxtBox.setText(r.getDataPoints().getEnglishTitle());
-            frTitleTxtBox.setText(r.getDataPoints().getFrenchTitle());
-        }
+        fillSearchBoxes();
     }//GEN-LAST:event_searchDocNumBtnActionPerformed
 
+    
+    
     /**
      *
      * @param evt
@@ -1023,6 +1001,27 @@ public class ConverterGUI extends JFrame {
             } catch (Exception ex) {
                 Logger.getLogger(ConverterGUI.class.getName()).log(Level.SEVERE, null, ex);
             }
+        }
+    }
+    
+    private void fillSearchBoxes(){
+        resetTxtBoxes();
+        Record r;
+        String searchNum;
+
+        searchNum = docNumSearchBox.getText();
+        r = null;
+        r = (Record) records.get(searchNum);
+
+        if (r == null) {
+            JOptionPane.showMessageDialog(null, "No such record found.", "Warning", JOptionPane.CANCEL_OPTION);
+        } else {
+            docNumTxtBox.setText(r.getDataPoints().getDocumentNumber());
+            engTitleTxtBox.setText(r.getDataPoints().getEnglishTitle());
+            frTitleTxtBox.setText(r.getDataPoints().getFrenchTitle());
+            //docTypeTxtBox.setText(r.getDataPoints().getDo);
+            appNumTxtBox.setText(r.getDataPoints().getAppNum());
+            
         }
     }
 
@@ -1081,6 +1080,13 @@ public class ConverterGUI extends JFrame {
             return out.getAbsolutePath();
         }
         return null;
+    }
+    
+        /**
+     *
+     */
+    public void initGUI() {
+        File f = chooseGraphicDirectory();
     }
 
     //<editor-fold defaultstate="collapsed" desc=" Default Private Variable Declarations ">
