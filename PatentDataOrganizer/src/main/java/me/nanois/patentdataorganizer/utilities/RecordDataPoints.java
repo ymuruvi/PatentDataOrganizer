@@ -120,7 +120,7 @@ public class RecordDataPoints {
         this.agent = agent;
     }
 
-    public String getApplicationNumber() {
+    public String getAppNum() {
         return applicationNumber;
     }
 
