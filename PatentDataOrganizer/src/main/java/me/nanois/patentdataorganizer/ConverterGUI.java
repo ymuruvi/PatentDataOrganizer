@@ -1,11 +1,13 @@
 package me.nanois.patentdataorganizer;
 
+import java.awt.Component;
 import java.awt.EventQueue;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JCheckBox;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.UIManager;
@@ -150,6 +152,7 @@ public class ConverterGUI extends JFrame {
                                                 try {
                                                     records.put(r.getRecordID(), r);
                                                     keys.add(r.getRecordID());
+                                                    enableExport();
                                                 } catch (Exception e) {
                                                     System.out.println(Tools.Contstants.ANSI_RED + "Error: "
                                                             + e + Tools.Contstants.ANSI_RESET);
@@ -174,22 +177,35 @@ public class ConverterGUI extends JFrame {
                              * https://meta.stackoverflow.com/questions/269174/questions-about-threadloop-not-working-without-print-statement
                              */
                             while (threads >= Math.min(MAX_THREADS, files.length)) {
-                                //System.out.println("Waiting");
+                                //System.out.println("T: " + threads + "M: " + Math.min(MAX_THREADS, files.length));
                             }
                             Thread handleFileThread = new Thread(new FileHandler(f));
                             threads++;
                             handleFileThread.start();
 
                         }
-                        if (records.size() > 0) {
-                            exportBtn.setEnabled(true);
-                        }
-                        currentStatus = Status.READING_DATA;
+
                     }
                 };
                 Thread t = new Thread(openingFiles);
                 t.start();
             }
+        }
+        if(records.size() > 0){
+            currentStatus = Status.READING_DATA;
+        }
+    }
+
+    /**
+     * 
+     */
+    private void enableExport() {
+        if (records.size() > 0) {
+            if(!exportBtn.isEnabled()){
+                System.out.println(Tools.Contstants.ANSI_BLUE + "Enabling Export" + Tools.Contstants.ANSI_RESET);
+                exportBtn.setEnabled(true);
+            }
+            
         }
     }
 
@@ -197,7 +213,7 @@ public class ConverterGUI extends JFrame {
         int value;
         double percent;
         counter++;
-        percent = ((double) counter) / (fileAmount);
+        percent = Math.round((double) counter) / (fileAmount);
         value = (int) (percent * 100.0);
         loadingProgressBar.setValue(value);
     }
@@ -246,6 +262,7 @@ public class ConverterGUI extends JFrame {
         patentCoopTreatyBox = new javax.swing.JCheckBox();
         appPriorityDataBox = new javax.swing.JCheckBox();
         availOfLicBox = new javax.swing.JCheckBox();
+        availOfLicBox1 = new javax.swing.JCheckBox();
         recordViewPanel = new javax.swing.JPanel();
         docNumSearchBox = new javax.swing.JTextField();
         docNumSearchLbl = new javax.swing.JLabel();
@@ -272,6 +289,7 @@ public class ConverterGUI extends JFrame {
         patCoopTreTxtBox = new javax.swing.JTextField();
         appPrioDataTxtBox = new javax.swing.JTextField();
         availOfLicTxtBox = new javax.swing.JTextField();
+        pctIssueDateTxtBox = new javax.swing.JTextField();
         docTypeLbl = new javax.swing.JLabel();
         docNumLbl = new javax.swing.JLabel();
         appNumLbl = new javax.swing.JLabel();
@@ -292,6 +310,7 @@ public class ConverterGUI extends JFrame {
         patCoopTreatyLbl = new javax.swing.JLabel();
         appPrioDataLbl = new javax.swing.JLabel();
         availOfLicLbl = new javax.swing.JLabel();
+        pctIssueDateLbl = new javax.swing.JLabel();
         loadingProgressBar = new javax.swing.JProgressBar();
         exportBtn = new javax.swing.JButton();
         tab2Panel = new javax.swing.JPanel();
@@ -319,13 +338,13 @@ public class ConverterGUI extends JFrame {
 
         scrollPanel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
-        docTypeBox.setSelected(true);
-        docTypeBox.setText("(12) Document Type");
+        docTypeBox.setText("Document Type");
         docTypeBox.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        docTypeBox.setEnabled(false);
 
+        docNumBox.setSelected(true);
         docNumBox.setText("Document Number");
         docNumBox.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        docNumBox.setEnabled(false);
 
         appNumBox.setText("Application Number");
         appNumBox.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
@@ -381,6 +400,9 @@ public class ConverterGUI extends JFrame {
         availOfLicBox.setText("Availability of License");
         availOfLicBox.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
 
+        availOfLicBox1.setText("PCT Publication Date");
+        availOfLicBox1.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+
         javax.swing.GroupLayout outputDocOptionsPanelLayout = new javax.swing.GroupLayout(outputDocOptionsPanel);
         outputDocOptionsPanel.setLayout(outputDocOptionsPanelLayout);
         outputDocOptionsPanelLayout.setHorizontalGroup(
@@ -407,7 +429,8 @@ public class ConverterGUI extends JFrame {
                     .addComponent(reExamCertBox)
                     .addComponent(patentCoopTreatyBox)
                     .addComponent(appPriorityDataBox)
-                    .addComponent(availOfLicBox))
+                    .addComponent(availOfLicBox)
+                    .addComponent(availOfLicBox1))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         outputDocOptionsPanelLayout.setVerticalGroup(
@@ -453,7 +476,9 @@ public class ConverterGUI extends JFrame {
                 .addComponent(appPriorityDataBox)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(availOfLicBox)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(availOfLicBox1)
+                .addContainerGap(107, Short.MAX_VALUE))
         );
 
         scrollPanel.setViewportView(outputDocOptionsPanel);
@@ -536,6 +561,9 @@ public class ConverterGUI extends JFrame {
         availOfLicTxtBox.setEditable(false);
         availOfLicTxtBox.setMaximumSize(new java.awt.Dimension(10, 26));
 
+        pctIssueDateTxtBox.setEditable(false);
+        pctIssueDateTxtBox.setMaximumSize(new java.awt.Dimension(10, 26));
+
         docTypeLbl.setText("(12) Document Type");
         docTypeLbl.setToolTipText("Document Type");
 
@@ -595,6 +623,9 @@ public class ConverterGUI extends JFrame {
 
         availOfLicLbl.setText("Availability of License");
         availOfLicLbl.setToolTipText("Availability of License");
+
+        pctIssueDateLbl.setText("PCT Publication Date");
+        pctIssueDateLbl.setToolTipText("Patent Cooperation Treaty");
 
         javax.swing.GroupLayout recordDataPanelLayout = new javax.swing.GroupLayout(recordDataPanel);
         recordDataPanel.setLayout(recordDataPanelLayout);
@@ -682,8 +713,12 @@ public class ConverterGUI extends JFrame {
                         .addGap(18, 18, 18)
                         .addGroup(recordDataPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(availOfLicTxtBox, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(availOfLicLbl, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(availOfLicLbl, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addGroup(recordDataPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(pctIssueDateTxtBox, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(pctIssueDateLbl, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap(34, Short.MAX_VALUE))
         );
         recordDataPanelLayout.setVerticalGroup(
             recordDataPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -787,7 +822,11 @@ public class ConverterGUI extends JFrame {
                     .addGroup(recordDataPanelLayout.createSequentialGroup()
                         .addComponent(appPrioDataLbl)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(appPrioDataTxtBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(appPrioDataTxtBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(recordDataPanelLayout.createSequentialGroup()
+                        .addComponent(pctIssueDateLbl)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(pctIssueDateTxtBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -800,7 +839,7 @@ public class ConverterGUI extends JFrame {
             .addGroup(recordViewPanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(recordViewPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 534, Short.MAX_VALUE)
+                    .addComponent(jScrollPane2)
                     .addGroup(recordViewPanelLayout.createSequentialGroup()
                         .addComponent(docNumSearchLbl)
                         .addGap(18, 18, 18)
@@ -819,8 +858,8 @@ public class ConverterGUI extends JFrame {
                     .addComponent(docNumSearchBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(docNumSearchLbl))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         loadingProgressBar.setToolTipText("");
@@ -854,11 +893,11 @@ public class ConverterGUI extends JFrame {
             .addGroup(recordPanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(recordPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(recordViewPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(recordViewPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(recordPanelLayout.createSequentialGroup()
                         .addComponent(loadingProgressBar, javax.swing.GroupLayout.PREFERRED_SIZE, 21, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(scrollPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                        .addComponent(scrollPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 265, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(exportBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -883,7 +922,7 @@ public class ConverterGUI extends JFrame {
             tab2PanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(tab2PanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 350, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 693, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -941,7 +980,7 @@ public class ConverterGUI extends JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(tabbedPane, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(tabbedPane, javax.swing.GroupLayout.PREFERRED_SIZE, 390, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -965,8 +1004,6 @@ public class ConverterGUI extends JFrame {
         fillSearchBoxes();
     }//GEN-LAST:event_searchDocNumBtnActionPerformed
 
-    
-    
     /**
      *
      * @param evt
@@ -992,10 +1029,7 @@ public class ConverterGUI extends JFrame {
             currentStatus = Status.EXPORTING_DATA;
             currentStatus = Status.READING_DATA;
             ArrayList<String> columns = new ArrayList<>();
-            columns.add("Apple");
-            columns.add("Pie");
-            columns.add("Is");
-            columns.add("Good");
+            getOutputColumns(columns);
             try {
                 Tools.writeExcelFile(records, keys, columns, dest);
             } catch (Exception ex) {
@@ -1004,7 +1038,21 @@ public class ConverterGUI extends JFrame {
         }
     }
     
-    private void fillSearchBoxes(){
+    private void getOutputColumns(ArrayList<String> columns){
+        if(docNumBox.isSelected()){
+            //columns.add("Document Number");
+        }
+        Component[] components = outputDocOptionsPanel.getComponents();
+        for(Component c: components){
+            if(c instanceof JCheckBox){
+                if(((JCheckBox) c).isSelected()){
+                    columns.add(((JCheckBox) c).getText());
+                }
+            }
+        }
+    }
+
+    private void fillSearchBoxes() {
         resetTxtBoxes();
         Record r;
         String searchNum;
@@ -1019,9 +1067,22 @@ public class ConverterGUI extends JFrame {
             docNumTxtBox.setText(r.getDataPoints().getDocumentNumber());
             engTitleTxtBox.setText(r.getDataPoints().getEnglishTitle());
             frTitleTxtBox.setText(r.getDataPoints().getFrenchTitle());
-            //docTypeTxtBox.setText(r.getDataPoints().getDo);
             appNumTxtBox.setText(r.getDataPoints().getAppNum());
-            
+            investorTxtBox.setText("");
+            ownersTxtBox.setText("");
+            applicantsTxtBox.setText("");
+            agentTxtBox.setText(r.getDataPoints().getAgent());
+            issuedTxtBox.setText(r.getDataPoints().getIssuedDate().getReadable());
+            reissuedTxtBox.setText("");
+            filedTxtBox.setText(r.getDataPoints().getFiledDate().getReadable());
+            openToPubTxtBox.setText(r.getDataPoints().getOpenToPubInsp().getReadable());
+            examRequestTxtBox.setText(r.getDataPoints().getExamReq());
+            reExamCertTxtBox.setText("");
+            canPatClassTxtBox.setText("");
+            intPatentClassTxtBox.setText("");
+            patCoopTreTxtBox.setText("");
+            appPrioDataTxtBox.setText("");
+            availOfLicTxtBox.setText("");
         }
     }
 
@@ -1081,8 +1142,8 @@ public class ConverterGUI extends JFrame {
         }
         return null;
     }
-    
-        /**
+
+    /**
      *
      */
     public void initGUI() {
@@ -1104,6 +1165,7 @@ public class ConverterGUI extends JFrame {
     private javax.swing.JLabel applicantsLbl;
     private javax.swing.JTextField applicantsTxtBox;
     private javax.swing.JCheckBox availOfLicBox;
+    private javax.swing.JCheckBox availOfLicBox1;
     private javax.swing.JLabel availOfLicLbl;
     private javax.swing.JTextField availOfLicTxtBox;
     private javax.swing.JCheckBox canPatClassBox;
@@ -1163,6 +1225,8 @@ public class ConverterGUI extends JFrame {
     private javax.swing.JTextField patCoopTreTxtBox;
     private javax.swing.JLabel patCoopTreatyLbl;
     private javax.swing.JCheckBox patentCoopTreatyBox;
+    private javax.swing.JLabel pctIssueDateLbl;
+    private javax.swing.JTextField pctIssueDateTxtBox;
     private javax.swing.JCheckBox reExamCertBox;
     private javax.swing.JLabel reExamCertLbl;
     private javax.swing.JTextField reExamCertTxtBox;
