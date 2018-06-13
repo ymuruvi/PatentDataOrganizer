@@ -114,7 +114,7 @@
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
-              <Component id="tabbedPane" min="-2" max="-2" attributes="0"/>
+              <Component id="tabbedPane" min="-2" pref="390" max="-2" attributes="0"/>
               <EmptySpace max="32767" attributes="0"/>
           </Group>
       </Group>
@@ -161,11 +161,11 @@
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                          <Component id="recordViewPanel" min="-2" max="-2" attributes="0"/>
+                          <Component id="recordViewPanel" max="32767" attributes="0"/>
                           <Group type="102" attributes="0">
                               <Component id="loadingProgressBar" min="-2" pref="21" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
-                              <Component id="scrollPanel" pref="0" max="32767" attributes="0"/>
+                              <Component id="scrollPanel" min="-2" pref="265" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
                               <Component id="exportBtn" min="-2" pref="44" max="-2" attributes="0"/>
                           </Group>
@@ -215,6 +215,7 @@
                                   <Component id="patentCoopTreatyBox" alignment="0" min="-2" max="-2" attributes="0"/>
                                   <Component id="appPriorityDataBox" alignment="0" min="-2" max="-2" attributes="0"/>
                                   <Component id="availOfLicBox" alignment="0" min="-2" max="-2" attributes="0"/>
+                                  <Component id="availOfLicBox1" alignment="0" min="-2" max="-2" attributes="0"/>
                               </Group>
                               <EmptySpace max="32767" attributes="0"/>
                           </Group>
@@ -263,7 +264,9 @@
                               <Component id="appPriorityDataBox" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
                               <Component id="availOfLicBox" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace max="32767" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Component id="availOfLicBox1" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace pref="107" max="32767" attributes="0"/>
                           </Group>
                       </Group>
                     </DimensionLayout>
@@ -271,20 +274,20 @@
                   <SubComponents>
                     <Component class="javax.swing.JCheckBox" name="docTypeBox">
                       <Properties>
-                        <Property name="selected" type="boolean" value="true"/>
-                        <Property name="text" type="java.lang.String" value="(12) Document Type"/>
+                        <Property name="text" type="java.lang.String" value="Document Type"/>
                         <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
                           <Color id="Default Cursor"/>
                         </Property>
-                        <Property name="enabled" type="boolean" value="false"/>
                       </Properties>
                     </Component>
                     <Component class="javax.swing.JCheckBox" name="docNumBox">
                       <Properties>
+                        <Property name="selected" type="boolean" value="true"/>
                         <Property name="text" type="java.lang.String" value="Document Number"/>
                         <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
                           <Color id="Default Cursor"/>
                         </Property>
+                        <Property name="enabled" type="boolean" value="false"/>
                       </Properties>
                     </Component>
                     <Component class="javax.swing.JCheckBox" name="appNumBox">
@@ -431,6 +434,14 @@
                         </Property>
                       </Properties>
                     </Component>
+                    <Component class="javax.swing.JCheckBox" name="availOfLicBox1">
+                      <Properties>
+                        <Property name="text" type="java.lang.String" value="PCT Publication Date"/>
+                        <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
+                          <Color id="Default Cursor"/>
+                        </Property>
+                      </Properties>
+                    </Component>
                   </SubComponents>
                 </Container>
               </SubComponents>
@@ -450,7 +461,7 @@
                       <Group type="102" alignment="0" attributes="0">
                           <EmptySpace max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="jScrollPane2" pref="534" max="32767" attributes="0"/>
+                              <Component id="jScrollPane2" max="32767" attributes="0"/>
                               <Group type="102" attributes="0">
                                   <Component id="docNumSearchLbl" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace type="separate" max="-2" attributes="0"/>
@@ -474,8 +485,8 @@
                               <Component id="docNumSearchLbl" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="jScrollPane2" min="-2" pref="300" max="-2" attributes="0"/>
-                          <EmptySpace max="32767" attributes="0"/>
+                          <Component id="jScrollPane2" pref="0" max="32767" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
@@ -629,9 +640,14 @@
                                               <Component id="availOfLicTxtBox" alignment="0" max="32767" attributes="0"/>
                                               <Component id="availOfLicLbl" alignment="0" min="-2" pref="150" max="-2" attributes="0"/>
                                           </Group>
+                                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                              <Component id="pctIssueDateTxtBox" alignment="0" max="32767" attributes="0"/>
+                                              <Component id="pctIssueDateLbl" alignment="0" min="-2" pref="150" max="-2" attributes="0"/>
+                                          </Group>
                                       </Group>
                                   </Group>
-                                  <EmptySpace max="32767" attributes="0"/>
+                                  <EmptySpace pref="34" max="32767" attributes="0"/>
                               </Group>
                           </Group>
                         </DimensionLayout>
@@ -769,6 +785,11 @@
                                           <Component id="appPrioDataLbl" min="-2" max="-2" attributes="0"/>
                                           <EmptySpace max="-2" attributes="0"/>
                                           <Component id="appPrioDataTxtBox" min="-2" max="-2" attributes="0"/>
+                                      </Group>
+                                      <Group type="102" attributes="0">
+                                          <Component id="pctIssueDateLbl" min="-2" max="-2" attributes="0"/>
+                                          <EmptySpace max="-2" attributes="0"/>
+                                          <Component id="pctIssueDateTxtBox" min="-2" max="-2" attributes="0"/>
                                       </Group>
                                   </Group>
                                   <EmptySpace max="32767" attributes="0"/>
@@ -937,6 +958,14 @@
                             </Property>
                           </Properties>
                         </Component>
+                        <Component class="javax.swing.JTextField" name="pctIssueDateTxtBox">
+                          <Properties>
+                            <Property name="editable" type="boolean" value="false"/>
+                            <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+                              <Dimension value="[10, 26]"/>
+                            </Property>
+                          </Properties>
+                        </Component>
                         <Component class="javax.swing.JLabel" name="docTypeLbl">
                           <Properties>
                             <Property name="text" type="java.lang.String" value="(12) Document Type"/>
@@ -1057,6 +1086,12 @@
                             <Property name="toolTipText" type="java.lang.String" value="Availability of License"/>
                           </Properties>
                         </Component>
+                        <Component class="javax.swing.JLabel" name="pctIssueDateLbl">
+                          <Properties>
+                            <Property name="text" type="java.lang.String" value="PCT Publication Date"/>
+                            <Property name="toolTipText" type="java.lang.String" value="Patent Cooperation Treaty"/>
+                          </Properties>
+                        </Component>
                       </SubComponents>
                     </Container>
                   </SubComponents>
@@ -1106,7 +1141,7 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="jScrollPane1" pref="350" max="32767" attributes="0"/>
+                      <Component id="jScrollPane1" pref="693" max="32767" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                   </Group>
               </Group>

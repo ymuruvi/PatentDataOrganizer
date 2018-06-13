@@ -42,10 +42,10 @@ public class Tools {
         public static final String XML = "xml";
     }
 
-    public static void testAccess(){
+    public static void testAccess() {
         System.out.println("Access to " + Tools.class + " is working.");
     }
-    
+
     /**
      * Altered Oracle tutorial code.
      *
@@ -77,14 +77,15 @@ public class Tools {
     }
 
     /**
-     * This code is derrived from some code I found online, I lost track of
-     * the link because windoze 10 decided to go rogue and update. If and
-     * when I find the site again I will credit them.
+     * This code is derrived from some code I found online, I lost track of the
+     * link because windoze 10 decided to go rogue and update. If and when I
+     * find the site again I will credit them.
+     *
      * @param records
      * @param keys
      * @param columns
      * @param filePath xlsx File path
-     * 
+     *
      */
     public static void writeExcelFile(HashMap records, ArrayList<String> keys, ArrayList<String> columns, String filePath) {
         CellStyle headerCellStyle;
@@ -121,12 +122,17 @@ public class Tools {
         int rowNum = 1;
         for (String key : keys) {
             Row row = sheet.createRow(rowNum++);
-            row.createCell(0).setCellValue(key);
-            row.createCell(1).setCellValue(key.toUpperCase());
+            int i = 0;
+            for(String c : columns){
+                String s = ((Record)records.get(key)).getDataPoints().getDataPoint(c);
+                row.createCell(i).setCellValue(s);
+                i++;
+            }
+
         }
 
         for (int i = 0; i < columns.size(); i++) {
-            sheet.autoSizeColumn(i);
+            //sheet.autoSizeColumn(i);
         }
 
         try {
@@ -137,15 +143,16 @@ public class Tools {
         } catch (IOException ex) {
             System.out.println("Error: " + ex.getMessage());
         }
-
+        System.out.println("Finished Exporting");
     }
-    public class ExcelFileFilter extends FileFilter{
+
+    public class ExcelFileFilter extends FileFilter {
 
         @Override
         public boolean accept(File f) {
-            if(f.isFile()){
+            if (f.isFile()) {
                 String ext = f.getName();
-                if(ext.equals("xlsx") || ext.equals("xls")){
+                if (ext.equals("xlsx") || ext.equals("xls")) {
                     return true;
                 }
             }
