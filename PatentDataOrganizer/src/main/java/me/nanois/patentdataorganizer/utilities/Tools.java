@@ -124,11 +124,12 @@ public class Tools {
             Row row = sheet.createRow(rowNum++);
             int i = 0;
             for(String c : columns){
-                String s = ((Record)records.get(key)).getDataPoints().getDataPoint(c);
+                Record r = ((Record)records.get(key));
+                RecordDataPoints dp = r.getDataPoints();
+                String s = dp.getDataPoint(c);
                 row.createCell(i).setCellValue(s);
                 i++;
             }
-
         }
 
         for (int i = 0; i < columns.size(); i++) {
