@@ -274,6 +274,7 @@
                   <SubComponents>
                     <Component class="javax.swing.JCheckBox" name="docTypeBox">
                       <Properties>
+                        <Property name="selected" type="boolean" value="true"/>
                         <Property name="text" type="java.lang.String" value="Document Type"/>
                         <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
                           <Color id="Default Cursor"/>
@@ -292,6 +293,7 @@
                     </Component>
                     <Component class="javax.swing.JCheckBox" name="appNumBox">
                       <Properties>
+                        <Property name="selected" type="boolean" value="true"/>
                         <Property name="text" type="java.lang.String" value="Application Number"/>
                         <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
                           <Color id="Default Cursor"/>
@@ -300,6 +302,7 @@
                     </Component>
                     <Component class="javax.swing.JCheckBox" name="engTitleBox">
                       <Properties>
+                        <Property name="selected" type="boolean" value="true"/>
                         <Property name="text" type="java.lang.String" value="English Title"/>
                         <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
                           <Color id="Default Cursor"/>
@@ -308,6 +311,7 @@
                     </Component>
                     <Component class="javax.swing.JCheckBox" name="frTitleBox">
                       <Properties>
+                        <Property name="selected" type="boolean" value="true"/>
                         <Property name="text" type="java.lang.String" value="French Title"/>
                         <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
                           <Color id="Default Cursor"/>
@@ -316,6 +320,7 @@
                     </Component>
                     <Component class="javax.swing.JCheckBox" name="inventorsBox">
                       <Properties>
+                        <Property name="selected" type="boolean" value="true"/>
                         <Property name="text" type="java.lang.String" value="Inventors"/>
                         <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
                           <Color id="Default Cursor"/>
@@ -324,6 +329,7 @@
                     </Component>
                     <Component class="javax.swing.JCheckBox" name="ownersBox">
                       <Properties>
+                        <Property name="selected" type="boolean" value="true"/>
                         <Property name="text" type="java.lang.String" value="Owners"/>
                         <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
                           <Color id="Default Cursor"/>
@@ -332,6 +338,7 @@
                     </Component>
                     <Component class="javax.swing.JCheckBox" name="applicantsBox">
                       <Properties>
+                        <Property name="selected" type="boolean" value="true"/>
                         <Property name="text" type="java.lang.String" value="Applicants"/>
                         <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
                           <Color id="Default Cursor"/>
@@ -340,6 +347,7 @@
                     </Component>
                     <Component class="javax.swing.JCheckBox" name="agentBox">
                       <Properties>
+                        <Property name="selected" type="boolean" value="true"/>
                         <Property name="text" type="java.lang.String" value="Agent"/>
                         <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
                           <Color id="Default Cursor"/>
@@ -348,6 +356,7 @@
                     </Component>
                     <Component class="javax.swing.JCheckBox" name="issuedBox">
                       <Properties>
+                        <Property name="selected" type="boolean" value="true"/>
                         <Property name="text" type="java.lang.String" value="Issued"/>
                         <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
                           <Color id="Default Cursor"/>
@@ -356,6 +365,7 @@
                     </Component>
                     <Component class="javax.swing.JCheckBox" name="reissuedBox">
                       <Properties>
+                        <Property name="selected" type="boolean" value="true"/>
                         <Property name="text" type="java.lang.String" value="Reissued"/>
                         <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
                           <Color id="Default Cursor"/>
@@ -364,6 +374,7 @@
                     </Component>
                     <Component class="javax.swing.JCheckBox" name="filedBox">
                       <Properties>
+                        <Property name="selected" type="boolean" value="true"/>
                         <Property name="text" type="java.lang.String" value="Filed"/>
                         <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
                           <Color id="Default Cursor"/>
@@ -372,6 +383,7 @@
                     </Component>
                     <Component class="javax.swing.JCheckBox" name="openToPubInspBox">
                       <Properties>
+                        <Property name="selected" type="boolean" value="true"/>
                         <Property name="text" type="java.lang.String" value="Open To Public Inspection"/>
                         <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
                           <Color id="Default Cursor"/>
@@ -380,6 +392,7 @@
                     </Component>
                     <Component class="javax.swing.JCheckBox" name="examReqBox">
                       <Properties>
+                        <Property name="selected" type="boolean" value="true"/>
                         <Property name="text" type="java.lang.String" value="Examination Requested"/>
                         <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
                           <Color id="Default Cursor"/>
@@ -388,6 +401,7 @@
                     </Component>
                     <Component class="javax.swing.JCheckBox" name="reExamCertBox">
                       <Properties>
+                        <Property name="selected" type="boolean" value="true"/>
                         <Property name="text" type="java.lang.String" value="Re-examination Certificate"/>
                         <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
                           <Color id="Default Cursor"/>
@@ -396,6 +410,7 @@
                     </Component>
                     <Component class="javax.swing.JCheckBox" name="canPatClassBox">
                       <Properties>
+                        <Property name="selected" type="boolean" value="true"/>
                         <Property name="text" type="java.lang.String" value="Canadian Patent Classification"/>
                         <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
                           <Color id="Default Cursor"/>
@@ -404,6 +419,7 @@
                     </Component>
                     <Component class="javax.swing.JCheckBox" name="intPatentClassBox">
                       <Properties>
+                        <Property name="selected" type="boolean" value="true"/>
                         <Property name="text" type="java.lang.String" value="International Patent Classification"/>
                         <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
                           <Color id="Default Cursor"/>
@@ -412,6 +428,7 @@
                     </Component>
                     <Component class="javax.swing.JCheckBox" name="patentCoopTreatyBox">
                       <Properties>
+                        <Property name="selected" type="boolean" value="true"/>
                         <Property name="text" type="java.lang.String" value="Patent Cooperation Treaty"/>
                         <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
                           <Color id="Default Cursor"/>
@@ -420,6 +437,7 @@
                     </Component>
                     <Component class="javax.swing.JCheckBox" name="appPriorityDataBox">
                       <Properties>
+                        <Property name="selected" type="boolean" value="true"/>
                         <Property name="text" type="java.lang.String" value="Application Priority Data"/>
                         <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
                           <Color id="Default Cursor"/>
@@ -428,6 +446,7 @@
                     </Component>
                     <Component class="javax.swing.JCheckBox" name="availOfLicBox">
                       <Properties>
+                        <Property name="selected" type="boolean" value="true"/>
                         <Property name="text" type="java.lang.String" value="Availability of License"/>
                         <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
                           <Color id="Default Cursor"/>
@@ -436,6 +455,7 @@
                     </Component>
                     <Component class="javax.swing.JCheckBox" name="availOfLicBox1">
                       <Properties>
+                        <Property name="selected" type="boolean" value="true"/>
                         <Property name="text" type="java.lang.String" value="PCT Publication Date"/>
                         <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
                           <Color id="Default Cursor"/>
@@ -1116,53 +1136,6 @@
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="exportBtnActionPerformed"/>
               </Events>
             </Component>
-          </SubComponents>
-        </Container>
-        <Container class="javax.swing.JPanel" name="tab2Panel">
-          <Constraints>
-            <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
-              <JTabbedPaneConstraints tabName="tab2">
-                <Property name="tabTitle" type="java.lang.String" value="tab2"/>
-              </JTabbedPaneConstraints>
-            </Constraint>
-          </Constraints>
-
-          <Layout>
-            <DimensionLayout dim="0">
-              <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" alignment="1" attributes="0">
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Component id="jScrollPane1" pref="735" max="32767" attributes="0"/>
-                      <EmptySpace max="-2" attributes="0"/>
-                  </Group>
-              </Group>
-            </DimensionLayout>
-            <DimensionLayout dim="1">
-              <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" alignment="0" attributes="0">
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Component id="jScrollPane1" pref="693" max="32767" attributes="0"/>
-                      <EmptySpace max="-2" attributes="0"/>
-                  </Group>
-              </Group>
-            </DimensionLayout>
-          </Layout>
-          <SubComponents>
-            <Container class="javax.swing.JScrollPane" name="jScrollPane1">
-              <AuxValues>
-                <AuxValue name="autoScrollPane" type="java.lang.Boolean" value="true"/>
-              </AuxValues>
-
-              <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
-              <SubComponents>
-                <Component class="javax.swing.JTextArea" name="jTextArea1">
-                  <Properties>
-                    <Property name="columns" type="int" value="20"/>
-                    <Property name="rows" type="int" value="5"/>
-                  </Properties>
-                </Component>
-              </SubComponents>
-            </Container>
           </SubComponents>
         </Container>
       </SubComponents>
