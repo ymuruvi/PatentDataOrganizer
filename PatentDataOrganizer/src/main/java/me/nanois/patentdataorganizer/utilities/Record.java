@@ -1,6 +1,7 @@
 package me.nanois.patentdataorganizer.utilities;
 
 import java.util.ArrayList;
+import java.util.ListIterator;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import org.w3c.dom.Document;
@@ -200,7 +201,7 @@ public class Record {
                 }
             }
         } catch (Exception e) {
-            System.out.println(Tools.Contstants.ANSI_RED + "Error: " + e.getMessage() + Tools.Contstants.ANSI_RESET);
+            System.out.println(Tools.Contstants.ANSI_RED + "Error: " + e.getLocalizedMessage() + Tools.Contstants.ANSI_RESET);
         }
         return out;
     }
@@ -212,7 +213,7 @@ public class Record {
      * @return
      */
     private ArrayList<Node> searchForNodes(Node node, String searchTerm) {
-        return searchForNodes(node.getChildNodes(), recordID);
+        return searchForNodes(node.getChildNodes(), searchTerm);
     }
 
     /**
@@ -223,13 +224,16 @@ public class Record {
      */
     private ArrayList<Node> searchForNodes(NodeList listOfFields, String searchTerm) {
         ArrayList<Node> list = new ArrayList<Node>();
-        Node n = searchForNode(listOfFields, searchTerm, 0);
-        for (int i = 1; n != null; i++) {
-            n = searchForNode(listOfFields, searchTerm, i);
-            if (n != null) {
-                list.add(n);
+        if(listOfFields != null){
+            Node n = searchForNode(listOfFields, searchTerm, 0);
+            for (int i = 1; n != null; i++) {
+                if (n != null) {
+                    list.add(n);
+                }
+                n = searchForNode(listOfFields, searchTerm, i);
             }
         }
+        
         return list;
     }
 
@@ -532,6 +536,28 @@ public class Record {
      * @param sn
      */
     private void handleCaOfficeSpecBibData(SearchNode sn) {
+        
+        if (sn != null) {
+            Node caParties = searchForNode(sn.getNode(), "ca-parties");
+            if (caParties != null) {
+                Node applNodes = searchForNode(caParties, "applicants");
+                if (applNodes != null) {
+                    ArrayList<Node> applList = searchForNodes(applNodes, "applicant");
+                    String apps = "";
+                    String name = "";
+                    String nationality = "";
+                    String out = "";
+                    int i = 0;
+                    for (Node n : applList) {
+                        name = getNodeText(searchForNode(n, "name"));
+                        nationality = getNodeText(searchForNode(searchForNode(n, "nationality"),"country"));
+                        out = name + " (" + nationality + ")";
+                        dataPoints.getApplicants().add(out);
+                    }
+                    
+                }
+            }
+        }
     }
 
     /**
