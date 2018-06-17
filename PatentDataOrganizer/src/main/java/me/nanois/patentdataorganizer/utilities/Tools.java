@@ -142,7 +142,7 @@ public class Tools {
             fileOut.close();
             workbook.close();
         } catch (IOException ex) {
-            System.out.println("Error: " + ex.getMessage());
+            System.out.println("Error: " + ex);
         }
         System.out.println("Finished Exporting");
     }
