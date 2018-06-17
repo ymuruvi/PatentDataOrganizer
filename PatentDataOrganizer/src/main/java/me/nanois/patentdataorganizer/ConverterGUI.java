@@ -29,6 +29,7 @@ public class ConverterGUI extends JFrame {
     private volatile int threads;
     private final static int MAX_THREADS = 100;
     private volatile static int counter;
+    private long fCount;
 
     /**
      *
@@ -94,13 +95,13 @@ public class ConverterGUI extends JFrame {
      * @param folder
      */
     public void openDirectory(File folder) {
-
+        
         File[] files;
         resetBarValue();
 
         if (folder != null) {
             if (folder.isDirectory()) {
-
+                fCount = 1;
                 records = new HashMap();
                 keys = new ArrayList<>();
                 exportBtn.setEnabled(false);
@@ -145,8 +146,9 @@ public class ConverterGUI extends JFrame {
                                     try {
                                         if (f.isFile()) {
                                             if ("xml".equals(Tools.getExtension(filePath))) {
-                                                System.out.println(Tools.Contstants.ANSI_GREEN + "Reading: "
+                                                System.out.println(Tools.Contstants.ANSI_GREEN + fCount + ": Reading: "
                                                         + filePath + Tools.Contstants.ANSI_RESET);
+                                                fCount++;
                                                 r = new Record();
                                                 r.parse(filePath);
                                                 try {
@@ -164,7 +166,7 @@ public class ConverterGUI extends JFrame {
                                             }
                                         }
                                     } catch (Exception ex) {
-                                        System.out.println("Error: " + ex.getMessage());
+                                        System.out.println("Error: " + ex);
                                     }
                                     incrementProgressBar(files.length);
                                     threads--;
@@ -172,7 +174,7 @@ public class ConverterGUI extends JFrame {
                             }
                             /**
                              * Pauses the program while the maximum number of
-                             * threads has been met. Used this thread to come to
+                             * threads has been met. Used this page to come to
                              * the conclusion of using volatile variables.
                              * https://meta.stackoverflow.com/questions/269174/questions-about-threadloop-not-working-without-print-statement
                              */
