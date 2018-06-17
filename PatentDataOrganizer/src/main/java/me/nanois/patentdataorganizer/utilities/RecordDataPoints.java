@@ -332,10 +332,10 @@ public class RecordDataPoints {
     public String getOwnersString(){
         String out = "";
         if(owners.size() > 0){
-            out = owners.get(0);
+            out = "\"" + owners.get(0) + "\"";
         }
         for(int i = 1; i < owners.size() ;i++){
-            out += ", " + owners.get(i);
+            out += ", \"" + owners.get(i) + "\"";
         }
         return out;
     }
@@ -343,10 +343,10 @@ public class RecordDataPoints {
     public String getApplicantsString(){
         String out = "";
         if(applicants.size() > 0){
-            out = applicants.get(0);
+            out = "\"" + applicants.get(0) + "\"";
         }
         for(int i = 1; i < applicants.size() ;i++){
-            out += ", " + applicants.get(i);
+            out += ", \"" + applicants.get(i) + "\"";
         }
         return out;
     }

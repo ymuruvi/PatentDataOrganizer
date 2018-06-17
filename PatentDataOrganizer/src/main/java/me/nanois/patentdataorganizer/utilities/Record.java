@@ -1,6 +1,7 @@
 package me.nanois.patentdataorganizer.utilities;
 
 import java.util.ArrayList;
+import java.util.ListIterator;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import org.w3c.dom.Document;
@@ -96,9 +97,9 @@ public class Record {
     }
 
     /**
-     *
+     * 
      * @param docString
-     * @return
+     * @return 
      */
     private static Document getDocument(String docString) {
         DocumentBuilderFactory factory;
@@ -200,19 +201,19 @@ public class Record {
                 }
             }
         } catch (Exception e) {
-            System.out.println(Tools.Contstants.ANSI_RED + "Error: " + e.getMessage() + Tools.Contstants.ANSI_RESET);
+            System.out.println(Tools.Contstants.ANSI_RED + "Error: " + e + Tools.Contstants.ANSI_RESET);
         }
         return out;
     }
 
     /**
-     *
+     * Returns a list of nodes with a matching <code>searchTerm</code>.
      * @param node
      * @param searchTerm
      * @return
      */
     private ArrayList<Node> searchForNodes(Node node, String searchTerm) {
-        return searchForNodes(node.getChildNodes(), recordID);
+        return searchForNodes(node.getChildNodes(), searchTerm);
     }
 
     /**
@@ -223,13 +224,16 @@ public class Record {
      */
     private ArrayList<Node> searchForNodes(NodeList listOfFields, String searchTerm) {
         ArrayList<Node> list = new ArrayList<Node>();
-        Node n = searchForNode(listOfFields, searchTerm, 0);
-        for (int i = 1; n != null; i++) {
-            n = searchForNode(listOfFields, searchTerm, i);
-            if (n != null) {
-                list.add(n);
+        if(listOfFields != null){
+            Node n = searchForNode(listOfFields, searchTerm, 0);
+            for (int i = 1; n != null; i++) {
+                if (n != null) {
+                    list.add(n);
+                }
+                n = searchForNode(listOfFields, searchTerm, i);
             }
         }
+        
         return list;
     }
 
@@ -269,7 +273,8 @@ public class Record {
                 return out;
             }
         } catch (Exception e) {
-            System.out.println("Error: " + e);
+            System.out.println(Tools.Contstants.ANSI_RED + "Error: " + e 
+                    + Tools.Contstants.ANSI_RESET);
         }
         return out;
     }
@@ -532,6 +537,59 @@ public class Record {
      * @param sn
      */
     private void handleCaOfficeSpecBibData(SearchNode sn) {
+        
+        if (sn != null) {
+            Node caParties = searchForNode(sn.getNode(), "ca-parties");
+            Node caAssignees = searchForNode(sn.getNode(), "ca-assignees");
+            if (caParties != null) {
+                Node applNodes = searchForNode(caParties, "applicants");
+                if (applNodes != null) {
+                    ArrayList<Node> applList = searchForNodes(applNodes, "applicant");
+                    String name = "";
+                    String nationality = "";
+                    for (Node n : applList) {
+                        name = getNodeText(searchForNode(n, "name"));
+                        nationality = getNodeText(searchForNode(searchForNode(n, "nationality"), "country"));
+                        dataPoints.getApplicants().add(name + " (" + nationality + ")");
+                    }
+
+                }
+            }
+            if (caAssignees != null) {
+                boolean found = false;
+                ArrayList<Node> assignees = searchForNodes(caAssignees, "ca-assignee");
+                for (Node assignee : assignees) {
+                    String granted = getNodeText(searchForNode(assignee, "ca-grantee"));
+                    if (granted.equals("Y")) {
+                        found = true;
+                        String name = getNodeText(searchForNode(assignee, "name"));
+                        String nationality = getNodeText(searchForNode(assignee, "country"));
+                        System.out.println(name + "-" + nationality);
+                        dataPoints.getOwners().add(name + " (" + nationality + ")");
+                    }
+                }
+                if (!found) {
+                    Date max = new Date("00000000");
+                    Node maxNode = null;
+                    Date newDate;
+                    for (Node assignee : assignees) {
+                        Node caDateAss = searchForNode(assignee, "ca-date-assignee-enable");
+                        String date = getNodeText(searchForNode(caDateAss, "date"));
+                        newDate = new  Date(date);
+                        if(newDate.isNewerThan(max)){
+                            max = newDate;
+                            maxNode = assignee;
+                        }
+                    }
+                    if(maxNode != null){
+                        String name = getNodeText(searchForNode(maxNode, "name"));
+                        String nationality = getNodeText(searchForNode(maxNode, "country"));
+                        System.out.println(name + "-" + nationality);
+                        dataPoints.getOwners().add(name + " (" + nationality + ")");
+                    }
+                }
+            }
+        }
     }
 
     /**

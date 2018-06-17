@@ -29,6 +29,7 @@ public class ConverterGUI extends JFrame {
     private volatile int threads;
     private final static int MAX_THREADS = 100;
     private volatile static int counter;
+    private long fCount;
 
     /**
      *
@@ -94,13 +95,13 @@ public class ConverterGUI extends JFrame {
      * @param folder
      */
     public void openDirectory(File folder) {
-
+        
         File[] files;
         resetBarValue();
 
         if (folder != null) {
             if (folder.isDirectory()) {
-
+                fCount = 1;
                 records = new HashMap();
                 keys = new ArrayList<>();
                 exportBtn.setEnabled(false);
@@ -145,8 +146,9 @@ public class ConverterGUI extends JFrame {
                                     try {
                                         if (f.isFile()) {
                                             if ("xml".equals(Tools.getExtension(filePath))) {
-                                                System.out.println(Tools.Contstants.ANSI_GREEN + "Reading: "
+                                                System.out.println(Tools.Contstants.ANSI_GREEN + fCount + ": Reading: "
                                                         + filePath + Tools.Contstants.ANSI_RESET);
+                                                fCount++;
                                                 r = new Record();
                                                 r.parse(filePath);
                                                 try {
@@ -164,7 +166,7 @@ public class ConverterGUI extends JFrame {
                                             }
                                         }
                                     } catch (Exception ex) {
-                                        System.out.println("Error: " + ex.getMessage());
+                                        System.out.println("Error: " + ex);
                                     }
                                     incrementProgressBar(files.length);
                                     threads--;
@@ -172,7 +174,7 @@ public class ConverterGUI extends JFrame {
                             }
                             /**
                              * Pauses the program while the maximum number of
-                             * threads has been met. Used this thread to come to
+                             * threads has been met. Used this page to come to
                              * the conclusion of using volatile variables.
                              * https://meta.stackoverflow.com/questions/269174/questions-about-threadloop-not-working-without-print-statement
                              */
@@ -313,9 +315,6 @@ public class ConverterGUI extends JFrame {
         pctIssueDateLbl = new javax.swing.JLabel();
         loadingProgressBar = new javax.swing.JProgressBar();
         exportBtn = new javax.swing.JButton();
-        tab2Panel = new javax.swing.JPanel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jTextArea1 = new javax.swing.JTextArea();
         menuBar = new javax.swing.JMenuBar();
         fileMenu = new javax.swing.JMenu();
         openFolderItem = new javax.swing.JMenuItem();
@@ -338,6 +337,7 @@ public class ConverterGUI extends JFrame {
 
         scrollPanel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
+        docTypeBox.setSelected(true);
         docTypeBox.setText("Document Type");
         docTypeBox.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
 
@@ -346,60 +346,79 @@ public class ConverterGUI extends JFrame {
         docNumBox.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         docNumBox.setEnabled(false);
 
+        appNumBox.setSelected(true);
         appNumBox.setText("Application Number");
         appNumBox.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
 
+        engTitleBox.setSelected(true);
         engTitleBox.setText("English Title");
         engTitleBox.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
 
+        frTitleBox.setSelected(true);
         frTitleBox.setText("French Title");
         frTitleBox.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
 
+        inventorsBox.setSelected(true);
         inventorsBox.setText("Inventors");
         inventorsBox.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
 
+        ownersBox.setSelected(true);
         ownersBox.setText("Owners");
         ownersBox.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
 
+        applicantsBox.setSelected(true);
         applicantsBox.setText("Applicants");
         applicantsBox.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
 
+        agentBox.setSelected(true);
         agentBox.setText("Agent");
         agentBox.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
 
+        issuedBox.setSelected(true);
         issuedBox.setText("Issued");
         issuedBox.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
 
+        reissuedBox.setSelected(true);
         reissuedBox.setText("Reissued");
         reissuedBox.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
 
+        filedBox.setSelected(true);
         filedBox.setText("Filed");
         filedBox.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
 
+        openToPubInspBox.setSelected(true);
         openToPubInspBox.setText("Open To Public Inspection");
         openToPubInspBox.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
 
+        examReqBox.setSelected(true);
         examReqBox.setText("Examination Requested");
         examReqBox.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
 
+        reExamCertBox.setSelected(true);
         reExamCertBox.setText("Re-examination Certificate");
         reExamCertBox.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
 
+        canPatClassBox.setSelected(true);
         canPatClassBox.setText("Canadian Patent Classification");
         canPatClassBox.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
 
+        intPatentClassBox.setSelected(true);
         intPatentClassBox.setText("International Patent Classification");
         intPatentClassBox.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
 
+        patentCoopTreatyBox.setSelected(true);
         patentCoopTreatyBox.setText("Patent Cooperation Treaty");
         patentCoopTreatyBox.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
 
+        appPriorityDataBox.setSelected(true);
         appPriorityDataBox.setText("Application Priority Data");
         appPriorityDataBox.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
 
+        availOfLicBox.setSelected(true);
         availOfLicBox.setText("Availability of License");
         availOfLicBox.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
 
+        availOfLicBox1.setSelected(true);
         availOfLicBox1.setText("PCT Publication Date");
         availOfLicBox1.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
 
@@ -905,29 +924,6 @@ public class ConverterGUI extends JFrame {
 
         tabbedPane.addTab("Record Data", recordPanel);
 
-        jTextArea1.setColumns(20);
-        jTextArea1.setRows(5);
-        jScrollPane1.setViewportView(jTextArea1);
-
-        javax.swing.GroupLayout tab2PanelLayout = new javax.swing.GroupLayout(tab2Panel);
-        tab2Panel.setLayout(tab2PanelLayout);
-        tab2PanelLayout.setHorizontalGroup(
-            tab2PanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, tab2PanelLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 735, Short.MAX_VALUE)
-                .addContainerGap())
-        );
-        tab2PanelLayout.setVerticalGroup(
-            tab2PanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(tab2PanelLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 693, Short.MAX_VALUE)
-                .addContainerGap())
-        );
-
-        tabbedPane.addTab("tab2", tab2Panel);
-
         fileMenu.setText("File");
 
         openFolderItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_O, java.awt.event.InputEvent.CTRL_MASK));
@@ -1013,9 +1009,7 @@ public class ConverterGUI extends JFrame {
     }//GEN-LAST:event_exportBtnActionPerformed
 
     private void exportDataItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exportDataItemActionPerformed
-        if (currentStatus == Status.READING_DATA) {
-            export();
-        }
+        export();
     }//GEN-LAST:event_exportDataItemActionPerformed
 
     public void export() {
@@ -1209,9 +1203,7 @@ public class ConverterGUI extends JFrame {
     private javax.swing.JCheckBoxMenuItem jCheckBoxMenuItem1;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JPopupMenu jPopupMenu1;
-    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTextArea jTextArea1;
     private javax.swing.JProgressBar loadingProgressBar;
     private javax.swing.JMenuBar menuBar;
     private javax.swing.JMenuItem openFolderItem;
@@ -1238,7 +1230,6 @@ public class ConverterGUI extends JFrame {
     private javax.swing.JTextField reissuedTxtBox;
     private javax.swing.JScrollPane scrollPanel;
     private javax.swing.JButton searchDocNumBtn;
-    private javax.swing.JPanel tab2Panel;
     private javax.swing.JTabbedPane tabbedPane;
     private javax.swing.JMenu viewMenu;
     // End of variables declaration//GEN-END:variables
