@@ -1,10 +1,11 @@
 package me.nanois.patentdataorganizer.utilities;
 
 import java.util.ArrayList;
-import java.util.ListIterator;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
+import org.w3c.dom.DOMImplementation;
 import org.w3c.dom.Document;
+import org.w3c.dom.DocumentType;
 import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
@@ -20,7 +21,7 @@ public class Record {
     /**
      * Type of document.
      */
-    private enum DocumentType {
+    private enum DocType {
         PATENT, PATENT_APP
     };
 
@@ -98,20 +99,35 @@ public class Record {
 
     /**
      * 
-     * @param docString
+     * @param docName
      * @return 
      */
-    private static Document getDocument(String docString) {
+    private static Document getDocument(String docName) {
+        Document doc;
         DocumentBuilderFactory factory;
         DocumentBuilder builder;
+        DocumentType docType;
+        
         try {
             factory = DocumentBuilderFactory.newInstance();
             factory.setIgnoringComments(true);
             factory.setIgnoringElementContentWhitespace(true);
             factory.setValidating(true);
-
+            
             builder = factory.newDocumentBuilder();
-            return builder.parse(new InputSource(docString));
+            String dtdFilePath = "/Users/nano/Documents/Programming/Projects/Patent\\ Data\\ Converter/TestCases/ca-patent-document-v2-0.dtd";
+            String dtdURL = "http://patents.ic.gc.ca/cipo/dtd/ca-patent-document-v2-0.dtd";
+            docType = builder.getDOMImplementation().createDocumentType( "ca-patent-document",
+                "-//CIPO//CA PATENT DOCUMENT 2.0//EN",
+                dtdURL );
+            
+            Document tmp = builder.parse(new InputSource(docName));
+            System.out.println(Tools.Contstants.ANSI_PURPLE + "Pub ID: " + tmp.getDoctype().getPublicId()
+                    + "  \tNS URI: " + tmp.getNamespaceURI() + "  \tQN: " );
+            String nameSpaceURI = tmp.getNamespaceURI();
+            String qualifiedName = "PUBLIC";
+            doc = builder.getDOMImplementation().createDocument(nameSpaceURI, qualifiedName, docType);
+            return doc;
 
         } catch (Exception e) {
             System.out.println(Tools.Contstants.ANSI_RED + e.getMessage() + Tools.Contstants.ANSI_RESET);
@@ -143,15 +159,15 @@ public class Record {
     /**
      * Returns the first occurrence of a node with a given name.
      *
-     * @param listOfFields The list of nodes for which a node will be searched
+     * @param listOfNodes The list of nodes for which a node will be searched
      * for.
      * @param searchTerm The name for which a node with a matching name will be
      * searched for.
      * @return The node with the name matching the <code>name</code> given, or
      * null if no such node is found.
      */
-    private Node searchForNode(NodeList listOfFields, String searchTerm) {
-        return searchForNode(listOfFields, searchTerm, 0);
+    private Node searchForNode(NodeList listOfNodes, String searchTerm) {
+        return searchForNode(listOfNodes, searchTerm, 0);
     }
 
     /**
@@ -159,12 +175,12 @@ public class Record {
      * given <code>searchTerm</code> from the tree of nodes in the
      * <code> listOfFields</code>. Returns null in the case no match is found.
      *
-     * @param listOfFields
+     * @param listOfNodes
      * @param searchTerm
      * @param occuranceIndex
      * @return
      */
-    private Node searchForNode(NodeList listOfFields, String searchTerm, int occuranceIndex) {
+    private Node searchForNode(NodeList listOfNodes ,String searchTerm, int occuranceIndex) {
 
         Node node;
         Node out = null;
@@ -175,9 +191,9 @@ public class Record {
         searchingForNode = true;
         try {
 
-            for (int i = 0; i < listOfFields.getLength() && searchingForNode; i++) {
+            for (int i = 0; i < listOfNodes.getLength() && searchingForNode; i++) {
 
-                node = listOfFields.item(i);
+                node = listOfNodes.item(i);
                 nodeName = node.getNodeName();
                 numChildNodes = node.getChildNodes().getLength();
                 if (node.getNodeName().equals(searchTerm)) {
@@ -218,23 +234,31 @@ public class Record {
 
     /**
      *
-     * @param listOfFields
+     * @param listOfNodes
      * @param searchTerm
      * @return
      */
-    private ArrayList<Node> searchForNodes(NodeList listOfFields, String searchTerm) {
+    private ArrayList<Node> searchForNodes(NodeList listOfNodes, String searchTerm) {
         ArrayList<Node> list = new ArrayList<Node>();
-        if(listOfFields != null){
-            Node n = searchForNode(listOfFields, searchTerm, 0);
+        if(listOfNodes != null){
+            Node n = searchForNode(listOfNodes, searchTerm, 0);
             for (int i = 1; n != null; i++) {
                 if (n != null) {
                     list.add(n);
                 }
-                n = searchForNode(listOfFields, searchTerm, i);
+                n = searchForNode(listOfNodes, searchTerm, i);
             }
         }
         
         return list;
+    }
+    
+    private boolean childNodeExists(Node n, String searchTerm){
+        return childNodeExists(n.getChildNodes(), searchTerm);
+    }
+    
+    private boolean childNodeExists(NodeList listOfNodes, String searchTerm){
+        return searchForNode(listOfNodes, searchTerm) == null;
     }
 
     /**
@@ -522,6 +546,24 @@ public class Record {
             Node dateNode = searchForNode(sn.getNode(), "date");
             String date = getNodeText(dateNode);
             dataPoints.setFiledDate(new Date(date));
+            Node docId = searchForNode(sn.getNode(), "document-id");
+            if(docId != null){
+                if(childNodeExists(docId, "date")){
+                    Node docNum = searchForNode(docId, "doc-number");
+                    String sAppNum = getNodeText(docNum);
+                    long appNum = 0;
+                    try {
+                        appNum = Long.parseLong(sAppNum);
+                    } catch (NumberFormatException ne) {
+                    } catch (Exception e) {
+                        System.out.println(Tools.Contstants.ANSI_RED + "Error: " 
+                                + e + Tools.Contstants.ANSI_RESET);
+                    }
+                    if(appNum >= 2000000){
+                        dataPoints.setApplicationNumber(sAppNum);
+                    }
+                }
+            }
         }
     }
 
@@ -564,7 +606,7 @@ public class Record {
                         found = true;
                         String name = getNodeText(searchForNode(assignee, "name"));
                         String nationality = getNodeText(searchForNode(assignee, "country"));
-                        System.out.println(name + "-" + nationality);
+                        //System.out.println(name + " - " + nationality);
                         dataPoints.getOwners().add(name + " (" + nationality + ")");
                     }
                 }
