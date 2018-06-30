@@ -1,15 +1,19 @@
 package me.nanois.patentdataorganizer.utilities;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
 import org.w3c.dom.DOMImplementation;
 import org.w3c.dom.Document;
 import org.w3c.dom.DocumentType;
 import org.w3c.dom.Element;
+import org.w3c.dom.NamedNodeMap;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 import org.xml.sax.InputSource;
+import org.xml.sax.SAXException;
 
 /**
  *
@@ -79,18 +83,15 @@ public class Record {
                     new SearchNode("pct-or-regional-filing-data"), new SearchNode("pct-or-regional-publishing-data"),
                     new SearchNode("ca-office-specific-bib-data"), new SearchNode("invention-title", 0),
                     new SearchNode("invention-title", 1)};
-
                 for (SearchNode sn : searchNodes) {
                     sn.setNode(searchForNode(listOfFields, sn.getSearchTerm(), sn.getOccurance()));
-                    //System.out.println(Tools.Contstants.ANSI_YELLOW + "Name: " + sn.getNodeName() + Tools.Contstants.ANSI_RESET);
                     handleDataNode(sn);
                 }
-
                 if (n != null) {
                 }
             } else {
-                System.out.println(Tools.Contstants.ANSI_RED + "Unable to read: "
-                        + fileName + Tools.Contstants.ANSI_RESET);
+                System.out.println(Tools.Constants.ANSI_RED + "Unable to read: "
+                        + fileName + Tools.Constants.ANSI_RESET);
             }
         } else {
 
@@ -103,34 +104,30 @@ public class Record {
      * @return 
      */
     private static Document getDocument(String docName) {
-        Document doc;
-        DocumentBuilderFactory factory;
-        DocumentBuilder builder;
-        DocumentType docType;
-        
         try {
-            factory = DocumentBuilderFactory.newInstance();
+            DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
             factory.setIgnoringComments(true);
             factory.setIgnoringElementContentWhitespace(true);
             factory.setValidating(true);
-            
-            builder = factory.newDocumentBuilder();
-            String dtdFilePath = "/Users/nano/Documents/Programming/Projects/Patent\\ Data\\ Converter/TestCases/ca-patent-document-v2-0.dtd";
-            String dtdURL = "http://patents.ic.gc.ca/cipo/dtd/ca-patent-document-v2-0.dtd";
-            docType = builder.getDOMImplementation().createDocumentType( "ca-patent-document",
+            DocumentBuilder builder = factory.newDocumentBuilder();
+            String[] dtdURL = {"http://patents.ic.gc.ca/cipo/dtd/ca-patent-document-v2-0.dtd",
+                 "/Users/nano/Documents/Programming/Projects/Patent\\ Data\\ Converter/TestCases/ca-patent-document-v2-0.dtd"};
+            DocumentType docType = builder.getDOMImplementation().createDocumentType( "ca-patent-document",
                 "-//CIPO//CA PATENT DOCUMENT 2.0//EN",
-                dtdURL );
+                dtdURL[0] );
             
             Document tmp = builder.parse(new InputSource(docName));
-            System.out.println(Tools.Contstants.ANSI_PURPLE + "Pub ID: " + tmp.getDoctype().getPublicId()
-                    + "  \tNS URI: " + tmp.getNamespaceURI() + "  \tQN: " );
+            System.out.println(Tools.Constants.ANSI_PURPLE + "Pub ID: " + tmp.getDoctype().getPublicId() + "  \tNS URI: " + tmp.getNamespaceURI() + "  \tQN: " );
             String nameSpaceURI = tmp.getNamespaceURI();
-            String qualifiedName = "PUBLIC";
-            doc = builder.getDOMImplementation().createDocument(nameSpaceURI, qualifiedName, docType);
-            return doc;
+            String qualifiedName = "";
+            System.out.println("LocalName: " + tmp.getLocalName() + " Prefix: " + tmp.getPrefix());
+            System.out.println("Base URI: " + tmp.getNodeName());
+            Document doc = builder.getDOMImplementation().createDocument(nameSpaceURI, qualifiedName, docType);
+            return tmp;
+            
 
         } catch (Exception e) {
-            System.out.println(Tools.Contstants.ANSI_RED + e.getMessage() + Tools.Contstants.ANSI_RESET);
+            System.out.println(Tools.Constants.ANSI_RED + e.getMessage() + Tools.Constants.ANSI_RESET);
         }
         return null;
     }
@@ -217,7 +214,7 @@ public class Record {
                 }
             }
         } catch (Exception e) {
-            System.out.println(Tools.Contstants.ANSI_RED + "Error: " + e + Tools.Contstants.ANSI_RESET);
+            System.out.println(Tools.Constants.ANSI_RED + "Error: " + e + Tools.Constants.ANSI_RESET);
         }
         return out;
     }
@@ -297,8 +294,8 @@ public class Record {
                 return out;
             }
         } catch (Exception e) {
-            System.out.println(Tools.Contstants.ANSI_RED + "Error: " + e 
-                    + Tools.Contstants.ANSI_RESET);
+            System.out.println(Tools.Constants.ANSI_RED + "Error: " + e 
+                    + Tools.Constants.ANSI_RESET);
         }
         return out;
     }
@@ -340,8 +337,8 @@ public class Record {
                 return out;
             }
         } catch (Exception e) {
-            System.out.println(Tools.Contstants.ANSI_RED + "Error: "
-                    + e + Tools.Contstants.ANSI_RESET);
+            System.out.println(Tools.Constants.ANSI_RED + "Error: "
+                    + e + Tools.Constants.ANSI_RESET);
         }
         return out;
     }
@@ -556,8 +553,8 @@ public class Record {
                         appNum = Long.parseLong(sAppNum);
                     } catch (NumberFormatException ne) {
                     } catch (Exception e) {
-                        System.out.println(Tools.Contstants.ANSI_RED + "Error: " 
-                                + e + Tools.Contstants.ANSI_RESET);
+                        System.out.println(Tools.Constants.ANSI_RED + "Error: " 
+                                + e + Tools.Constants.ANSI_RESET);
                     }
                     if(appNum >= 2000000){
                         dataPoints.setApplicationNumber(sAppNum);
