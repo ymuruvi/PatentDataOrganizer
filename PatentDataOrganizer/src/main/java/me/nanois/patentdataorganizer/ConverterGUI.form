@@ -555,118 +555,123 @@
                                   <Group type="103" groupAlignment="0" attributes="0">
                                       <Group type="102" attributes="0">
                                           <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                              <Component id="docTypeTxtBox" max="32767" attributes="0"/>
-                                              <Component id="docTypeLbl" pref="150" max="32767" attributes="0"/>
+                                              <Group type="102" attributes="0">
+                                                  <Component id="docTypeLbl" max="32767" attributes="0"/>
+                                                  <EmptySpace type="separate" max="-2" attributes="0"/>
+                                              </Group>
+                                              <Group type="102" attributes="0">
+                                                  <Component id="docTypeTxtBox" max="32767" attributes="0"/>
+                                                  <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
+                                              </Group>
                                           </Group>
-                                          <EmptySpace type="separate" max="-2" attributes="0"/>
                                           <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                              <Component id="docNumTxtBox" alignment="0" max="32767" attributes="0"/>
+                                              <Component id="docNumTxtBox" alignment="0" max="-2" attributes="0"/>
                                               <Component id="docNumLbl" alignment="0" min="-2" pref="150" max="-2" attributes="0"/>
                                           </Group>
                                           <EmptySpace type="separate" max="-2" attributes="0"/>
                                           <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                              <Component id="appNumTxtBox" alignment="0" max="32767" attributes="0"/>
+                                              <Component id="appNumTxtBox" alignment="0" max="-2" attributes="0"/>
                                               <Component id="appNumLbl" alignment="0" min="-2" pref="150" max="-2" attributes="0"/>
                                           </Group>
                                       </Group>
                                       <Group type="102" alignment="0" attributes="0">
                                           <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                              <Component id="engTitleTxtBox" alignment="0" max="32767" attributes="0"/>
+                                              <Component id="engTitleTxtBox" alignment="0" max="-2" attributes="0"/>
                                               <Component id="engTitleLbl" alignment="0" min="-2" pref="150" max="-2" attributes="0"/>
                                           </Group>
                                           <EmptySpace type="separate" max="-2" attributes="0"/>
                                           <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                              <Component id="frTitleTxtBox" alignment="0" max="32767" attributes="0"/>
+                                              <Component id="frTitleTxtBox" alignment="0" max="-2" attributes="0"/>
                                               <Component id="frTitleLbl" alignment="0" min="-2" pref="150" max="-2" attributes="0"/>
                                           </Group>
                                           <EmptySpace type="separate" max="-2" attributes="0"/>
                                           <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                              <Component id="investorTxtBox" alignment="0" max="32767" attributes="0"/>
+                                              <Component id="investorTxtBox" alignment="0" max="-2" attributes="0"/>
                                               <Component id="invLbl" alignment="0" min="-2" pref="150" max="-2" attributes="0"/>
                                           </Group>
                                       </Group>
                                       <Group type="102" alignment="0" attributes="0">
                                           <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                              <Component id="ownersTxtBox" alignment="0" max="32767" attributes="0"/>
+                                              <Component id="ownersTxtBox" alignment="0" max="-2" attributes="0"/>
                                               <Component id="ownersLbl" alignment="0" min="-2" pref="150" max="-2" attributes="0"/>
                                           </Group>
                                           <EmptySpace type="separate" max="-2" attributes="0"/>
                                           <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                              <Component id="applicantsTxtBox" alignment="0" max="32767" attributes="0"/>
+                                              <Component id="applicantsTxtBox" alignment="0" max="-2" attributes="0"/>
                                               <Component id="applicantsLbl" alignment="0" min="-2" pref="150" max="-2" attributes="0"/>
                                           </Group>
                                           <EmptySpace type="separate" max="-2" attributes="0"/>
                                           <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                              <Component id="agentTxtBox" alignment="0" max="32767" attributes="0"/>
+                                              <Component id="agentTxtBox" alignment="0" max="-2" attributes="0"/>
                                               <Component id="agentLbl" alignment="0" min="-2" pref="150" max="-2" attributes="0"/>
                                           </Group>
                                       </Group>
                                       <Group type="102" alignment="0" attributes="0">
                                           <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                              <Component id="issuedTxtBox" alignment="0" max="32767" attributes="0"/>
+                                              <Component id="issuedTxtBox" alignment="0" max="-2" attributes="0"/>
                                               <Component id="issuedLbl" alignment="0" min="-2" pref="150" max="-2" attributes="0"/>
                                           </Group>
                                           <EmptySpace type="separate" max="-2" attributes="0"/>
                                           <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                              <Component id="reissuedTxtBox" alignment="0" max="32767" attributes="0"/>
+                                              <Component id="reissuedTxtBox" alignment="0" max="-2" attributes="0"/>
                                               <Component id="reissuedLbl" alignment="0" min="-2" pref="150" max="-2" attributes="0"/>
                                           </Group>
                                           <EmptySpace type="separate" max="-2" attributes="0"/>
                                           <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                              <Component id="filedTxtBox" alignment="0" max="32767" attributes="0"/>
+                                              <Component id="filedTxtBox" alignment="0" max="-2" attributes="0"/>
                                               <Component id="filedLbl" alignment="0" min="-2" pref="150" max="-2" attributes="0"/>
                                           </Group>
                                       </Group>
                                       <Group type="102" alignment="0" attributes="0">
                                           <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                              <Component id="openToPubTxtBox" alignment="0" max="32767" attributes="0"/>
+                                              <Component id="openToPubTxtBox" alignment="0" max="-2" attributes="0"/>
                                               <Component id="openToPubLbl" alignment="0" min="-2" pref="150" max="-2" attributes="0"/>
                                           </Group>
                                           <EmptySpace type="separate" max="-2" attributes="0"/>
                                           <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                              <Component id="examRequestTxtBox" alignment="0" max="32767" attributes="0"/>
+                                              <Component id="examRequestTxtBox" alignment="0" max="-2" attributes="0"/>
                                               <Component id="examReqLbl" alignment="0" min="-2" pref="150" max="-2" attributes="0"/>
                                           </Group>
                                           <EmptySpace type="separate" max="-2" attributes="0"/>
                                           <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                              <Component id="reExamCertTxtBox" alignment="0" max="32767" attributes="0"/>
+                                              <Component id="reExamCertTxtBox" alignment="0" max="-2" attributes="0"/>
                                               <Component id="reExamCertLbl" alignment="0" min="-2" pref="150" max="-2" attributes="0"/>
                                           </Group>
                                       </Group>
                                       <Group type="102" alignment="0" attributes="0">
                                           <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                              <Component id="canPatClassTxtBox" alignment="0" max="32767" attributes="0"/>
+                                              <Component id="canPatClassTxtBox" alignment="0" max="-2" attributes="0"/>
                                               <Component id="canPatClassLbl" alignment="0" min="-2" pref="150" max="-2" attributes="0"/>
                                           </Group>
                                           <EmptySpace type="separate" max="-2" attributes="0"/>
                                           <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                              <Component id="intPatentClassTxtBox" alignment="0" max="32767" attributes="0"/>
+                                              <Component id="intPatentClassTxtBox" alignment="0" max="-2" attributes="0"/>
                                               <Component id="intPatClassLbl" alignment="0" min="-2" pref="150" max="-2" attributes="0"/>
                                           </Group>
                                           <EmptySpace type="separate" max="-2" attributes="0"/>
                                           <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                              <Component id="patCoopTreTxtBox" alignment="0" max="32767" attributes="0"/>
+                                              <Component id="patCoopTreTxtBox" alignment="0" max="-2" attributes="0"/>
                                               <Component id="patCoopTreatyLbl" alignment="0" min="-2" pref="150" max="-2" attributes="0"/>
                                           </Group>
                                       </Group>
                                       <Group type="102" alignment="0" attributes="0">
                                           <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                              <Component id="appPrioDataTxtBox" alignment="0" max="32767" attributes="0"/>
+                                              <Component id="appPrioDataTxtBox" alignment="0" max="-2" attributes="0"/>
                                               <Component id="appPrioDataLbl" alignment="0" min="-2" pref="150" max="-2" attributes="0"/>
                                           </Group>
                                           <EmptySpace type="separate" max="-2" attributes="0"/>
                                           <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                              <Component id="availOfLicTxtBox" alignment="0" max="32767" attributes="0"/>
+                                              <Component id="availOfLicTxtBox" alignment="0" max="-2" attributes="0"/>
                                               <Component id="availOfLicLbl" alignment="0" min="-2" pref="150" max="-2" attributes="0"/>
                                           </Group>
                                           <EmptySpace type="separate" max="-2" attributes="0"/>
                                           <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                              <Component id="pctIssueDateTxtBox" alignment="0" max="32767" attributes="0"/>
+                                              <Component id="pctIssueDateTxtBox" alignment="0" max="-2" attributes="0"/>
                                               <Component id="pctIssueDateLbl" alignment="0" min="-2" pref="150" max="-2" attributes="0"/>
                                           </Group>
                                       </Group>
                                   </Group>
-                                  <EmptySpace pref="34" max="32767" attributes="0"/>
+                                  <EmptySpace pref="49" max="32767" attributes="0"/>
                               </Group>
                           </Group>
                         </DimensionLayout>
@@ -821,15 +826,36 @@
                           <Properties>
                             <Property name="editable" type="boolean" value="false"/>
                             <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-                              <Dimension value="[10, 26]"/>
+                              <Dimension value="[10, 150]"/>
+                            </Property>
+                            <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+                              <Dimension value="[10, 150]"/>
+                            </Property>
+                            <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+                              <Dimension value="[150, 26]"/>
+                            </Property>
+                            <Property name="size" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+                              <Dimension value="[150, 26]"/>
                             </Property>
                           </Properties>
+                          <Events>
+                            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="docTypeTxtBoxActionPerformed"/>
+                          </Events>
                         </Component>
                         <Component class="javax.swing.JTextField" name="docNumTxtBox">
                           <Properties>
                             <Property name="editable" type="boolean" value="false"/>
                             <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-                              <Dimension value="[10, 26]"/>
+                              <Dimension value="[10, 150]"/>
+                            </Property>
+                            <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+                              <Dimension value="[10, 150]"/>
+                            </Property>
+                            <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+                              <Dimension value="[150, 26]"/>
+                            </Property>
+                            <Property name="size" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+                              <Dimension value="[150, 26]"/>
                             </Property>
                           </Properties>
                         </Component>
@@ -837,7 +863,16 @@
                           <Properties>
                             <Property name="editable" type="boolean" value="false"/>
                             <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-                              <Dimension value="[10, 26]"/>
+                              <Dimension value="[10, 150]"/>
+                            </Property>
+                            <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+                              <Dimension value="[10, 150]"/>
+                            </Property>
+                            <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+                              <Dimension value="[150, 26]"/>
+                            </Property>
+                            <Property name="size" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+                              <Dimension value="[150, 26]"/>
                             </Property>
                           </Properties>
                         </Component>
@@ -845,7 +880,16 @@
                           <Properties>
                             <Property name="editable" type="boolean" value="false"/>
                             <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-                              <Dimension value="[10, 26]"/>
+                              <Dimension value="[10, 150]"/>
+                            </Property>
+                            <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+                              <Dimension value="[10, 150]"/>
+                            </Property>
+                            <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+                              <Dimension value="[150, 26]"/>
+                            </Property>
+                            <Property name="size" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+                              <Dimension value="[150, 26]"/>
                             </Property>
                           </Properties>
                         </Component>
@@ -853,7 +897,16 @@
                           <Properties>
                             <Property name="editable" type="boolean" value="false"/>
                             <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-                              <Dimension value="[10, 26]"/>
+                              <Dimension value="[10, 150]"/>
+                            </Property>
+                            <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+                              <Dimension value="[10, 150]"/>
+                            </Property>
+                            <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+                              <Dimension value="[150, 26]"/>
+                            </Property>
+                            <Property name="size" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+                              <Dimension value="[150, 26]"/>
                             </Property>
                           </Properties>
                         </Component>
@@ -861,7 +914,16 @@
                           <Properties>
                             <Property name="editable" type="boolean" value="false"/>
                             <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-                              <Dimension value="[10, 26]"/>
+                              <Dimension value="[10, 150]"/>
+                            </Property>
+                            <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+                              <Dimension value="[10, 150]"/>
+                            </Property>
+                            <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+                              <Dimension value="[150, 26]"/>
+                            </Property>
+                            <Property name="size" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+                              <Dimension value="[150, 26]"/>
                             </Property>
                           </Properties>
                         </Component>
@@ -869,7 +931,16 @@
                           <Properties>
                             <Property name="editable" type="boolean" value="false"/>
                             <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-                              <Dimension value="[10, 26]"/>
+                              <Dimension value="[10, 150]"/>
+                            </Property>
+                            <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+                              <Dimension value="[10, 150]"/>
+                            </Property>
+                            <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+                              <Dimension value="[150, 26]"/>
+                            </Property>
+                            <Property name="size" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+                              <Dimension value="[150, 26]"/>
                             </Property>
                           </Properties>
                         </Component>
@@ -877,7 +948,16 @@
                           <Properties>
                             <Property name="editable" type="boolean" value="false"/>
                             <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-                              <Dimension value="[10, 26]"/>
+                              <Dimension value="[10, 150]"/>
+                            </Property>
+                            <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+                              <Dimension value="[10, 150]"/>
+                            </Property>
+                            <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+                              <Dimension value="[150, 26]"/>
+                            </Property>
+                            <Property name="size" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+                              <Dimension value="[150, 26]"/>
                             </Property>
                           </Properties>
                         </Component>
@@ -885,7 +965,16 @@
                           <Properties>
                             <Property name="editable" type="boolean" value="false"/>
                             <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-                              <Dimension value="[10, 26]"/>
+                              <Dimension value="[10, 150]"/>
+                            </Property>
+                            <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+                              <Dimension value="[10, 150]"/>
+                            </Property>
+                            <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+                              <Dimension value="[150, 26]"/>
+                            </Property>
+                            <Property name="size" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+                              <Dimension value="[150, 26]"/>
                             </Property>
                           </Properties>
                         </Component>
@@ -893,7 +982,16 @@
                           <Properties>
                             <Property name="editable" type="boolean" value="false"/>
                             <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-                              <Dimension value="[10, 26]"/>
+                              <Dimension value="[10, 150]"/>
+                            </Property>
+                            <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+                              <Dimension value="[10, 150]"/>
+                            </Property>
+                            <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+                              <Dimension value="[150, 26]"/>
+                            </Property>
+                            <Property name="size" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+                              <Dimension value="[150, 26]"/>
                             </Property>
                           </Properties>
                         </Component>
@@ -901,7 +999,16 @@
                           <Properties>
                             <Property name="editable" type="boolean" value="false"/>
                             <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-                              <Dimension value="[10, 26]"/>
+                              <Dimension value="[10, 150]"/>
+                            </Property>
+                            <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+                              <Dimension value="[10, 150]"/>
+                            </Property>
+                            <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+                              <Dimension value="[150, 26]"/>
+                            </Property>
+                            <Property name="size" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+                              <Dimension value="[150, 26]"/>
                             </Property>
                           </Properties>
                         </Component>
@@ -909,7 +1016,16 @@
                           <Properties>
                             <Property name="editable" type="boolean" value="false"/>
                             <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-                              <Dimension value="[10, 26]"/>
+                              <Dimension value="[10, 150]"/>
+                            </Property>
+                            <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+                              <Dimension value="[10, 150]"/>
+                            </Property>
+                            <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+                              <Dimension value="[150, 26]"/>
+                            </Property>
+                            <Property name="size" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+                              <Dimension value="[150, 26]"/>
                             </Property>
                           </Properties>
                         </Component>
@@ -917,7 +1033,16 @@
                           <Properties>
                             <Property name="editable" type="boolean" value="false"/>
                             <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-                              <Dimension value="[10, 26]"/>
+                              <Dimension value="[10, 150]"/>
+                            </Property>
+                            <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+                              <Dimension value="[10, 150]"/>
+                            </Property>
+                            <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+                              <Dimension value="[150, 26]"/>
+                            </Property>
+                            <Property name="size" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+                              <Dimension value="[150, 26]"/>
                             </Property>
                           </Properties>
                         </Component>
@@ -925,7 +1050,16 @@
                           <Properties>
                             <Property name="editable" type="boolean" value="false"/>
                             <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-                              <Dimension value="[10, 26]"/>
+                              <Dimension value="[10, 150]"/>
+                            </Property>
+                            <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+                              <Dimension value="[10, 150]"/>
+                            </Property>
+                            <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+                              <Dimension value="[150, 26]"/>
+                            </Property>
+                            <Property name="size" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+                              <Dimension value="[150, 26]"/>
                             </Property>
                           </Properties>
                         </Component>
@@ -933,7 +1067,16 @@
                           <Properties>
                             <Property name="editable" type="boolean" value="false"/>
                             <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-                              <Dimension value="[10, 26]"/>
+                              <Dimension value="[10, 150]"/>
+                            </Property>
+                            <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+                              <Dimension value="[10, 150]"/>
+                            </Property>
+                            <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+                              <Dimension value="[150, 26]"/>
+                            </Property>
+                            <Property name="size" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+                              <Dimension value="[150, 26]"/>
                             </Property>
                           </Properties>
                         </Component>
@@ -941,7 +1084,16 @@
                           <Properties>
                             <Property name="editable" type="boolean" value="false"/>
                             <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-                              <Dimension value="[10, 26]"/>
+                              <Dimension value="[10, 150]"/>
+                            </Property>
+                            <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+                              <Dimension value="[10, 150]"/>
+                            </Property>
+                            <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+                              <Dimension value="[150, 26]"/>
+                            </Property>
+                            <Property name="size" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+                              <Dimension value="[150, 26]"/>
                             </Property>
                           </Properties>
                         </Component>
@@ -949,7 +1101,16 @@
                           <Properties>
                             <Property name="editable" type="boolean" value="false"/>
                             <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-                              <Dimension value="[10, 26]"/>
+                              <Dimension value="[10, 150]"/>
+                            </Property>
+                            <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+                              <Dimension value="[10, 150]"/>
+                            </Property>
+                            <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+                              <Dimension value="[150, 26]"/>
+                            </Property>
+                            <Property name="size" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+                              <Dimension value="[150, 26]"/>
                             </Property>
                           </Properties>
                         </Component>
@@ -957,7 +1118,16 @@
                           <Properties>
                             <Property name="editable" type="boolean" value="false"/>
                             <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-                              <Dimension value="[10, 26]"/>
+                              <Dimension value="[10, 150]"/>
+                            </Property>
+                            <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+                              <Dimension value="[10, 150]"/>
+                            </Property>
+                            <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+                              <Dimension value="[150, 26]"/>
+                            </Property>
+                            <Property name="size" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+                              <Dimension value="[150, 26]"/>
                             </Property>
                           </Properties>
                         </Component>
@@ -965,7 +1135,16 @@
                           <Properties>
                             <Property name="editable" type="boolean" value="false"/>
                             <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-                              <Dimension value="[10, 26]"/>
+                              <Dimension value="[10, 150]"/>
+                            </Property>
+                            <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+                              <Dimension value="[10, 150]"/>
+                            </Property>
+                            <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+                              <Dimension value="[150, 26]"/>
+                            </Property>
+                            <Property name="size" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+                              <Dimension value="[150, 26]"/>
                             </Property>
                           </Properties>
                         </Component>
@@ -973,7 +1152,16 @@
                           <Properties>
                             <Property name="editable" type="boolean" value="false"/>
                             <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-                              <Dimension value="[10, 26]"/>
+                              <Dimension value="[10, 150]"/>
+                            </Property>
+                            <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+                              <Dimension value="[10, 150]"/>
+                            </Property>
+                            <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+                              <Dimension value="[150, 26]"/>
+                            </Property>
+                            <Property name="size" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+                              <Dimension value="[150, 26]"/>
                             </Property>
                           </Properties>
                         </Component>
@@ -981,7 +1169,16 @@
                           <Properties>
                             <Property name="editable" type="boolean" value="false"/>
                             <Property name="maximumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-                              <Dimension value="[10, 26]"/>
+                              <Dimension value="[10, 150]"/>
+                            </Property>
+                            <Property name="minimumSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+                              <Dimension value="[10, 150]"/>
+                            </Property>
+                            <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+                              <Dimension value="[150, 26]"/>
+                            </Property>
+                            <Property name="size" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
+                              <Dimension value="[150, 26]"/>
                             </Property>
                           </Properties>
                         </Component>
