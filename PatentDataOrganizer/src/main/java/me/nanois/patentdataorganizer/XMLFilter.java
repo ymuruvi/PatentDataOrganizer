@@ -23,7 +23,7 @@ public class XMLFilter extends FileFilter{
 
         String extension = Tools.getExtension(f);
         if (extension != null) {
-            if (extension.equals(Tools.Contstants.XML)) {
+            if (extension.equals(Tools.Constants.XML)) {
                     return true;
             } else {
                 return false;
