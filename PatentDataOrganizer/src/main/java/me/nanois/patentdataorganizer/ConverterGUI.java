@@ -12,6 +12,7 @@ import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 import javax.swing.JFrame;
+import javax.swing.JTextField;
 import javax.swing.filechooser.FileNameExtensionFilter;
 import me.nanois.patentdataorganizer.utilities.Record;
 import me.nanois.patentdataorganizer.utilities.Tools;
@@ -146,23 +147,24 @@ public class ConverterGUI extends JFrame {
                                     try {
                                         if (f.isFile()) {
                                             if ("xml".equals(Tools.getExtension(filePath))) {
-                                                System.out.println(Tools.Contstants.ANSI_GREEN + fCount + ": Reading: "
-                                                        + filePath + Tools.Contstants.ANSI_RESET);
+                                                System.out.println(Tools.Constants.ANSI_GREEN + fCount + ": Reading: "
+                                                        + filePath + Tools.Constants.ANSI_RESET);
                                                 fCount++;
                                                 r = new Record();
                                                 r.parse(filePath);
                                                 try {
                                                     records.put(r.getRecordID(), r);
                                                     keys.add(r.getRecordID());
+                                                    System.out.println(r);
                                                     enableExport();
                                                 } catch (Exception e) {
-                                                    System.out.println(Tools.Contstants.ANSI_RED + "Error: "
-                                                            + e + Tools.Contstants.ANSI_RESET);
+                                                    System.out.println(Tools.Constants.ANSI_RED + "Error: "
+                                                            + e + Tools.Constants.ANSI_RESET);
                                                 }
                                             } else {
-                                                System.out.println(Tools.Contstants.ANSI_RED + filePath
+                                                System.out.println(Tools.Constants.ANSI_RED + filePath
                                                         + " is not an XML File (" + Tools.getExtension(filePath)
-                                                        + ")" + Tools.Contstants.ANSI_RESET);
+                                                        + ")" + Tools.Constants.ANSI_RESET);
                                             }
                                         }
                                     } catch (Exception ex) {
@@ -204,7 +206,7 @@ public class ConverterGUI extends JFrame {
     private void enableExport() {
         if (records.size() > 0) {
             if(!exportBtn.isEnabled()){
-                System.out.println(Tools.Contstants.ANSI_BLUE + "Enabling Export" + Tools.Contstants.ANSI_RESET);
+                System.out.println(Tools.Constants.ANSI_BLUE + "Enabling Export" + Tools.Constants.ANSI_RESET);
                 exportBtn.setEnabled(true);
             }
             
@@ -1032,9 +1034,6 @@ public class ConverterGUI extends JFrame {
     }
     
     private void getOutputColumns(ArrayList<String> columns){
-        if(docNumBox.isSelected()){
-            //columns.add("Document Number");
-        }
         Component[] components = outputDocOptionsPanel.getComponents();
         for(Component c: components){
             if(c instanceof JCheckBox){
@@ -1083,26 +1082,12 @@ public class ConverterGUI extends JFrame {
      * Resets JTextField boxes
      */
     public void resetTxtBoxes() {
-        docTypeTxtBox.setText("");
-        docNumTxtBox.setText("");
-        appNumTxtBox.setText("");
-        engTitleTxtBox.setText("");
-        frTitleTxtBox.setText("");
-        investorTxtBox.setText("");
-        ownersTxtBox.setText("");
-        applicantsTxtBox.setText("");
-        agentTxtBox.setText("");
-        issuedTxtBox.setText("");
-        reissuedTxtBox.setText("");
-        filedTxtBox.setText("");
-        openToPubTxtBox.setText("");
-        examRequestTxtBox.setText("");
-        reExamCertTxtBox.setText("");
-        canPatClassTxtBox.setText("");
-        intPatentClassTxtBox.setText("");
-        patCoopTreTxtBox.setText("");
-        appPrioDataTxtBox.setText("");
-        availOfLicTxtBox.setText("");
+        Component[] components = recordDataPanel.getComponents();
+        for(Component c : components){
+            if(c instanceof JTextField){
+                ((JTextField)c).setText("");
+            }
+        }
     }
 
     /**
