@@ -2,6 +2,8 @@ package me.nanois.patentdataorganizer.utilities;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
@@ -37,6 +39,10 @@ public class Record {
     private RecordDataPoints dataPoints;
 
     private String recordID;
+    
+    private static DocumentBuilderFactory factory;
+    
+    private static DocumentBuilder builder;
 
     //</editor-fold>
     /**
@@ -44,6 +50,15 @@ public class Record {
      */
     public Record() {
         dataPoints = new RecordDataPoints();
+        factory = DocumentBuilderFactory.newInstance();
+        factory.setIgnoringComments(true);
+        factory.setIgnoringElementContentWhitespace(true);
+        factory.setValidating(true);
+        try {
+            builder = factory.newDocumentBuilder();
+        } catch (ParserConfigurationException ex) {
+            System.out.println(Tools.Constants.ANSI_RED + "Error: " + ex + Tools.Constants.ANSI_RESET);
+        }
     }
 
     /**
@@ -103,29 +118,9 @@ public class Record {
      * @param docName
      * @return 
      */
-    private static Document getDocument(String docName) {
+    private Document getDocument(String docName) {
         try {
-            DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-            factory.setIgnoringComments(true);
-            factory.setIgnoringElementContentWhitespace(true);
-            factory.setValidating(true);
-            DocumentBuilder builder = factory.newDocumentBuilder();
-            String[] dtdURL = {"http://patents.ic.gc.ca/cipo/dtd/ca-patent-document-v2-0.dtd",
-                 "/Users/nano/Documents/Programming/Projects/Patent\\ Data\\ Converter/TestCases/ca-patent-document-v2-0.dtd"};
-            DocumentType docType = builder.getDOMImplementation().createDocumentType( "ca-patent-document",
-                "-//CIPO//CA PATENT DOCUMENT 2.0//EN",
-                dtdURL[0] );
-            
-            Document tmp = builder.parse(new InputSource(docName));
-            System.out.println(Tools.Constants.ANSI_PURPLE + "Pub ID: " + tmp.getDoctype().getPublicId() + "  \tNS URI: " + tmp.getNamespaceURI() + "  \tQN: " );
-            String nameSpaceURI = tmp.getNamespaceURI();
-            String qualifiedName = "";
-            System.out.println("LocalName: " + tmp.getLocalName() + " Prefix: " + tmp.getPrefix());
-            System.out.println("Base URI: " + tmp.getNodeName());
-            Document doc = builder.getDOMImplementation().createDocument(nameSpaceURI, qualifiedName, docType);
-            return tmp;
-            
-
+            return builder.parse(new InputSource(docName));
         } catch (Exception e) {
             System.out.println(Tools.Constants.ANSI_RED + e.getMessage() + Tools.Constants.ANSI_RESET);
         }
